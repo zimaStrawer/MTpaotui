@@ -1,0 +1,68 @@
+/**
+ * 设计 Token(§4)· 三层 primitive → semantic → component。
+ * 值经 Figma MCP 从组件库(node 960:7565)拉取,与 design.md 交叉校验一致。
+ * Figma 中文分组(主题色/中性色/辅助色)→ CSS 英文语义名,组名不进变量名。
+ */
+@theme {
+  /* ── 主题色 Brand ── */
+  --color-brand-primary: #fee42b; /* 美团黄,仅主 CTA / 选中态 */
+  --color-brand-secondary: #fffbe4;
+  --color-accent-primary: #f58b1d; /* 价格 / 时间 / 紧迫信息专用 */
+  --color-accent-secondary: #fff5e9;
+
+  /* ── 中性色 Neutral(统一色相 H220)── */
+  --color-text-primary: #1b1d21;
+  --color-text-secondary: #595d65;
+  --color-text-tertiary: #8c9098;
+  --color-text-quaternary: #dde0e6; /* 失效态 / 浅填充,勿用于正文 */
+  --color-bg-page: #f4f5f7;
+  --color-bg-container: #fbfcfe;
+  --color-bg-black: #282b31; /* 深色底 / 遮罩基色 */
+  --color-divider: rgba(27, 29, 33, 0.05);
+
+  /* ── 辅助色 Functional(产品语义色,非通用 success/error)── */
+  --color-alert: #ff090d; /* 提醒 */
+  --color-insurance-primary: #079968; /* 保价 */
+  --color-insurance-secondary: #e7fff2;
+  --color-decorative-primary: #804d30;
+  --color-decorative-secondary: #fdd4b8;
+  --color-decorative-tertiary: #fff4ee;
+
+  /* ── 圆角 Radius ── */
+  --radius-2: 2px;
+  --radius-4: 4px;
+  --radius-6: 6px;
+  --radius-8: 8px;
+  --radius-10: 10px;
+  --radius-12: 12px;
+  --radius-16: 16px;
+  --radius-20: 20px;
+
+  /* ── 字体族(替代字体策略见 design.md)── */
+  --font-app: 'PingFang SC', 'Noto Sans SC', 'Helvetica Neue', system-ui,
+    sans-serif;
+  --font-number: 'SF Pro', 'SF Pro Text', -apple-system, system-ui, sans-serif;
+  --font-brand: 'Meituan Type', 'PingFang SC', system-ui, sans-serif;
+
+  /* ── 字号(层级靠字重递进,不靠字号堆砌)── */
+  --text-headline: 22px;
+  --text-headline--line-height: 1.4;
+  --text-title: 18px;
+  --text-title--line-height: 1.4;
+  --text-tab: 16px;
+  --text-tab--line-height: 1.4;
+  --text-body: 14px;
+  --text-body--line-height: 1.5;
+  --text-caption: 12px;
+  --text-caption--line-height: 1.5;
+  --text-caption-sm: 11px;
+  --text-caption-sm--line-height: 1.5;
+  --text-caption-xs: 10px;
+  --text-caption-xs--line-height: 1.5;
+  --text-number: 14px;
+  --text-number--line-height: 1.2;
+  --text-number-sm: 12px;
+  --text-number-sm--line-height: 1.2;
+  --text-display-lg: 32px; /* 组件库 数字/display-lg(重量/尺寸大数字) */
+  --text-display-lg--line-height: 1;
+}
