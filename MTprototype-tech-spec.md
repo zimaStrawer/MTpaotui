@@ -205,3 +205,13 @@ interface Courier {
 - **失败 / 异常态**(骑手异常、地址识别失败等)——延后。
 - **埋点**——最后再做,本期只保留"事件从一处流出"的写法习惯,不实现 `track()`。
 - 性能预算 / 虚拟滚动 / 懒加载(除非真出现超长列表);分析 SDK;reset / 跳转运营工具;真后端 / 鉴权。
+
+
+## 15. 开发里程碑
+- M0 脚手架	Vite + React + strict TS + Tailwind + Router 骨架 + Vercel 先发链接
+- M1 地基	Figma MCP 拉 tokens、领域模型、Repository 接口 + Mock、Zustand、14 个共享组件
+- M2 第一纵切	物品信息页(类型→重量→体积→保价 分段状态机)
+- M3 首页 + 地址页	地址页同一路由走两次(pickup/delivery)
+- M4 下单确认页	车型推荐提示 + 提交订单,happy path 全通
+- M5 配送追踪时间轴	P1 核心:5 态每 10–15 秒自动推进、收货码揭示、信任三角全量呈现
+- M6 收尾	PWA、可访问性、README

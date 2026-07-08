@@ -30,6 +30,17 @@ export const ITEM_CATEGORIES = [
 ] as const;
 export type ItemCategory = (typeof ITEM_CATEGORIES)[number];
 
+/** 易损品类:保价组件出「建议您保价」态,车型推荐倾向汽车 */
+export const FRAGILE_CATEGORIES: readonly ItemCategory[] = [
+  '鲜花',
+  '蛋糕',
+  '数码',
+];
+
+export function isFragileCategory(category: ItemCategory): boolean {
+  return FRAGILE_CATEGORIES.includes(category);
+}
+
 /**
  * 保价档位(frame 1380:20291 保价 slot):
  * none = 未保价(最高赔 5 倍跑腿费)/ tier1 = ≤500元 保价费¥1

@@ -1,5 +1,5 @@
 import iconHelp from '../../assets/item-info/icon-help.svg';
-import { WEIGHT_MAX_KG, WEIGHT_TICKS } from './constants';
+import { WEIGHT_FREE_KG, WEIGHT_MAX_KG, WEIGHT_TICKS } from './constants';
 import { FieldHeader } from './FieldHeader';
 import { TickSlider } from './TickSlider';
 
@@ -26,8 +26,11 @@ export function WeightCard({ weightKg, onChange }: WeightCardProps) {
         骑手取件时会评估物品重量, 5公斤内不加价, 超重需补齐差价
       </p>
       <div className="flex items-end justify-center gap-1 py-1">
+        {weightKg < WEIGHT_FREE_KG && (
+          <span className="text-body font-medium text-text-primary">小于</span>
+        )}
         <span className="font-number text-display-lg font-medium text-text-primary">
-          {weightKg}
+          {Math.max(weightKg, WEIGHT_FREE_KG)}
         </span>
         <span className="text-body font-medium text-text-primary">公斤</span>
       </div>

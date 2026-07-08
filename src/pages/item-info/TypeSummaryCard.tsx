@@ -2,7 +2,11 @@ import iconChevron from '../../assets/nav/icon-chevron.svg';
 import iconFlower from '../../assets/item-info/icon-flower.svg';
 import iconRemoveBadge from '../../assets/item-info/icon-remove-badge.svg';
 import photoBouquet from '../../assets/item-info/photo-bouquet.jpg';
-import type { InsuranceTier, ItemCategory } from '../../data/models/order';
+import {
+  isFragileCategory,
+  type InsuranceTier,
+  type ItemCategory,
+} from '../../data/models/order';
 import { FieldHeader } from './FieldHeader';
 import { InsurancePanel } from './InsurancePanel';
 import { ProhibitedNote } from './ProhibitedNote';
@@ -78,7 +82,11 @@ export function TypeSummaryCard({
         />
       </div>
 
-      <InsurancePanel value={insurance} onChange={onInsuranceChange} />
+      <InsurancePanel
+        value={insurance}
+        fragile={isFragileCategory(category)}
+        onChange={onInsuranceChange}
+      />
     </section>
   );
 }
