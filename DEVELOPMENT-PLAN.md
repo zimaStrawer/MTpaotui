@@ -38,10 +38,14 @@
 - [ ] **领域模型**:按 §5 落 `data/models/`(`Order / Address / Item / Courier / TrackingStage` 等 union 类型)
 - [ ] **数据层**:`OrderRepository` 接口 + `MockOrderRepository` 实现;车型推荐规则为 mock 层纯函数
 - [ ] **Store**:Zustand 仅内存;互斥状态用 union 不堆 Boolean;事件从一处流出的写法立规
-- [ ] **共享组件改为按需建**(Figma 组件库整理尚在进行,变体信息随每页开工时提供):M1 只建全页面都用的框架件(`StatusBar`、`NavigationBar`、`TabBar`、`HomeIndicator`);其余(业务选择、地址填写-居中、物品类型选择、物品体积、保价、进度条、骑手卡片、物品凭证、取收标签、车型推荐提示条)在**首个使用它的页面**开工时建,Figma 变体 → React props/状态枚举
+- [ ] **共享组件全部按需建**(不预建;变体信息随每页开工时提供,Figma 变体 → React props/状态枚举):
+  - **不实现的系统 UI**:`StatusBar`、`HomeIndicator` 由真机系统提供,Figma frame 里对应图层实现时跳过;工程侧只做安全区适配(`viewport-fit=cover` + `env(safe-area-inset-*)`)
+  - `TabBar` 本期流程用不到,不做(设计中出现再议)
+  - `NavigationBar` 是应用内 UI(全屏网页无系统返回),各路由显示状态不同,首个用到的页面开工时建
+  - 其余(业务选择、地址填写-居中、物品类型选择、物品体积、保价、进度条、骑手卡片、物品凭证、取收标签、车型推荐提示条)同样在首个使用页开工时建
 - [ ] 组件保持纯 props 受控(§3):不拿数据、不存状态
 
-**验收**:框架件在演示路由渲染正常;色值/间距/圆角零魔法数字。
+**验收**:token 映射就位,色值/间距/圆角零魔法数字。
 
 ## M2 · 第一条纵切:物品信息页 `ItemInfoPage`
 
