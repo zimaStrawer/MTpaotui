@@ -27,6 +27,17 @@ export const MOCK_DELIVERY_ADDRESS: Address = {
   detail: '万象天地写字楼A座',
 };
 
+/** 「我的位置」当前定位 mock(首页帮送模式的默认取件地址,frame 913:7841) */
+export const MOCK_SELF_ADDRESS: Address = {
+  role: 'pickup',
+  contactName: '郑木生',
+  phone: '13857180426',
+  detail: '龙井路·红棉书院 3-2-1802',
+};
+
+/** 首页价格条起步价(mock 报价,M4 接费用计算) */
+export const MOCK_BASE_FEE_YUAN = 14.5;
+
 /** 情境提示(§0「事可感」)与车型推荐规则共用的环境上下文 */
 export const MOCK_WEATHER = 'rain' as const;
 export const MOCK_DISTANCE_KM = 3.2;

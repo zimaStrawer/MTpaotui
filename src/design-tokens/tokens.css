@@ -47,6 +47,8 @@
   /* ── 字号(层级靠字重递进,不靠字号堆砌)── */
   --text-headline: 22px;
   --text-headline--line-height: 1.4;
+  --text-title-brand: 20px;
+  --text-title-brand--line-height: 1.4;
   --text-title: 18px;
   --text-title--line-height: 1.4;
   --text-tab: 16px;
