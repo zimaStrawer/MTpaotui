@@ -1,14 +1,13 @@
 import iconChevron from '../../assets/nav/icon-chevron.svg';
 import iconFlower from '../../assets/item-info/icon-flower.svg';
-import iconRemoveBadge from '../../assets/item-info/icon-remove-badge.svg';
 import photoBouquet from '../../assets/item-info/photo-bouquet.jpg';
 import {
   isFragileCategory,
   type InsuranceTier,
   type ItemCategory,
 } from '../../data/models/order';
+import { InsurancePanel } from '../../components/InsurancePanel';
 import { FieldHeader } from './FieldHeader';
-import { InsurancePanel } from './InsurancePanel';
 import { ProhibitedNote } from './ProhibitedNote';
 
 interface TypeSummaryCardProps {
@@ -66,11 +65,16 @@ export function TypeSummaryCard({
               alt="物品照片"
               className="size-12 rounded-8 object-cover"
             />
-            <img
-              src={iconRemoveBadge}
-              alt=""
-              className="absolute -top-1.5 -right-1.5 size-3.5"
-            />
+            <span className="absolute -top-1.5 -right-1.5 flex size-3.5 items-center justify-center rounded-full bg-bg-black">
+              <svg viewBox="0 0 8 8" aria-hidden className="size-1.5">
+                <path
+                  d="M1.2 1.2l5.6 5.6M6.8 1.2L1.2 6.8"
+                  stroke="var(--color-bg-container)"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </span>
           </span>
         )}
         <textarea

@@ -1,9 +1,26 @@
-import iconCheckCorner from '../../assets/item-info/icon-check-corner.svg';
-import iconEdit from '../../assets/item-info/icon-edit.svg';
-import iconHelp from '../../assets/item-info/icon-help.svg';
-import logoShengxinsong from '../../assets/item-info/logo-shengxinsong.svg';
-import type { InsuranceTier } from '../../data/models/order';
-import { INSURANCE_OPTIONS } from './constants';
+import iconChevron from '../assets/nav/icon-chevron.svg';
+import iconEdit from '../assets/item-info/icon-edit.svg';
+import iconHelp from '../assets/item-info/icon-help.svg';
+import logoShengxinsong from '../assets/item-info/logo-shengxinsong.svg';
+import type { InsuranceTier } from '../data/models/order';
+import { CornerCheck } from './CornerCheck';
+
+const INSURANCE_OPTIONS: {
+  tier: Extract<InsuranceTier, 'tier1' | 'tier2'>;
+  valueLabel: string;
+  feeLabel: string;
+}[] = [
+  { tier: 'tier1', valueLabel: '价值500元及以下', feeLabel: '保价费¥1' },
+  { tier: 'tier2', valueLabel: '价值501~1000元', feeLabel: '保价费¥2' },
+];
+
+/** 缩小态展示的保价费(custom 无固定档,显示「自定义」) */
+const COLLAPSED_FEE_LABEL: Record<InsuranceTier, string> = {
+  none: '',
+  tier1: '¥1',
+  tier2: '¥2',
+  custom: '自定义',
+};
 
 interface InsurancePanelProps {
   value: InsuranceTier;
@@ -19,16 +36,6 @@ const chipBase =
   'relative flex h-16 w-30 shrink-0 flex-col justify-center gap-1 overflow-hidden rounded-12 border px-2 text-left';
 const chipSelected = 'border-brand-primary bg-brand-secondary';
 const chipIdle = 'border-text-quaternary bg-bg-container';
-
-function CornerCheck() {
-  return (
-    <img
-      src={iconCheckCorner}
-      alt=""
-      className="absolute top-0 right-0 h-6"
-    />
-  );
-}
 
 /** 保价 slot(省心送保价服务):档位横滑,再点已选档位可取消。 */
 export function InsurancePanel({ value, fragile, onChange }: InsurancePanelProps) {
@@ -51,9 +58,7 @@ export function InsurancePanel({ value, fragile, onChange }: InsurancePanelProps
         </p>
       )}
       {state === 'suggest' && (
-        <p className="mt-1 text-caption-sm text-alert">
-          物品易损 建议您保价
-        </p>
+        <p className="mt-1 text-caption-sm text-alert">物品易损 建议您保价</p>
       )}
       {state === 'reminder' && (
         <p className="mt-1 text-caption-sm text-text-tertiary">
@@ -95,5 +100,33 @@ export function InsurancePanel({ value, fragile, onChange }: InsurancePanelProps
         </button>
       </div>
     </div>
+  );
+}
+
+interface InsuranceCollapsedBarProps {
+  tier: InsuranceTier;
+  /** 点击展开为完整保价面板 */
+  onExpand: () => void;
+}
+
+/** 已保价-缩小(1541:27854):前序流程已选保价时的单行态。 */
+export function InsuranceCollapsedBar({ tier, onExpand }: InsuranceCollapsedBarProps) {
+  return (
+    <button
+      type="button"
+      onClick={onExpand}
+      className="flex w-full items-center justify-between rounded-8 bg-bg-page p-2 text-left"
+    >
+      <span className="flex items-center gap-1 text-caption font-medium text-text-primary">
+        保价费
+        <span className="text-title font-semibold">
+          {COLLAPSED_FEE_LABEL[tier]}
+        </span>
+      </span>
+      <span className="flex items-center text-caption text-text-tertiary">
+        省心送服务保障中
+        <img src={iconChevron} alt="" className="size-3.5 rotate-180" />
+      </span>
+    </button>
   );
 }

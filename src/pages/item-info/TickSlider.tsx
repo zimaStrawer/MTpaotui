@@ -1,5 +1,3 @@
-import sliderThumb from '../../assets/item-info/slider-thumb.svg';
-
 interface TickSliderProps {
   value: number;
   max: number;
@@ -30,12 +28,14 @@ export function TickSlider({ value, max, ticks, ariaLabel, onChange }: TickSlide
           className="absolute top-1/2 h-2 -translate-y-1/2 rounded-full bg-brand-primary"
           style={{ width: `${percent}%` }}
         />
-        <img
-          src={sliderThumb}
-          alt=""
-          className="pointer-events-none absolute top-1/2 size-5 -translate-x-1/2 -translate-y-1/2"
+        {/* 圆钮:白圆 + 双握持纹;阴影按 Elevation 规范带中性蓝调色相 */}
+        <span
+          className="pointer-events-none absolute top-1/2 flex size-5 -translate-x-1/2 -translate-y-1/2 items-center justify-center gap-[3px] rounded-full bg-bg-container shadow-[0_2px_6px_rgba(28,30,33,0.2)]"
           style={{ left: `${percent}%` }}
-        />
+        >
+          <span className="h-1.5 w-px rounded-full bg-text-quaternary" />
+          <span className="h-1.5 w-px rounded-full bg-text-quaternary" />
+        </span>
         <input
           type="range"
           min={0}

@@ -18,6 +18,8 @@ export function HomePage() {
   const navigate = useNavigate();
   const business = useOrderDraftStore((state) => state.business);
   const setBusiness = useOrderDraftStore((state) => state.setBusiness);
+  const serviceMode = useOrderDraftStore((state) => state.serviceMode);
+  const setServiceMode = useOrderDraftStore((state) => state.setServiceMode);
   const vehicle = useOrderDraftStore((state) => state.vehicle);
   const setVehicle = useOrderDraftStore((state) => state.setVehicle);
   const pickup = useOrderDraftStore((state) => state.pickup);
@@ -25,9 +27,16 @@ export function HomePage() {
 
   const handleEditAddress = (role: AddressRole) => navigate(`/address/${role}`);
 
-  /** 去下单:收件地址已填则直进物品信息,否则先填收件地址 */
-  const handleSubmit = () =>
-    navigate(delivery === null ? '/address/delivery' : '/item-info');
+  /** 去下单:按流程顺序补齐未填地址(取→收),都齐则进物品信息 */
+  const handleSubmit = () => {
+    if (pickup === null) {
+      navigate('/address/pickup');
+    } else if (delivery === null) {
+      navigate('/address/delivery');
+    } else {
+      navigate('/item-info');
+    }
+  };
 
   return (
     <div className="relative mx-auto min-h-dvh max-w-md pb-28">
@@ -45,9 +54,11 @@ export function HomePage() {
         <div className="h-[104px]" />
         <main className="flex flex-col gap-4 px-2">
           <ServiceCard
+            mode={serviceMode}
             pickup={pickup}
             delivery={delivery}
             vehicle={vehicle}
+            onModeChange={setServiceMode}
             onVehicleChange={setVehicle}
             onEditAddress={handleEditAddress}
             onSubmit={handleSubmit}

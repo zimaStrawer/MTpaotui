@@ -3,15 +3,24 @@
 /** 首页业务 tab,本期只做「帮取送」 */
 export type BusinessType = '帮取送' | '帮我买' | '帮个忙';
 
+/**
+ * 帮取送子服务(首页服务选择卡,下单页沿用此预选):
+ * send = 帮送 / pick = 帮取(取收地址互换)/ express = 1对1急送(强化帮送)
+ */
+export type ServiceMode = 'send' | 'pick' | 'express';
+
 /** 取件 / 收件(地址页同一路由两种角色) */
 export type AddressRole = 'pickup' | 'delivery';
 
 export interface Address {
   role: AddressRole;
+  /** 地图定位点,如「龙井路·红棉书院」 */
+  poi: string;
+  /** 门牌号,如「3幢2单元1802室」 */
+  unit: string;
   contactName: string;
+  /** 11 位数字,展示格式化见 lib/format */
   phone: string;
-  /** 如「景顺铂悦城9号楼」 */
-  detail: string;
 }
 
 /** 物品品类,顺序即设计稿宫格顺序(frame 1380:20261,4 列 × 3 行) */

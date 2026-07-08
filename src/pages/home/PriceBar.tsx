@@ -1,7 +1,5 @@
-import priceMaskOrange from '../../assets/home/price-mask-orange.svg';
-import priceMaskYellow from '../../assets/home/price-mask-yellow.svg';
 import { MOCK_BASE_FEE_YUAN } from '../../data/mock/fixtures';
-import type { ServiceMode } from './service-mode';
+import type { ServiceMode } from '../../data/models/order';
 
 interface PriceBarProps {
   mode: ServiceMode;
@@ -14,21 +12,22 @@ const BAR_BG: Record<ServiceMode, string> = {
   express: 'bg-decorative-tertiary',
 };
 
+const CTA_BG: Record<ServiceMode, string> = {
+  send: 'bg-brand-primary',
+  pick: 'bg-brand-primary',
+  express: 'bg-decorative-secondary',
+};
+
 const [feeInt, feeDecimal] = MOCK_BASE_FEE_YUAN.toFixed(1).split('.');
 
-/** 价格条(913:6529):起步价 + 立减角标 + 去下单。 */
+/** 价格条(913:6529):起步价 + 立减角标;右侧「去下单」为跑道圆按钮。 */
 export function PriceBar({ mode, onSubmit }: PriceBarProps) {
   return (
     <button
       type="button"
       onClick={onSubmit}
-      className={`relative h-12 w-full overflow-hidden rounded-full text-left ${BAR_BG[mode]}`}
+      className={`relative h-12 w-full rounded-full text-left ${BAR_BG[mode]}`}
     >
-      <img
-        src={mode === 'express' ? priceMaskOrange : priceMaskYellow}
-        alt=""
-        className="absolute top-0 right-0 h-full"
-      />
       <span className="absolute top-3 left-5 flex items-end gap-1">
         <span className="flex items-end gap-0.5 text-text-primary">
           <span className="font-number text-tab leading-4 font-bold">¥</span>
@@ -45,9 +44,13 @@ export function PriceBar({ mode, onSubmit }: PriceBarProps) {
       <span className="absolute top-4 left-[108px] flex h-5 items-center rounded-tl-10 rounded-tr-10 rounded-br-10 bg-alert px-2 text-caption-sm whitespace-nowrap text-bg-container">
         最高减20元
       </span>
-      {/* 去下单为装饰字体(DingTalk JinBuTi),无授权时以粗体近似 */}
-      <span className="absolute top-2.5 right-7 text-[22px] font-bold tracking-[-1.76px] text-text-primary">
-        去下单
+      <span
+        className={`absolute inset-y-0 right-0 flex w-[132px] items-center justify-center rounded-full ${CTA_BG[mode]}`}
+      >
+        {/* 去下单为装饰字体(DingTalk JinBuTi),无授权时以粗体近似 */}
+        <span className="text-[22px] font-bold tracking-[-1.76px] text-text-primary">
+          去下单
+        </span>
       </span>
     </button>
   );

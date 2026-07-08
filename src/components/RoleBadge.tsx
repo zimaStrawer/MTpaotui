@@ -1,4 +1,4 @@
-import type { AddressRole } from '../../data/models/order';
+import type { AddressRole } from '../data/models/order';
 
 interface RoleBadgeProps {
   role: AddressRole;

@@ -20,7 +20,7 @@ export function AddressField({ address, placeholder, onClick }: AddressFieldProp
       {address !== null ? (
         <span className="flex flex-col pl-4">
           <span className="text-body font-medium text-text-primary">
-            {address.detail}
+            {address.poi} {address.unit}
           </span>
           <span className="flex items-center gap-2 text-caption text-text-secondary">
             {address.contactName}
