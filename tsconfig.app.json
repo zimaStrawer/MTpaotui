@@ -10,6 +10,7 @@
     /* 工程约束(§3):strict,禁 any */
     "strict": true,
     "noUnusedLocals": true,
+    "noUncheckedIndexedAccess": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,

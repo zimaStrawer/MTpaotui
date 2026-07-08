@@ -22,6 +22,10 @@ export default tseslint.config(
       /* 工程约束(§3):禁止 any / @ts-ignore */
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/ban-ts-comment': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
     },
   },
 );
