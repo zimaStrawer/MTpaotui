@@ -9,7 +9,7 @@ export interface VehicleContext {
 }
 
 /** 阈值为 mock 规则,按测试场景可调 */
-const FRAGILE_CATEGORIES: readonly ItemCategory[] = ['鲜花', '数码'];
+const FRAGILE_CATEGORIES: readonly ItemCategory[] = ['鲜花', '蛋糕', '数码'];
 const HEAVY_KG = 20;
 const BULKY_CM3 = 50 * 40 * 40;
 const FAR_KM = 10;
@@ -24,10 +24,8 @@ export function recommendVehicle({
   distanceKm,
   weather,
 }: VehicleContext): DeliveryVehicle {
-  const bulky =
-    item.volume !== undefined &&
-    item.volume.l * item.volume.w * item.volume.h >= BULKY_CM3;
-  const heavy = item.weightKg !== undefined && item.weightKg >= HEAVY_KG;
+  const bulky = item.volume.l * item.volume.w * item.volume.h >= BULKY_CM3;
+  const heavy = item.weightKg >= HEAVY_KG;
   const fragile = FRAGILE_CATEGORIES.includes(item.category);
   const far = distanceKm >= FAR_KM;
   const badWeather = weather === 'rain';

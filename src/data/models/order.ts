@@ -14,16 +14,42 @@ export interface Address {
   detail: string;
 }
 
-export type ItemCategory = '鲜花' | '文件' | '数码' | '食品' | '其他';
+/** 物品品类,顺序即设计稿宫格顺序(frame 1380:20261,4 列 × 3 行) */
+export const ITEM_CATEGORIES = [
+  '餐饮',
+  '文件',
+  '生鲜',
+  '蛋糕',
+  '鲜花',
+  '数码',
+  '服饰',
+  '帮取快递',
+  '五金',
+  '汽配',
+  '其他',
+] as const;
+export type ItemCategory = (typeof ITEM_CATEGORIES)[number];
 
-/** free_5x = 未保价(最高赔 5 倍跑腿费)/ paid = 保价 */
-export type InsuranceTier = 'none' | 'free_5x' | 'paid';
+/**
+ * 保价档位(frame 1380:20291 保价 slot):
+ * none = 未保价(最高赔 5 倍跑腿费)/ tier1 = ≤500元 保价费¥1
+ * tier2 = 501~1000元 保价费¥2 / custom = 自定义物品价值
+ */
+export type InsuranceTier = 'none' | 'tier1' | 'tier2' | 'custom';
+
+/** 三维尺寸,单位 cm */
+export interface Volume {
+  l: number;
+  w: number;
+  h: number;
+}
 
 export interface Item {
   category: ItemCategory;
-  weightKg?: number;
-  /** 三维体积,单位 cm */
-  volume?: { l: number; w: number; h: number };
+  /** 重量滑杆必有值(骑手取件时评估,5 公斤内不加价) */
+  weightKg: number;
+  /** 默认为配送箱尺寸,详细尺寸展开后可调 */
+  volume: Volume;
   insurance: InsuranceTier;
   /** 物品描述 / 配送要求 */
   note?: string;
