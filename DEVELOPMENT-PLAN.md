@@ -34,7 +34,7 @@
 
 ## M1 · 地基
 
-- [ ] **Design tokens**:经 Figma MCP 从组件库 `960:7565` 拉取,三层 primitive → semantic → component;CSS 导出英文名,映射进 Tailwind 配置。**不手写猜值。**
+- [x] **Design tokens**:经 Figma MCP 从组件库 `960:7565` 拉取(与 design.md 交叉校验一致),落 `design-tokens/tokens.css`(Tailwind 4 `@theme`)
 - [ ] **领域模型**:按 §5 落 `data/models/`(`Order / Address / Item / Courier / TrackingStage` 等 union 类型)
 - [ ] **数据层**:`OrderRepository` 接口 + `MockOrderRepository` 实现;车型推荐规则为 mock 层纯函数
 - [ ] **Store**:Zustand 仅内存;互斥状态用 union 不堆 Boolean;事件从一处流出的写法立规
@@ -51,12 +51,12 @@
 
 > frame:类型 `1380:20261` / 重量 `1380:20291` / 体积 `1380:20301`
 
-- [ ] 开工前:接收该页具体设计信息,MCP 拉 frame 上下文
-- [ ] 分段填写状态机:类型 → 重量 → 体积 → 保价(slot),一个路由一个状态字段
-- [ ] 表单数据写入 store,类型对齐 `Item`
-- [ ] 与前后路由的入参/出参约定先定死(即使邻页未建)
+- [x] 开工前:接收该页具体设计信息,MCP 拉 frame 上下文(类型 `1380:20261` / 重量 `1380:20291` / 体积展开 `1476:31660`)
+- [x] 分段状态机:`category → detail`(重量/体积/保价在 detail 段同屏);体积展开为卡内布尔
+- [x] 表单数据集中页面层,确定时写入 store;`Item` 模型对齐真实设计(11 品类、保价 4 档、体积必填)
+- [x] 出参约定:确定 → `store.item` + 跳转 `/order-confirm`
 
-**验收**:选「鲜花」走完四段,store 中拿到完整 `Item`。
+**验收**:选「鲜花」走完全段,store 中拿到完整 `Item`。✅(待真机视觉复核)
 
 ## M3 · 首页 + 地址页
 
