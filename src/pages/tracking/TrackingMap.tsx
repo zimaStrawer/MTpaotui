@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import { RoleBadge } from '../../components/RoleBadge';
 import iconFlower from '../../assets/item-info/icon-flower.svg';
 import iconAnnounce from '../../assets/tracking/icon-announce.svg';
@@ -9,6 +11,9 @@ import { TrackingNavigation } from './TrackingNavigation';
 
 type ActiveTrackingStage = Exclude<TrackingStage, 'completed'>;
 type MovingStage = Exclude<ActiveTrackingStage, 'accepting'>;
+
+const ACCEPTING_COUNTDOWN_SECONDS = 44;
+const SONAR_WAVE_DELAYS = ['0s', '1.2s', '2.4s'] as const;
 
 const MAP_STATUS: Record<
   MovingStage,
@@ -53,12 +58,33 @@ function MapPin({ role }: { role: 'pickup' | 'delivery' }) {
 }
 
 function AcceptingBubble() {
+  const [remainingSeconds, setRemainingSeconds] = useState(
+    ACCEPTING_COUNTDOWN_SECONDS,
+  );
+
+  useEffect(() => {
+    const startedAt = Date.now();
+    const timer = window.setInterval(() => {
+      const elapsedSeconds = Math.floor((Date.now() - startedAt) / 1_000);
+      setRemainingSeconds(
+        Math.max(ACCEPTING_COUNTDOWN_SECONDS - elapsedSeconds, 0),
+      );
+    }, 1_000);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const countdown = `0:${String(remainingSeconds).padStart(2, '0')}`;
+
   return (
     <div className="flex h-14 overflow-hidden rounded-8 border border-bg-container bg-bg-container shadow-[0_1px_4px_rgba(28,30,33,0.12)]">
       <div className="flex w-[72px] flex-col items-center justify-center bg-bg-page px-3 py-1.5">
-        <span className="font-number text-number font-medium text-accent-primary">
-          0:44
-        </span>
+        <time
+          dateTime={`PT${remainingSeconds}S`}
+          className="font-number text-number font-medium text-accent-primary tabular-nums"
+        >
+          {countdown}
+        </time>
         <span className="text-caption font-medium whitespace-nowrap text-text-primary">
           预计接单
         </span>
@@ -66,6 +92,25 @@ function AcceptingBubble() {
       <div className="flex items-center px-2 text-caption font-medium whitespace-nowrap text-text-primary">
         正全力为您寻找骑手
       </div>
+    </div>
+  );
+}
+
+function AcceptingSonar() {
+  return (
+    <div className="absolute top-[calc(136px+env(safe-area-inset-top))] left-1/2 size-44 -translate-x-1/2">
+      <div aria-hidden className="absolute inset-0">
+        {SONAR_WAVE_DELAYS.map((animationDelay) => (
+          <span
+            key={animationDelay}
+            className="tracking-sonar-wave absolute inset-0 rounded-full"
+            style={{ animationDelay }}
+          />
+        ))}
+      </div>
+      <span className="absolute top-1/2 left-1/2 z-10 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand-primary shadow-[0_2px_8px_rgba(28,30,33,0.10)]">
+        <img src={iconFlower} alt="鲜花订单定位" className="size-8" />
+      </span>
     </div>
   );
 }
@@ -160,11 +205,7 @@ export function TrackingMap({
           <div className="absolute top-[calc(122px+env(safe-area-inset-top))] left-1/2 z-10 -translate-x-1/2">
             <AcceptingBubble />
           </div>
-          <div className="absolute top-[calc(136px+env(safe-area-inset-top))] left-1/2 flex size-44 -translate-x-1/2 items-center justify-center rounded-full bg-brand-primary/20">
-            <span className="flex size-12 items-center justify-center rounded-full bg-brand-primary shadow-[0_2px_8px_rgba(28,30,33,0.10)]">
-              <img src={iconFlower} alt="鲜花订单定位" className="size-8" />
-            </span>
-          </div>
+          <AcceptingSonar />
         </>
       ) : (
         <>

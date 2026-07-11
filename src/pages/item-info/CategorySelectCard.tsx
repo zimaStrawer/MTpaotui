@@ -1,8 +1,8 @@
 import iconChevron from '../../assets/nav/icon-chevron.svg';
-import categoryGrid from '../../assets/item-info/category-grid.png';
 import iconAiSpark from '../../assets/item-info/icon-ai-spark.svg';
 import iconCamera from '../../assets/item-info/icon-camera.svg';
 import { ITEM_CATEGORIES, type ItemCategory } from '../../data/models/order';
+import { CATEGORY_ICON } from './category-icons';
 import { FieldHeader } from './FieldHeader';
 import { ProhibitedNote } from './ProhibitedNote';
 
@@ -12,11 +12,11 @@ interface CategorySelectCardProps {
 
 /**
  * 物品类型选择卡(frame 1380:20288)。
- * 品类宫格在设计稿中为整图导出,以透明热区网格(4 列 × 3 行,与图内布局对齐)承接点击。
+ * 品类宫格使用 Figma 导出的独立 SVG,按钮本身承接展示与点击。
  */
 export function CategorySelectCard({ onSelect }: CategorySelectCardProps) {
   return (
-    <section className="w-full rounded-16 bg-bg-container px-4 py-3">
+    <section className="w-full rounded-16 bg-bg-container px-4 pt-3 pb-4">
       <div className="flex flex-col gap-2">
         <FieldHeader
           label="类型"
@@ -46,19 +46,27 @@ export function CategorySelectCard({ onSelect }: CategorySelectCardProps) {
         </p>
       </div>
 
-      <div className="relative mx-auto mt-3 w-full max-w-[317px]">
-        <img src={categoryGrid} alt="" className="w-full" />
-        <div className="absolute inset-0 grid grid-cols-4 grid-rows-3">
-          {ITEM_CATEGORIES.map((category) => (
+      <div className="mt-2 grid w-full grid-cols-4 gap-2">
+        {ITEM_CATEGORIES.map((category) => {
+          const icon = CATEGORY_ICON[category];
+          return (
             <button
               key={category}
               type="button"
-              aria-label={category}
               onClick={() => onSelect(category)}
-              className="active:rounded-8 active:bg-text-primary/5"
-            />
-          ))}
-        </div>
+              className="flex aspect-square min-w-0 flex-col items-center justify-center rounded-8 bg-bg-page text-body font-normal text-text-primary transition-colors active:bg-text-primary/5 motion-reduce:transition-none"
+            >
+              <span className="flex size-8 items-center justify-center">
+                <img
+                  src={icon.src}
+                  alt=""
+                  style={{ width: icon.width, height: icon.height }}
+                />
+              </span>
+              <span>{category}</span>
+            </button>
+          );
+        })}
       </div>
     </section>
   );

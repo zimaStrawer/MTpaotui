@@ -1,5 +1,4 @@
 import iconChevron from '../../assets/nav/icon-chevron.svg';
-import iconFlower from '../../assets/item-info/icon-flower.svg';
 import photoBouquet from '../../assets/item-info/photo-bouquet.jpg';
 import {
   isFragileCategory,
@@ -7,6 +6,7 @@ import {
   type ItemCategory,
 } from '../../data/models/order';
 import { InsurancePanel } from '../../components/InsurancePanel';
+import { CATEGORY_ICON } from './category-icons';
 import { FieldHeader } from './FieldHeader';
 import { ProhibitedNote } from './ProhibitedNote';
 
@@ -32,6 +32,8 @@ export function TypeSummaryCard({
   onNoteChange,
   onInsuranceChange,
 }: TypeSummaryCardProps) {
+  const categoryIcon = CATEGORY_ICON[category];
+
   return (
     <section className="flex w-full flex-col gap-3 rounded-16 bg-bg-container px-4 py-3">
       <div className="flex flex-col gap-2">
@@ -42,11 +44,22 @@ export function TypeSummaryCard({
             <button
               type="button"
               onClick={onReopenCategory}
-              className="flex min-h-11 items-center"
+              className="flex min-h-11 items-center gap-1"
             >
-              {category === '鲜花' && (
-                <img src={iconFlower} alt="" className="size-5" />
-              )}
+              <span
+                aria-hidden
+                className="size-5 shrink-0 bg-accent-primary"
+                style={{
+                  WebkitMaskImage: `url("${categoryIcon.src}")`,
+                  maskImage: `url("${categoryIcon.src}")`,
+                  WebkitMaskPosition: 'center',
+                  maskPosition: 'center',
+                  WebkitMaskRepeat: 'no-repeat',
+                  maskRepeat: 'no-repeat',
+                  WebkitMaskSize: 'contain',
+                  maskSize: 'contain',
+                }}
+              />
               <span className="text-body font-medium text-accent-primary">
                 {category}
               </span>
