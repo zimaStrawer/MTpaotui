@@ -43,7 +43,7 @@ export function TickSlider({ value, max, ticks, ariaLabel, onChange }: TickSlide
           step={1}
           value={value}
           aria-label={ariaLabel}
-          onChange={(event) => onChange(Number(event.target.value))}
+          onInput={(event) => onChange(Number(event.currentTarget.value))}
           className="absolute inset-x-0 top-1/2 h-11 w-full -translate-y-1/2 cursor-pointer opacity-0"
         />
       </div>

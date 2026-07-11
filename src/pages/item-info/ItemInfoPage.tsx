@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import { NavigationBar } from '../../components/NavigationBar';
@@ -45,6 +45,23 @@ export function ItemInfoPage() {
     draftItem?.volume ?? DELIVERY_BOX_CM,
   );
   const [volumeExpanded, setVolumeExpanded] = useState(false);
+  const volumeCardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!volumeExpanded) return;
+
+    const frame = requestAnimationFrame(() => {
+      const reduceMotion = window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      ).matches;
+      volumeCardRef.current?.scrollIntoView({
+        behavior: reduceMotion ? 'auto' : 'smooth',
+        block: 'start',
+      });
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [volumeExpanded]);
 
   const handleSelectCategory = (selected: ItemCategory) => {
     setCategory(selected);
@@ -83,12 +100,14 @@ export function ItemInfoPage() {
               onInsuranceChange={setInsurance}
             />
             <WeightCard weightKg={weightKg} onChange={setWeightKg} />
-            <VolumeCard
-              volume={volume}
-              expanded={volumeExpanded}
-              onToggleExpanded={setVolumeExpanded}
-              onChange={setVolume}
-            />
+            <div ref={volumeCardRef}>
+              <VolumeCard
+                volume={volume}
+                expanded={volumeExpanded}
+                onToggleExpanded={setVolumeExpanded}
+                onChange={setVolume}
+              />
+            </div>
           </>
         )}
       </main>

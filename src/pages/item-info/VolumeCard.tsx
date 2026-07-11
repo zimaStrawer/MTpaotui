@@ -4,6 +4,7 @@ import photoDeliveryBox from '../../assets/item-info/photo-delivery-box.png';
 import type { Volume } from '../../data/models/order';
 import {
   DELIVERY_BOX_CM,
+  DIMENSION_CAR_THRESHOLD_CM,
   DIMENSION_MAX_CM,
   DIMENSION_TICKS,
   MAX_GIRTH_CM,
@@ -34,6 +35,12 @@ export function VolumeCard({
   onChange,
 }: VolumeCardProps) {
   const girth = volume.l + volume.w + volume.h;
+  const illustrationState =
+    girth > MAX_GIRTH_CM
+      ? 'oversize'
+      : Math.max(volume.l, volume.w, volume.h) > DIMENSION_CAR_THRESHOLD_CM
+        ? 'large'
+        : 'default';
 
   return (
     <section className="flex w-full flex-col gap-2 rounded-16 bg-bg-container px-4 py-3">
@@ -87,7 +94,7 @@ export function VolumeCard({
             </span>
             可正常配送
           </p>
-          <VolumeIllustration oversize={girth > MAX_GIRTH_CM} />
+          <VolumeIllustration state={illustrationState} volume={volume} />
           <div className="mt-2 flex flex-col gap-6">
             {DIMENSIONS.map(({ key, label }) => (
               <div key={key} className="flex flex-col gap-2">
