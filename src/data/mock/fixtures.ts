@@ -7,10 +7,11 @@ import type { Courier } from '../models/tracking';
  */
 
 export const MOCK_COURIER: Courier = {
-  name: '李师傅',
-  rating: 4.9,
+  name: '谢师傅',
+  rating: 4.5,
+  satisfaction: 97.73,
   badges: ['信用骑手', '鲜花使者'],
-  pickupCode: '3721',
+  pickupCode: '8251',
 };
 
 /** 场景取件地址(frame 878:5645 已填态;粘贴识别 / 定位的填充目标) */

@@ -51,6 +51,10 @@
   --text-title-brand--line-height: 1.4;
   --text-title: 18px;
   --text-title--line-height: 1.4;
+  --text-title-sm: 16px;
+  --text-title-sm--line-height: 1.4;
+  --text-title-max: 30px;
+  --text-title-max--line-height: 1.4;
   --text-tab: 16px;
   --text-tab--line-height: 1.4;
   --text-body: 14px;
@@ -65,6 +69,12 @@
   --text-number--line-height: 1.2;
   --text-number-sm: 12px;
   --text-number-sm--line-height: 1.2;
+  --text-number-lg: 16px;
+  --text-number-lg--line-height: 1.2;
+  --text-display: 24px;
+  --text-display--line-height: 1.2;
+  --text-display-xl: 36px;
+  --text-display-xl--line-height: 1;
   --text-display-lg: 32px; /* 组件库 数字/display-lg(重量/尺寸大数字) */
   --text-display-lg--line-height: 1;
 }

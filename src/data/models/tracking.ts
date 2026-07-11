@@ -20,6 +20,7 @@ export const TRACKING_STAGE_FLOW: readonly TrackingStage[] = [
 export interface Courier {
   name: string;
   rating: number;
+  satisfaction: number;
   /** 信用骑手 / 鲜花使者 / 大件御用 / 极速神通 */
   badges: string[];
   /** 取件前 UI 显示 ✱✱✱✱,picked 起揭示 4 位数字 */
