@@ -41,8 +41,22 @@ export function AddressBookCard({ selectedPoi, onPick }: AddressBookCardProps) {
             type="button"
             aria-label="关闭提示"
             onClick={() => setTipVisible(false)}
+            className="ml-auto flex size-4 shrink-0 items-center justify-center"
           >
-            <img src={iconCloseSmall} alt="" className="size-4" />
+            <span
+              aria-hidden
+              className="size-4 bg-accent-primary"
+              style={{
+                WebkitMaskImage: `url("${iconCloseSmall}")`,
+                maskImage: `url("${iconCloseSmall}")`,
+                WebkitMaskPosition: 'center',
+                maskPosition: 'center',
+                WebkitMaskRepeat: 'no-repeat',
+                maskRepeat: 'no-repeat',
+                WebkitMaskSize: 'contain',
+                maskSize: 'contain',
+              }}
+            />
           </button>
         </div>
       )}

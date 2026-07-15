@@ -92,7 +92,7 @@ export function ServiceOptionCard({ value, onChange }: ServiceOptionCardProps) {
             <span className="rounded-4 border-[0.6px] border-text-tertiary px-1 py-0.5 text-caption-xs font-medium text-text-tertiary">
               享标准权益
             </span>
-            <img src={iconHelp} alt="" className="size-3.5" />
+            <img src={iconHelp} alt="" className="size-4" />
           </span>
         </OptionShell>
 
@@ -109,7 +109,7 @@ export function ServiceOptionCard({ value, onChange }: ServiceOptionCardProps) {
             <span className="rounded-4 bg-gradient-to-r from-[#ffe2af] to-[#e8ba7e] px-1 py-0.5 text-caption-xs font-medium text-decorative-primary">
               权益升级
             </span>
-            <img src={iconHelp} alt="" className="size-3.5" />
+            <img src={iconHelp} alt="" className="size-4" />
           </span>
           <span className="absolute bottom-2.5 left-4 flex items-center gap-0.5">
             {['优先接单', '尊享骑士', '专享理赔权益'].map((benefit) => (

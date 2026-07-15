@@ -24,7 +24,7 @@ export function CategorySelectCard({ onSelect }: CategorySelectCardProps) {
           right={
             <span className="flex items-center text-caption text-text-tertiary">
               禁送清单
-              <img src={iconChevron} alt="" className="size-3.5 rotate-180" />
+              <img src={iconChevron} alt="" className="size-3" />
             </span>
           }
         />

@@ -18,7 +18,7 @@ export function WeightCard({ weightKg, onChange }: WeightCardProps) {
         right={
           <span className="flex items-center gap-1 text-caption text-text-tertiary">
             不知道重量怎么办
-            <img src={iconHelp} alt="" className="size-3.5" />
+            <img src={iconHelp} alt="" className="size-4" />
           </span>
         }
       />

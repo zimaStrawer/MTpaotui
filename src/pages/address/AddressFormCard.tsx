@@ -1,4 +1,4 @@
-import iconChevron from '../../assets/nav/icon-chevron.svg';
+import iconChevron from '../../assets/nav/icon-chevron-24.svg';
 import type { AddressRole } from '../../data/models/order';
 import { formatPhone } from '../../lib/format';
 import { MapPreview } from './MapPreview';
@@ -74,7 +74,7 @@ export function AddressFormCard({
               </span>
             )}
           </button>
-          <img src={iconChevron} alt="" className="size-6 rotate-180" />
+          <img src={iconChevron} alt="" className="size-6" />
 
           <FieldLabel text="门牌号" />
           <input

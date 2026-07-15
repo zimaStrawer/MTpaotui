@@ -40,7 +40,7 @@ export function ItemInfoCard({
           <span className="text-caption font-medium text-text-primary">
             {item.category}/{item.weightKg}公斤
           </span>
-          <img src={iconChevron} alt="" className="size-3.5 rotate-180" />
+          <img src={iconChevron} alt="" className="size-3" />
         </span>
       </button>
 

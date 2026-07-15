@@ -1,4 +1,5 @@
 import courierAvatar from '../../assets/tracking/courier-avatar.jpg';
+import iconClose from '../../assets/nav/icon-close-12.svg';
 import iconButtonRing from '../../assets/tracking/icon-button-ring.svg';
 import iconMessage from '../../assets/tracking/icon-message.svg';
 import iconPhone from '../../assets/tracking/icon-phone.svg';
@@ -103,9 +104,9 @@ export function CourierCard({
             type="button"
             aria-label="关闭打赏提示"
             onClick={onDismissTip}
-            className="flex h-[31px] w-8 shrink-0 items-center justify-center text-title-sm text-text-primary"
+            className="flex h-[31px] w-8 shrink-0 items-center justify-center"
           >
-            ×
+            <img src={iconClose} alt="" className="size-3" />
           </button>
         </div>
       )}

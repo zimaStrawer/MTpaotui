@@ -1,5 +1,5 @@
 import iconCar from '../../assets/home/icon-car.svg';
-import iconEbike from '../../assets/home/icon-ebike.png';
+import iconEbike from '../../assets/home/icon-ebike.svg';
 import type { DeliveryVehicle } from '../../data/models/order';
 
 interface VehicleCapsuleProps {
@@ -27,7 +27,22 @@ export function VehicleCapsule({ value, onChange }: VehicleCapsuleProps) {
               selected ? 'bg-bg-container' : ''
             }`}
           >
-            <img src={option.icon} alt="" className="size-4" />
+            <span
+              aria-hidden
+              className={`size-4 ${
+                selected ? 'bg-text-primary' : 'bg-text-secondary'
+              }`}
+              style={{
+                WebkitMaskImage: `url("${option.icon}")`,
+                maskImage: `url("${option.icon}")`,
+                WebkitMaskPosition: 'center',
+                maskPosition: 'center',
+                WebkitMaskRepeat: 'no-repeat',
+                maskRepeat: 'no-repeat',
+                WebkitMaskSize: 'contain',
+                maskSize: 'contain',
+              }}
+            />
             <span
               className={`text-caption ${
                 selected

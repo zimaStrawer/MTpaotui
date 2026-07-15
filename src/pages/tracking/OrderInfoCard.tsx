@@ -1,3 +1,4 @@
+import iconChevron from '../../assets/nav/icon-chevron.svg';
 import type { Address } from '../../data/models/order';
 import { compactUnit, maskPhone } from '../../lib/format';
 
@@ -70,9 +71,7 @@ export function OrderInfoCard({
         className="mx-auto mt-auto flex h-7 items-center text-caption font-medium text-text-tertiary"
       >
         订单号/下单时间/费用明细
-        <span aria-hidden className="ml-0.5 text-body leading-none">
-          ⌄
-        </span>
+        <img src={iconChevron} alt="" className="ml-0.5 size-3 rotate-90" />
       </button>
     </section>
   );

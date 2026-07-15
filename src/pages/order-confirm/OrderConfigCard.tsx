@@ -23,7 +23,7 @@ export function OrderConfigCard() {
             >
               {row.value}
             </span>
-            <img src={iconChevron} alt="" className="size-3.5 rotate-180" />
+            <img src={iconChevron} alt="" className="size-3" />
           </span>
         </div>
       ))}

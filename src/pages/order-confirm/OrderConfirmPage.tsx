@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import iconBack from '../../assets/home/icon-back.svg';
+import iconBack from '../../assets/nav/icon-back.svg';
 import {
   SERVICE_QUOTES,
   type OrderServiceKey,
@@ -114,7 +114,9 @@ export function OrderConfirmPage() {
             onClick={() => navigate(-1)}
             className="absolute left-0 flex size-11 items-center justify-center"
           >
-            <img src={iconBack} alt="" className="size-8" />
+            <span className="flex size-8 items-center justify-center rounded-full bg-bg-container">
+              <img src={iconBack} alt="" className="size-5" />
+            </span>
           </button>
           <AnnouncementBar />
         </div>

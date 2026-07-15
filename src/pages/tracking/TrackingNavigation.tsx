@@ -24,7 +24,7 @@ export function TrackingNavigation({
         onClick={onBack}
         className="flex size-11 items-center justify-center"
       >
-        <img src={iconBack} alt="" className="size-8" />
+        <img src={iconBack} alt="" className="size-6" />
       </button>
       <div className="flex -space-x-2">
         <button
@@ -37,7 +37,7 @@ export function TrackingNavigation({
           <img
             src={iconBookmark}
             alt=""
-            className={`size-6 transition-opacity duration-200 motion-reduce:transition-none ${
+            className={`size-5 transition-opacity duration-200 motion-reduce:transition-none ${
               bookmarked ? 'opacity-100' : 'opacity-75'
             }`}
           />
@@ -48,7 +48,7 @@ export function TrackingNavigation({
           onClick={onSupport}
           className="flex size-11 items-center justify-center"
         >
-          <img src={iconService} alt="" className="size-6" />
+          <img src={iconService} alt="" className="size-5" />
         </button>
       </div>
     </header>

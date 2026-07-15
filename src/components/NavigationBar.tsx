@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import iconBack from '../assets/home/icon-back.svg';
+import iconBack from '../assets/nav/icon-back.svg';
 import iconClose from '../assets/nav/icon-close.svg';
 
 interface NavigationBarProps {
@@ -23,9 +23,11 @@ export function NavigationBar({ title, badge, onClose, onBack }: NavigationBarPr
           type="button"
           aria-label={onBack ? '返回' : '关闭'}
           onClick={leftAction}
-          className="absolute left-0 flex size-11 items-center justify-center"
+          className="absolute left-1 flex size-11 items-center justify-center"
         >
-          <img src={onBack ? iconBack : iconClose} alt="" className="size-8" />
+          <span className="flex size-8 items-center justify-center rounded-full bg-bg-container">
+            <img src={onBack ? iconBack : iconClose} alt="" className="size-5" />
+          </span>
         </button>
       )}
       {badge}

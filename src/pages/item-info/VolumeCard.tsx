@@ -120,7 +120,7 @@ export function VolumeCard({
             onClick={() => onChange(DELIVERY_BOX_CM)}
             className="mx-auto mt-2 flex items-center gap-1 rounded-full border border-text-quaternary px-2 py-1.5"
           >
-            <img src={iconRefresh} alt="" className="size-5" />
+            <img src={iconRefresh} alt="" className="size-4" />
             <span className="text-caption text-text-tertiary">恢复默认</span>
           </button>
         </>

@@ -1,7 +1,12 @@
-<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 17.6 17.6" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Scale (&#231;&#173;&#137;&#230;&#175;&#148;&#231;&#188;&#169;&#230;&#148;&#190;)">
-<path id="Vector" d="M8.7998 3.77144H13.8284V8.80001" stroke="var(--stroke-0, #FBFCFE)" stroke-width="1.06667"/>
-<path id="Vector_2" d="M9.219 13.4095H4.19043V8.38091" stroke="var(--stroke-0, #FBFCFE)" stroke-width="1.06667"/>
-<path id="Vector_3" d="M13.6379 4.00005L3.9998 13.6381" stroke="var(--stroke-0, #FBFCFE)" stroke-width="1.06667"/>
+<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1596_44651)">
+<path d="M5.8291 1.71436H9.28216C9.75555 1.71436 10.1393 2.09811 10.1393 2.5715V6.02456" stroke="#FBFCFE" stroke-width="0.9" stroke-linecap="round"/>
+<path d="M6.18813 9.97549H2.73507C2.26169 9.97549 1.87793 9.59173 1.87793 9.11834V5.66528" stroke="#FBFCFE" stroke-width="0.9" stroke-linecap="round"/>
+<path d="M9.42941 2.57153L2.57227 9.42868" stroke="#FBFCFE" stroke-width="0.9" stroke-linecap="round"/>
 </g>
+<defs>
+<clipPath id="clip0_1596_44651">
+<rect width="12" height="12" fill="white" transform="translate(0 12) rotate(-90)"/>
+</clipPath>
+</defs>
 </svg>

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import { RoleBadge } from '../../components/RoleBadge';
-import iconFlower from '../../assets/item-info/icon-flower.svg';
+import { MapMarker } from '../../components/MapMarker';
+import iconFlower from '../../assets/item-info/icon-category-flower.svg';
+import iconChevron from '../../assets/nav/icon-chevron.svg';
 import iconAnnounce from '../../assets/tracking/icon-announce.svg';
 import courierScooter from '../../assets/tracking/courier-scooter.png';
 import mapRain from '../../assets/tracking/map-rain.png';
@@ -44,18 +45,6 @@ const MAP_STATUS: Record<
     distance: '0米',
   },
 };
-
-function MapPin({ role }: { role: 'pickup' | 'delivery' }) {
-  return (
-    <span className="flex flex-col items-center">
-      <span className="flex size-[30px] items-center justify-center rounded-full bg-bg-container shadow-[0_1px_3px_rgba(28,30,33,0.18)]">
-        <RoleBadge role={role} />
-      </span>
-      <span className="-mt-px size-1.5 rotate-45 bg-bg-container shadow-[1px_1px_1px_rgba(28,30,33,0.12)]" />
-      <span className="mt-0.5 size-1.5 rounded-full border border-bg-container bg-text-tertiary" />
-    </span>
-  );
-}
 
 function AcceptingBubble() {
   const [remainingSeconds, setRemainingSeconds] = useState(
@@ -109,7 +98,21 @@ function AcceptingSonar() {
         ))}
       </div>
       <span className="absolute top-1/2 left-1/2 z-10 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand-primary shadow-[0_2px_8px_rgba(28,30,33,0.10)]">
-        <img src={iconFlower} alt="鲜花订单定位" className="size-8" />
+        <span
+          role="img"
+          aria-label="鲜花订单定位"
+          className="size-8 bg-accent-primary"
+          style={{
+            WebkitMaskImage: `url("${iconFlower}")`,
+            maskImage: `url("${iconFlower}")`,
+            WebkitMaskPosition: 'center',
+            maskPosition: 'center',
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
+            WebkitMaskSize: 'contain',
+            maskSize: 'contain',
+          }}
+        />
       </span>
     </div>
   );
@@ -139,9 +142,7 @@ function CourierStatusBubble({ stage }: { stage: MovingStage }) {
             {status.distance}
           </span>
         </span>
-        <span aria-hidden className="text-body leading-none text-text-tertiary">
-          ›
-        </span>
+        <img src={iconChevron} alt="" className="size-3" />
       </div>
     </div>
   );
@@ -226,7 +227,7 @@ export function TrackingMap({
             }`}
           />
           <div className="absolute top-[calc(344px+env(safe-area-inset-top))] left-[70.4%]">
-            <MapPin role={stage === 'accepted' ? 'pickup' : 'delivery'} />
+            <MapMarker role={stage === 'accepted' ? 'pickup' : 'delivery'} />
           </div>
         </>
       )}

@@ -1,4 +1,4 @@
-import iconChevron from '../../assets/nav/icon-chevron.svg';
+import iconChevron from '../../assets/nav/icon-chevron-16.svg';
 import mapDelivery from '../../assets/address/map-delivery.jpg';
 import mapPickup from '../../assets/address/map-pickup.jpg';
 import type { AddressRole } from '../../data/models/order';
@@ -33,7 +33,7 @@ export function MapPreview({ role, poi }: MapPreviewProps) {
           <span className="text-caption font-medium text-text-primary">
             {poi}
           </span>
-          <img src={iconChevron} alt="" className="size-4 rotate-180" />
+          <img src={iconChevron} alt="" className="size-4" />
         </span>
         <span className="h-3 w-0.5 rounded-full bg-bg-black" />
         <span className="size-2 rounded-full border-2 border-bg-container bg-bg-black shadow-[0_0_2px_rgba(27,29,33,0.3)]" />

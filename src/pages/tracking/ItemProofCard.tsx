@@ -1,4 +1,5 @@
 import { RoleBadge } from '../../components/RoleBadge';
+import iconChevron from '../../assets/nav/icon-chevron.svg';
 import iconExpand from '../../assets/tracking/icon-expand.svg';
 import iconHelp from '../../assets/tracking/icon-help.svg';
 import logoInsurance from '../../assets/tracking/logo-insurance.svg';
@@ -33,7 +34,7 @@ function ProofThumbnail({ confirmed, role, src }: ProofThumbnailProps) {
       </span>
       {confirmed && (
         <span className="absolute right-0 bottom-0 flex size-4 items-center justify-center rounded-[5px] bg-text-primary">
-          <img src={iconExpand} alt="" className="size-4" />
+          <img src={iconExpand} alt="" className="size-3" />
         </span>
       )}
     </div>
@@ -75,9 +76,7 @@ export function ItemProofCard({
         className="absolute top-0.5 right-2 flex h-6 items-center px-1 text-caption-sm text-text-tertiary"
       >
         查看权益
-        <span aria-hidden className="ml-0.5 text-body leading-none">
-          ›
-        </span>
+        <img src={iconChevron} alt="" className="ml-0.5 size-3" />
       </button>
 
       <div className="absolute top-[43px] left-4 flex flex-col gap-1">
@@ -90,7 +89,7 @@ export function ItemProofCard({
           >
             {codeVisible ? pickupCode : '✱✱✱✱'}
           </span>
-          <img src={iconHelp} alt="" className="size-3.5" />
+          <img src={iconHelp} alt="" className="size-4" />
         </div>
         <p className="text-caption whitespace-nowrap text-text-tertiary">
           <span className="max-[350px]:hidden">

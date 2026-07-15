@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { RoleBadge } from '../../components/RoleBadge';
 import helpTopics from '../../assets/tracking/help-topics.jpg';
+import iconChevron from '../../assets/nav/icon-chevron.svg';
 import iconExpand from '../../assets/tracking/icon-expand.svg';
 import proofDelivery from '../../assets/tracking/proof-delivery-confirmed.jpg';
 import proofPickup from '../../assets/tracking/proof-pickup-confirmed.jpg';
@@ -30,7 +31,7 @@ function SignedThumbnail({
         <RoleBadge role={role} />
       </span>
       <span className="absolute right-0 bottom-0 flex size-4 items-center justify-center rounded-[5px] bg-text-primary">
-        <img src={iconExpand} alt="" className="size-4" />
+        <img src={iconExpand} alt="" className="size-3" />
       </span>
     </div>
   );
@@ -106,9 +107,7 @@ export function CompletedOrderView({
                 className="mt-1 flex h-5 items-center self-start text-caption text-text-tertiary"
               >
                 查看详情
-                <span aria-hidden className="text-body leading-none">
-                  ›
-                </span>
+                <img src={iconChevron} alt="" className="size-3" />
               </button>
             </div>
             <div className="ml-auto flex gap-3 max-[350px]:gap-2">

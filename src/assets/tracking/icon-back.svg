@@ -1,5 +1,10 @@
-<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Left (&#229;&#183;&#166;)">
-<path id="Vector" d="M20.667 24L12.667 16L20.667 8" stroke="var(--stroke-0, #1B1D21)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1596_17626)">
+<path d="M15.5 4L7.5 12L15.5 20" stroke="#1B1D21" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
+<defs>
+<clipPath id="clip0_1596_17626">
+<rect width="24" height="24" fill="white" transform="matrix(1 0 0 -1 0 24)"/>
+</clipPath>
+</defs>
 </svg>

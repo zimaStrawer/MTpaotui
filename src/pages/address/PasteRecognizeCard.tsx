@@ -1,4 +1,5 @@
 import iconCamera from '../../assets/item-info/icon-camera.svg';
+import iconCopy from '../../assets/address/icon-copy.svg';
 
 interface PasteRecognizeCardProps {
   /** mock:点击即以场景地址自动填充表单 */
@@ -18,11 +19,7 @@ export function PasteRecognizeCard({ onPaste }: PasteRecognizeCardProps) {
       <span className="flex-1 text-body text-text-tertiary">
         点击粘贴地址, 帮您自动填充
       </span>
-      {/* 粘贴图标:双层方块 */}
-      <span className="relative size-4">
-        <span className="absolute top-0.5 left-0.5 size-2 rounded-2 bg-text-quaternary" />
-        <span className="absolute top-[5.5px] left-[5.5px] size-2 rounded-2 bg-bg-container" />
-      </span>
+      <img src={iconCopy} alt="" className="size-4" />
       <span className="text-caption font-medium text-text-primary">
         粘贴识别
       </span>

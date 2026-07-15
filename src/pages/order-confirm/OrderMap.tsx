@@ -1,34 +1,14 @@
 import mapPickup from '../../assets/address/map-pickup.jpg';
-import iconBack from '../../assets/home/icon-back.svg';
+import iconBack from '../../assets/nav/icon-back.svg';
 import iconWeather from '../../assets/home/icon-weather.svg';
 import iconChevron from '../../assets/nav/icon-chevron.svg';
 import routeCurve from '../../assets/order/route-curve.svg';
+import { MapMarker } from '../../components/MapMarker';
 import {
   MOCK_ACCEPT_MINUTES,
   MOCK_DELIVERY_ETA,
 } from '../../data/mock/service-quotes';
 import type { Address, AddressRole } from '../../data/models/order';
-
-/** 地图地标钉(946:9646/9647):白色外圈 + 角色色内圈 + 落地锚点。 */
-function MapPin({ role }: { role: AddressRole }) {
-  const isPickup = role === 'pickup';
-  return (
-    <span className="flex flex-col items-center">
-      <span className="flex size-[30px] items-center justify-center rounded-full bg-bg-container shadow-[0_1px_3px_rgba(27,29,33,0.25)]">
-        <span
-          className={`flex size-6 items-center justify-center rounded-full text-caption font-semibold ${
-            isPickup
-              ? 'bg-bg-black text-bg-container'
-              : 'bg-brand-primary text-text-primary'
-          }`}
-        >
-          {isPickup ? '取' : '收'}
-        </span>
-      </span>
-      <span className="-mt-px size-1.5 rotate-45 bg-bg-container shadow-[0_1px_2px_rgba(27,29,33,0.25)]" />
-    </span>
-  );
-}
 
 interface FloatCardProps {
   address: Address;
@@ -68,7 +48,7 @@ function FloatCard({ address, metric, metricLabel, metricBg, onClick }: FloatCar
             <span>{address.phone}</span>
           </span>
         </span>
-        <img src={iconChevron} alt="" className="size-3.5 rotate-180" />
+        <img src={iconChevron} alt="" className="size-3" />
       </span>
     </button>
   );
@@ -97,10 +77,10 @@ export function OrderMap({ pickup, delivery, onBack, onEditAddress }: OrderMapPr
         className="absolute top-[128px] left-[123px] w-[120px]"
       />
       <span className="absolute top-[190px] left-[108px]">
-        <MapPin role="pickup" />
+        <MapMarker role="pickup" />
       </span>
       <span className="absolute top-[93px] left-[228px]">
-        <MapPin role="delivery" />
+        <MapMarker role="delivery" />
       </span>
       <div className="absolute top-[43px] left-[143px]">
         <FloatCard
@@ -134,7 +114,9 @@ export function OrderMap({ pickup, delivery, onBack, onEditAddress }: OrderMapPr
           onClick={onBack}
           className="flex size-11 items-center justify-center"
         >
-          <img src={iconBack} alt="" className="size-8" />
+          <span className="flex size-8 items-center justify-center rounded-full bg-bg-container">
+            <img src={iconBack} alt="" className="size-5" />
+          </span>
         </button>
         <span className="flex items-center gap-1 text-caption font-medium text-text-primary">
           <img src={iconWeather} alt="" className="size-5" />

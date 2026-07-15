@@ -14,11 +14,11 @@ export function CheckoutBar({ quote, submitting, onSubmit }: CheckoutBarProps) {
       <div className="flex h-10 items-center justify-around">
         <span className="flex items-center text-caption text-text-primary">
           暂无可用红包
-          <img src={iconChevron} alt="" className="size-3.5 rotate-180" />
+          <img src={iconChevron} alt="" className="size-3" />
         </span>
         <span className="flex items-center text-caption text-text-primary">
           在线支付
-          <img src={iconChevron} alt="" className="size-3.5 rotate-180" />
+          <img src={iconChevron} alt="" className="size-3" />
         </span>
       </div>
       <div className="mx-2 mb-3 flex h-12 items-center overflow-hidden rounded-full bg-text-primary">
@@ -38,7 +38,7 @@ export function CheckoutBar({ quote, submitting, onSubmit }: CheckoutBarProps) {
           <img
             src={iconChevron}
             alt=""
-            className="mb-1 size-3.5 rotate-90 opacity-60"
+            className="mb-1 size-3 rotate-90 opacity-60"
           />
         </span>
         <button

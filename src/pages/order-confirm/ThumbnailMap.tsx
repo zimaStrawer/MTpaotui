@@ -39,7 +39,7 @@ function Side({
           <span>{address.phone}</span>
         </span>
       </span>
-      <img src={iconChevron} alt="" className="size-3.5 rotate-180" />
+      <img src={iconChevron} alt="" className="size-3" />
     </button>
   );
 }

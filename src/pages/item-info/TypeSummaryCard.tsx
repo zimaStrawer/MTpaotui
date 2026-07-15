@@ -1,4 +1,5 @@
-import iconChevron from '../../assets/nav/icon-chevron.svg';
+import iconChevron from '../../assets/nav/icon-chevron-16.svg';
+import iconClose from '../../assets/nav/icon-close-12.svg';
 import photoBouquet from '../../assets/item-info/photo-bouquet.jpg';
 import {
   isFragileCategory,
@@ -63,7 +64,20 @@ export function TypeSummaryCard({
               <span className="text-body font-medium text-accent-primary">
                 {category}
               </span>
-              <img src={iconChevron} alt="" className="size-3.5 rotate-180" />
+              <span
+                aria-hidden
+                className="size-4 shrink-0 bg-accent-primary"
+                style={{
+                  WebkitMaskImage: `url("${iconChevron}")`,
+                  maskImage: `url("${iconChevron}")`,
+                  WebkitMaskPosition: 'center',
+                  maskPosition: 'center',
+                  WebkitMaskRepeat: 'no-repeat',
+                  maskRepeat: 'no-repeat',
+                  WebkitMaskSize: 'contain',
+                  maskSize: 'contain',
+                }}
+              />
             </button>
           }
         />
@@ -79,14 +93,20 @@ export function TypeSummaryCard({
               className="size-12 rounded-8 object-cover"
             />
             <span className="absolute -top-1.5 -right-1.5 flex size-3.5 items-center justify-center rounded-full bg-bg-black">
-              <svg viewBox="0 0 8 8" aria-hidden className="size-1.5">
-                <path
-                  d="M1.2 1.2l5.6 5.6M6.8 1.2L1.2 6.8"
-                  stroke="var(--color-bg-container)"
-                  strokeWidth="1.2"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <span
+                aria-hidden
+                className="size-3 bg-bg-container"
+                style={{
+                  WebkitMaskImage: `url("${iconClose}")`,
+                  maskImage: `url("${iconClose}")`,
+                  WebkitMaskPosition: 'center',
+                  maskPosition: 'center',
+                  WebkitMaskRepeat: 'no-repeat',
+                  maskRepeat: 'no-repeat',
+                  WebkitMaskSize: 'contain',
+                  maskSize: 'contain',
+                }}
+              />
             </span>
           </span>
         )}
