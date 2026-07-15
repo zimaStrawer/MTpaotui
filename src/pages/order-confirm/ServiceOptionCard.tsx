@@ -1,14 +1,12 @@
 import iconHelp from '../../assets/item-info/icon-help.svg';
 import logoExpress from '../../assets/order/logo-express.svg';
 import { CornerCheck } from '../../components/CornerCheck';
-import {
-  SERVICE_QUOTES,
-  type OrderServiceKey,
-} from '../../data/mock/service-quotes';
+import { SERVICE_QUOTES } from '../../data/mock/service-quotes';
+import type { DeliveryService } from '../../data/models/order';
 
 interface ServiceOptionCardProps {
-  value: OrderServiceKey;
-  onChange: (key: OrderServiceKey) => void;
+  value: DeliveryService;
+  onChange: (key: DeliveryService) => void;
 }
 
 function Fee({ yuan }: { yuan: number }) {

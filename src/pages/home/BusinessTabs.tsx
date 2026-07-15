@@ -2,23 +2,25 @@ import iconBizHelppick from '../../assets/home/icon-biz-helppick.png';
 import type { BusinessType } from '../../data/models/order';
 
 interface BusinessTabsProps {
-  value: BusinessType;
-  onChange: (business: BusinessType) => void;
+  onUnavailableSelect: () => void;
 }
 
 const TABS: BusinessType[] = ['帮取送', '帮我买', '帮个忙'];
 
-/** 业务 tab(913:7861):本期只做「帮取送」,其余两个可点但不切流程。 */
-export function BusinessTabs({ value, onChange }: BusinessTabsProps) {
+/** 业务入口(913:7861):帮取送固定选中,其余入口仅提示暂未开放。 */
+export function BusinessTabs({ onUnavailableSelect }: BusinessTabsProps) {
   return (
     <div className="flex items-center gap-2 px-2">
       {TABS.map((business) => {
-        const active = value === business;
+        const active = business === '帮取送';
         return (
           <button
             key={business}
             type="button"
-            onClick={() => onChange(business)}
+            aria-current={active ? 'page' : undefined}
+            onClick={() => {
+              if (!active) onUnavailableSelect();
+            }}
             className={
               active
                 ? 'flex items-center gap-1 rounded-full bg-bg-container py-0.5 pr-4 pl-3'

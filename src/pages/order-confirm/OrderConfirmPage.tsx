@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import iconBack from '../../assets/nav/icon-back.svg';
+import { SERVICE_QUOTES } from '../../data/mock/service-quotes';
 import {
-  SERVICE_QUOTES,
-  type OrderServiceKey,
-} from '../../data/mock/service-quotes';
-import type { AddressRole, InsuranceTier } from '../../data/models/order';
+  resolveDeliveryService,
+  type AddressRole,
+  type DeliveryService,
+  type InsuranceTier,
+} from '../../data/models/order';
 import { orderRepository } from '../../data/repositories';
 import { useOrderDraftStore } from '../../store/order-draft-store';
 import { AnnouncementBar } from './AnnouncementBar';
@@ -59,12 +61,11 @@ export function OrderConfirmPage() {
 
   if (pickup === null || delivery === null || item === null) return null;
 
-  const selected: OrderServiceKey =
-    serviceMode === 'express' ? 'express' : vehicle === 'car' ? 'car' : 'standard';
+  const selected = resolveDeliveryService(serviceMode, vehicle);
   const quote = SERVICE_QUOTES[selected];
 
   /** 选档回写业务配置,保持与首页同一份草稿 */
-  const handleSelectService = (key: OrderServiceKey) => {
+  const handleSelectService = (key: DeliveryService) => {
     if (key === 'express') {
       setServiceMode('express');
       setVehicle('ebike');
@@ -89,6 +90,7 @@ export function OrderConfirmPage() {
     setSubmitting(true);
     const receipt = await orderRepository.submitOrder({
       business,
+      serviceMode,
       pickup,
       delivery,
       item,

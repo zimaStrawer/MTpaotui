@@ -1,11 +1,13 @@
 import { create } from 'zustand';
 
-import type {
-  Address,
-  BusinessType,
-  DeliveryVehicle,
-  Item,
-  ServiceMode,
+import {
+  swapAddressRoles,
+  transitionServiceAddresses,
+  type Address,
+  type BusinessType,
+  type DeliveryVehicle,
+  type Item,
+  type ServiceMode,
 } from '../data/models/order';
 import type { OrderReceipt } from '../data/repositories';
 
@@ -27,8 +29,7 @@ interface OrderDraftState {
 }
 
 interface OrderDraftActions {
-  setBusiness: (business: BusinessType) => void;
-  /** 帮送↔帮取 切换时,已填的取/收地址互换;急送为强化帮送,与帮送共用地址 */
+  /** 仅帮送↔帮取直接互切时交换地址;急送继承当前地址顺序 */
   setServiceMode: (mode: ServiceMode) => void;
   setVehicle: (vehicle: DeliveryVehicle) => void;
   /** role 已含在 Address 内,pickup / delivery 各占一槽 */
@@ -54,24 +55,11 @@ const initialState: OrderDraftState = {
 export const useOrderDraftStore = create<OrderDraftState & OrderDraftActions>()(
   (set) => ({
     ...initialState,
-    setBusiness: (business) => set({ business }),
     setServiceMode: (mode) =>
-      set((state) => {
-        const wasPick = state.serviceMode === 'pick';
-        const isPick = mode === 'pick';
-        if (wasPick === isPick) return { serviceMode: mode };
-        return {
-          serviceMode: mode,
-          pickup:
-            state.delivery === null
-              ? null
-              : { ...state.delivery, role: 'pickup' },
-          delivery:
-            state.pickup === null
-              ? null
-              : { ...state.pickup, role: 'delivery' },
-        };
-      }),
+      set((state) => ({
+        serviceMode: mode,
+        ...transitionServiceAddresses(state.serviceMode, mode, state),
+      })),
     setVehicle: (vehicle) => set({ vehicle }),
     setAddress: (address) =>
       set(
@@ -80,16 +68,7 @@ export const useOrderDraftStore = create<OrderDraftState & OrderDraftActions>()(
           : { delivery: address },
       ),
     swapAddresses: () =>
-      set((state) => ({
-        pickup:
-          state.delivery === null
-            ? null
-            : { ...state.delivery, role: 'pickup' },
-        delivery:
-          state.pickup === null
-            ? null
-            : { ...state.pickup, role: 'delivery' },
-      })),
+      set((state) => swapAddressRoles(state)),
     setItem: (item) => set({ item }),
     setReceipt: (receipt) => set({ receipt }),
     reset: () => set(initialState),

@@ -76,6 +76,7 @@ src/
 
 ```ts
 type BusinessType = '帮取送' | '帮我买' | '帮个忙';   // 首页业务 tab,本期只做「帮取送」
+type ServiceMode = 'send' | 'pick' | 'express';       // 帮送 / 帮取 / 1对1急送
 
 type AddressRole = 'pickup' | 'delivery';            // 取件 / 收件(同一路由两种角色)
 interface Address {
@@ -98,6 +99,7 @@ interface Item {
 type DeliveryVehicle = 'ebike' | 'car';              // 车型推荐规则见下
 interface Order {
   business: BusinessType;
+  serviceMode: ServiceMode;
   pickup: Address;
   delivery: Address;
   item: Item;
@@ -118,6 +120,9 @@ interface Courier {
 
 - **Repository 模式**:`OrderRepository` 是接口,`MockOrderRepository` 是实现;页面/store 只依赖接口。接真 API 新增 `HttpOrderRepository`,改一处注入即可。
 - **车型推荐规则**(mock 层一条纯函数):物品尺寸大 / 过重 / 易损 / 距离遥远 / 天气恶劣 → 推荐汽车配送(下单页顶部提示条)。
+- **服务模式规则**:一对一急送不开放载具切换并继承当前取/收地址;仅帮送与帮取直接互切时交换地址角色。
+- **体积规则**:默认配送箱为 `41×30×31cm`;任一边超过 `100cm` 建议汽车,三边和超过 `150cm` 判定超限。
+- **运力信息规则**:未填写取件地址时显示“填取件地址可查接单时间”;填写后帮送/帮取选择汽车时隐藏,其余状态展示运力信息。
 
 ---
 
@@ -127,7 +132,7 @@ interface Courier {
 
 | 路由 | 组件 | Figma frame(node id) | 页内状态 / 分段 |
 |---|---|---|---|
-| 首页 | `HomePage` | 首页 `913:7841` | 业务 tab:帮取送 / 帮我买 / 帮个忙(**只做帮取送**) |
+| 首页 | `HomePage` | 首页 `913:7841` | 帮取送固定为核心业务;其他入口使用全局通用 Toast 提示,不切换草稿业务 |
 | 地址 | `AddressPage` | 取件 `878:5645`、收件 `885:6377` | 同一路由,`role = pickup / delivery`,流程中走两次 |
 | 物品信息 | `ItemInfoPage` | 类型 `1380:20261`、重量 `1380:20291`、体积 `1380:20301` | 分段填写:类型 → 重量 → 体积 → 保价(slot) |
 | 下单确认 | `OrderConfirmPage` | 下单页1 `856:1453`、页2 `1507:10832`、页3 `864:7899` | 物品区展开/精简、地址栏有无等状态 + 车型推荐提示 |

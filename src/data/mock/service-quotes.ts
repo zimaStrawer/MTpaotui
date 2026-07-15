@@ -1,18 +1,18 @@
+import type { DeliveryService } from '../models/order';
+
 /**
  * 下单页服务档位报价(frame 864:7143,mock 静态值)。
  * standard = 普通帮送 / express = 1对1急送 / car = 汽车配送。
  */
-export type OrderServiceKey = 'standard' | 'express' | 'car';
-
 export interface ServiceQuote {
-  key: OrderServiceKey;
+  key: DeliveryService;
   feeYuan: number;
   /** 划线原价(有优惠时展示) */
   originalFeeYuan?: number;
   etaLabel: string;
 }
 
-export const SERVICE_QUOTES: Record<OrderServiceKey, ServiceQuote> = {
+export const SERVICE_QUOTES: Record<DeliveryService, ServiceQuote> = {
   standard: { key: 'standard', feeYuan: 4.9, originalFeeYuan: 15, etaLabel: '16:58' },
   express: { key: 'express', feeYuan: 9.3, etaLabel: '16:40' },
   car: { key: 'car', feeYuan: 29.5, etaLabel: '16:45' },

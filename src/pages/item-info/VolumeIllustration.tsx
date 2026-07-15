@@ -2,20 +2,23 @@ import illustBoxRef from '../../assets/item-info/illust-box-ref.png';
 import illustCourierDefault from '../../assets/item-info/illust-courier-default.png';
 import illustCourierLarge from '../../assets/item-info/illust-courier-large.png';
 import illustCourierOversize from '../../assets/item-info/illust-courier.png';
-import type { Volume } from '../../data/models/order';
+import type {
+  Volume,
+  VolumeDeliveryStatus,
+} from '../../data/models/order';
 import { DIMENSION_MAX_CM } from './constants';
 
 interface VolumeIllustrationProps {
-  state: 'default' | 'large' | 'oversize';
+  state: VolumeDeliveryStatus;
   volume: Volume;
 }
 
 const COURIER_STATE = {
-  default: {
+  standard: {
     image: illustCourierDefault,
     message: '这件交给我，您放心！',
   },
-  large: {
+  'car-recommended': {
     image: illustCourierLarge,
     message: '这件有点大，汽车送更稳',
   },

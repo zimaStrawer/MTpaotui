@@ -1,13 +1,15 @@
 import iconCheckGreen from '../../assets/item-info/icon-check-green.svg';
 import iconRefresh from '../../assets/item-info/icon-refresh.svg';
 import photoDeliveryBox from '../../assets/item-info/photo-delivery-box.png';
-import type { Volume } from '../../data/models/order';
 import {
-  DELIVERY_BOX_CM,
-  DIMENSION_CAR_THRESHOLD_CM,
+  classifyVolumeDelivery,
+  DEFAULT_DELIVERY_BOX_VOLUME,
+  VOLUME_MAX_GIRTH_CM,
+  type Volume,
+} from '../../data/models/order';
+import {
   DIMENSION_MAX_CM,
   DIMENSION_TICKS,
-  MAX_GIRTH_CM,
 } from './constants';
 import { FieldHeader } from './FieldHeader';
 import { Switch } from './Switch';
@@ -34,13 +36,7 @@ export function VolumeCard({
   onToggleExpanded,
   onChange,
 }: VolumeCardProps) {
-  const girth = volume.l + volume.w + volume.h;
-  const illustrationState =
-    girth > MAX_GIRTH_CM
-      ? 'oversize'
-      : Math.max(volume.l, volume.w, volume.h) > DIMENSION_CAR_THRESHOLD_CM
-        ? 'large'
-        : 'default';
+  const deliveryStatus = classifyVolumeDelivery(volume);
 
   return (
     <section className="flex w-full flex-col gap-2 rounded-16 bg-bg-container px-4 py-3">
@@ -75,8 +71,9 @@ export function VolumeCard({
             <div className="flex flex-col gap-2 text-caption text-text-secondary">
               <p className="font-medium">配送箱尺寸：</p>
               <p>
-                长{DELIVERY_BOX_CM.l}cm * 宽{DELIVERY_BOX_CM.w}cm * 高
-                {DELIVERY_BOX_CM.h}cm
+                长{DEFAULT_DELIVERY_BOX_VOLUME.l}cm * 宽
+                {DEFAULT_DELIVERY_BOX_VOLUME.w}cm * 高
+                {DEFAULT_DELIVERY_BOX_VOLUME.h}cm
               </p>
               <p className="flex items-center gap-1">
                 <img src={iconCheckGreen} alt="" className="size-4.5" />
@@ -90,11 +87,11 @@ export function VolumeCard({
           <p className="text-caption-sm text-text-tertiary">
             物品尺寸
             <span className="text-accent-primary">
-              三边之和在{MAX_GIRTH_CM}厘米内
+              三边之和在{VOLUME_MAX_GIRTH_CM}厘米内
             </span>
             可正常配送
           </p>
-          <VolumeIllustration state={illustrationState} volume={volume} />
+          <VolumeIllustration state={deliveryStatus} volume={volume} />
           <div className="mt-2 flex flex-col gap-6">
             {DIMENSIONS.map(({ key, label }) => (
               <div key={key} className="flex flex-col gap-2">
@@ -117,7 +114,7 @@ export function VolumeCard({
           </div>
           <button
             type="button"
-            onClick={() => onChange(DELIVERY_BOX_CM)}
+            onClick={() => onChange(DEFAULT_DELIVERY_BOX_VOLUME)}
             className="mx-auto mt-2 flex items-center gap-1 rounded-full border border-text-quaternary px-2 py-1.5"
           >
             <img src={iconRefresh} alt="" className="size-4" />

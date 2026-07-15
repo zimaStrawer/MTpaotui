@@ -13,6 +13,55 @@
 }
 
 @layer utilities {
+  @keyframes toast-enter {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .toast-enter {
+    animation: toast-enter 200ms ease-out both;
+  }
+
+  @keyframes home-address-swap-from-bottom {
+    from {
+      transform: translateY(calc(100% + 16px));
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes home-address-swap-from-top {
+    from {
+      transform: translateY(calc(-100% - 16px));
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .home-address-swap-from-bottom,
+  .home-address-swap-from-top {
+    animation-duration: 300ms;
+    animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+    animation-fill-mode: both;
+    will-change: transform;
+  }
+
+  .home-address-swap-from-bottom {
+    animation-name: home-address-swap-from-bottom;
+  }
+
+  .home-address-swap-from-top {
+    animation-name: home-address-swap-from-top;
+  }
+
   @keyframes tracking-sonar-pulse {
     0% {
       opacity: 0;
@@ -48,6 +97,15 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .toast-enter {
+      animation: none;
+    }
+
+    .home-address-swap-from-bottom,
+    .home-address-swap-from-top {
+      animation: none;
+    }
+
     .tracking-sonar-wave {
       animation: none;
       opacity: 0.24;

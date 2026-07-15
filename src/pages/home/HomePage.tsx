@@ -1,10 +1,18 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import heroBg from '../../assets/home/hero-bg.png';
 import marketingCard from '../../assets/home/marketing-card.png';
 import servicesRow from '../../assets/home/services-row.png';
 import tabBar from '../../assets/home/tab-bar.png';
-import type { AddressRole } from '../../data/models/order';
+import {
+  Toast,
+  UNAVAILABLE_FEATURE_MESSAGE,
+} from '../../components/Toast';
+import {
+  resolveCapacityInfoState,
+  type AddressRole,
+} from '../../data/models/order';
 import { useOrderDraftStore } from '../../store/order-draft-store';
 import { BusinessTabs } from './BusinessTabs';
 import { HomeNavBar } from './HomeNavBar';
@@ -16,14 +24,26 @@ import { ServiceCard } from './ServiceCard';
  */
 export function HomePage() {
   const navigate = useNavigate();
-  const business = useOrderDraftStore((state) => state.business);
-  const setBusiness = useOrderDraftStore((state) => state.setBusiness);
+  const [unavailableNoticeId, setUnavailableNoticeId] = useState<number | null>(
+    null,
+  );
   const serviceMode = useOrderDraftStore((state) => state.serviceMode);
   const setServiceMode = useOrderDraftStore((state) => state.setServiceMode);
   const vehicle = useOrderDraftStore((state) => state.vehicle);
   const setVehicle = useOrderDraftStore((state) => state.setVehicle);
   const pickup = useOrderDraftStore((state) => state.pickup);
   const delivery = useOrderDraftStore((state) => state.delivery);
+  const capacityInfoState = resolveCapacityInfoState({
+    serviceMode,
+    vehicle,
+    pickup,
+  });
+
+  useEffect(() => {
+    if (unavailableNoticeId === null) return;
+    const timer = window.setTimeout(() => setUnavailableNoticeId(null), 3_000);
+    return () => window.clearTimeout(timer);
+  }, [unavailableNoticeId]);
 
   const handleEditAddress = (role: AddressRole) => navigate(`/address/${role}`);
 
@@ -48,7 +68,11 @@ export function HomePage() {
       <div className="relative flex flex-col pt-[env(safe-area-inset-top)]">
         <HomeNavBar />
         <div className="mt-2">
-          <BusinessTabs value={business} onChange={setBusiness} />
+          <BusinessTabs
+            onUnavailableSelect={() =>
+              setUnavailableNoticeId((noticeId) => (noticeId ?? 0) + 1)
+            }
+          />
         </div>
         {/* 品牌口号与吉祥物区域(在 hero 整图内),布局级留白 */}
         <div className="h-[104px]" />
@@ -58,6 +82,7 @@ export function HomePage() {
             pickup={pickup}
             delivery={delivery}
             vehicle={vehicle}
+            capacityInfoState={capacityInfoState}
             onModeChange={setServiceMode}
             onVehicleChange={setVehicle}
             onEditAddress={handleEditAddress}
@@ -80,6 +105,13 @@ export function HomePage() {
       <div className="fixed inset-x-0 bottom-0 z-10 mx-auto max-w-md bg-bg-container pb-[env(safe-area-inset-bottom)]">
         <img src={tabBar} alt="跑腿 / 订单 / 我的" className="w-full" />
       </div>
+      {unavailableNoticeId !== null && (
+        <Toast
+          key={unavailableNoticeId}
+          message={UNAVAILABLE_FEATURE_MESSAGE}
+          className="bottom-[calc(88px+env(safe-area-inset-bottom))]"
+        />
+      )}
     </div>
   );
 }

@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import { SERVICE_QUOTES, type OrderServiceKey } from '../../data/mock/service-quotes';
+import { SERVICE_QUOTES } from '../../data/mock/service-quotes';
+import { resolveDeliveryService } from '../../data/models/order';
 import type { TrackingStage } from '../../data/models/tracking';
 import { orderRepository } from '../../data/repositories';
 import { useOrderDraftStore } from '../../store/order-draft-store';
+import { Toast } from '../../components/Toast';
 import { CompletedOrderView } from './CompletedOrderView';
 import { CourierCard } from './CourierCard';
 import { OrderInfoCard } from './OrderInfoCard';
@@ -55,8 +57,7 @@ export function TrackingPage() {
     return null;
   }
 
-  const serviceKey: OrderServiceKey =
-    serviceMode === 'express' ? 'express' : vehicle === 'car' ? 'car' : 'standard';
+  const serviceKey = resolveDeliveryService(serviceMode, vehicle);
   const feeYuan = SERVICE_QUOTES[serviceKey].feeYuan;
 
   const handleShare = async () => {
@@ -142,12 +143,10 @@ export function TrackingPage() {
     <>
       {content}
       {notice && (
-        <div
-          role="status"
-          className="fixed bottom-[calc(24px+env(safe-area-inset-bottom))] left-1/2 z-50 -translate-x-1/2 rounded-full bg-bg-black px-4 py-2 text-caption whitespace-nowrap text-bg-container shadow-[0_4px_16px_rgba(28,30,33,0.18)]"
-        >
-          {notice}
-        </div>
+        <Toast
+          message={notice}
+          className="bottom-[calc(24px+env(safe-area-inset-bottom))]"
+        />
       )}
     </>
   );

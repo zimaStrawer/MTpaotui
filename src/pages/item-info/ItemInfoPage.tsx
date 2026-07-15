@@ -2,16 +2,17 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import { NavigationBar } from '../../components/NavigationBar';
-import type {
-  InsuranceTier,
-  ItemCategory,
-  Volume,
+import {
+  DEFAULT_DELIVERY_BOX_VOLUME,
+  DEFAULT_ITEM_WEIGHT_KG,
+  type InsuranceTier,
+  type ItemCategory,
+  type Volume,
 } from '../../data/models/order';
 import { useOrderDraftStore } from '../../store/order-draft-store';
 import { BrandCard } from './BrandCard';
 import { CategorySelectCard } from './CategorySelectCard';
 import { ConfirmBar } from './ConfirmBar';
-import { DEFAULT_WEIGHT_KG, DELIVERY_BOX_CM } from './constants';
 import { TypeSummaryCard } from './TypeSummaryCard';
 import { VolumeCard } from './VolumeCard';
 import { WeightCard } from './WeightCard';
@@ -39,10 +40,10 @@ export function ItemInfoPage() {
     draftItem?.insurance ?? 'none',
   );
   const [weightKg, setWeightKg] = useState(
-    draftItem?.weightKg ?? DEFAULT_WEIGHT_KG,
+    draftItem?.weightKg ?? DEFAULT_ITEM_WEIGHT_KG,
   );
   const [volume, setVolume] = useState<Volume>(
-    draftItem?.volume ?? DELIVERY_BOX_CM,
+    draftItem?.volume ?? DEFAULT_DELIVERY_BOX_VOLUME,
   );
   const [volumeExpanded, setVolumeExpanded] = useState(false);
   const volumeCardRef = useRef<HTMLDivElement>(null);
