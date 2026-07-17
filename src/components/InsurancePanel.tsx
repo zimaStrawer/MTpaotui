@@ -48,7 +48,11 @@ export function InsurancePanel({ value, fragile, onChange }: InsurancePanelProps
   return (
     <div className="relative w-full overflow-hidden rounded-8 bg-bg-page p-3">
       <div className="flex items-center gap-1">
-        <img src={logoShengxinsong} alt="省心送保价服务" className="h-6" />
+        <img
+          src={logoShengxinsong}
+          alt="省心送保价服务"
+          className="h-[25px] w-[92px] shrink-0"
+        />
         <img src={iconHelp} alt="" className="size-4" />
       </div>
       {state === 'benefit' && (

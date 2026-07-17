@@ -1,0 +1,8 @@
+<svg width="182" height="48" viewBox="0 0 182 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <mask id="price-cta-express-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="182" height="48">
+    <rect width="182" height="48" rx="24" fill="#DADDE3" />
+  </mask>
+  <g mask="url(#price-cta-express-mask)">
+    <path d="M72 22.5L81.5 -6H187V53.5H73L82.5 22.5H72Z" fill="#FDD4B8" />
+  </g>
+</svg>

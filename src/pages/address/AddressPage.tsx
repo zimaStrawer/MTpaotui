@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 
 import { NavigationBar } from '../../components/NavigationBar';
 import { RoleBadge } from '../../components/RoleBadge';
+import {
+  Toast,
+  UNAVAILABLE_FEATURE_MESSAGE,
+} from '../../components/Toast';
 import {
   SCENARIO_DELIVERY_ADDRESS,
   SCENARIO_PICKUP_ADDRESS,
@@ -48,6 +52,15 @@ export function AddressPage() {
           phone: stored.phone,
         },
   );
+  const [unavailableNoticeId, setUnavailableNoticeId] = useState<number | null>(
+    null,
+  );
+
+  useEffect(() => {
+    if (unavailableNoticeId === null) return;
+    const timer = window.setTimeout(() => setUnavailableNoticeId(null), 3_000);
+    return () => window.clearTimeout(timer);
+  }, [unavailableNoticeId]);
 
   const scenario =
     role === 'pickup' ? SCENARIO_PICKUP_ADDRESS : SCENARIO_DELIVERY_ADDRESS;
@@ -55,11 +68,8 @@ export function AddressPage() {
   const handlePatch = (patch: Partial<AddressFormValue>) =>
     setForm((current) => ({ ...current, ...patch }));
 
-  /** 地址行点击 = mock 定位选点,只填 poi */
-  const handlePickPoi = () => handlePatch({ poi: scenario.poi });
-
-  /** 粘贴识别 = 整表单自动填充 */
-  const handlePaste = () =>
+  /** 地址行点击 = 以对应场景默认地址填满表单,便于串联测试后续流程。 */
+  const handlePickPoi = () =>
     setForm({
       poi: scenario.poi,
       unit: scenario.unit,
@@ -99,7 +109,11 @@ export function AddressPage() {
         onBack={() => navigate(-1)}
       />
       <main className="flex flex-col gap-2 px-2 pt-3 pb-8">
-        <PasteRecognizeCard onPaste={handlePaste} />
+        <PasteRecognizeCard
+          onUnavailable={() =>
+            setUnavailableNoticeId((noticeId) => (noticeId ?? 0) + 1)
+          }
+        />
         <AddressFormCard
           role={role}
           value={form}
@@ -109,6 +123,13 @@ export function AddressPage() {
         />
         <AddressBookCard selectedPoi={form.poi} onPick={handlePickBookEntry} />
       </main>
+      {unavailableNoticeId !== null && (
+        <Toast
+          key={unavailableNoticeId}
+          message={UNAVAILABLE_FEATURE_MESSAGE}
+          className="bottom-[calc(24px+env(safe-area-inset-bottom))]"
+        />
+      )}
     </div>
   );
 }

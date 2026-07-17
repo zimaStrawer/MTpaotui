@@ -102,7 +102,11 @@ export function ServiceOptionCard({ value, onChange }: ServiceOptionCardProps) {
           tall
         >
           <span className="absolute top-[15px] left-5 flex items-center gap-2">
-            <img src={logoExpress} alt="1对1急送" className="h-[22px]" />
+            <img
+              src={logoExpress}
+              alt="1对1急送"
+              className="h-[22px] w-[75px] shrink-0"
+            />
             {/* 金渐变为组件级装饰值(非全局 token) */}
             <span className="rounded-4 bg-gradient-to-r from-[#ffe2af] to-[#e8ba7e] px-1 py-0.5 text-caption-xs font-medium text-decorative-primary">
               权益升级
@@ -113,7 +117,7 @@ export function ServiceOptionCard({ value, onChange }: ServiceOptionCardProps) {
             {['优先接单', '尊享骑士', '专享理赔权益'].map((benefit) => (
               <span
                 key={benefit}
-                className="rounded-tl-4 rounded-tr-4 rounded-br-4 bg-bg-container px-1 py-0.5 text-caption-xs font-medium text-decorative-primary"
+                className="rounded-tl-4 rounded-tr-4 rounded-br-4 px-1 py-0.5 text-caption-xs font-medium text-decorative-primary"
               >
                 {benefit}
               </span>

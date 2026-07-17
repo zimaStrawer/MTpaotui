@@ -45,7 +45,7 @@ export function TypeSummaryCard({
             <button
               type="button"
               onClick={onReopenCategory}
-              className="flex min-h-11 items-center gap-1"
+              className="flex h-5 items-center"
             >
               <span
                 aria-hidden

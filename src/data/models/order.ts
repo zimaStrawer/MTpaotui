@@ -21,7 +21,7 @@ export interface Address {
   role: AddressRole;
   /** 地图定位点,如「龙井路·红棉书院」 */
   poi: string;
-  /** 门牌号,如「3幢2单元1802室」 */
+  /** 门牌号,与地址簿统一使用紧凑格式,如「3-2-1802」 */
   unit: string;
   contactName: string;
   /** 11 位数字,展示格式化见 lib/format */

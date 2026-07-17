@@ -120,7 +120,7 @@ export function ServiceCard({
                 <img
                   src={active ? logoExpressYellow : logoExpressGray}
                   alt="1对1急送"
-                  className="h-[22px]"
+                  className="h-[22px] w-[75px] shrink-0"
                 />
               ) : (
                 <span

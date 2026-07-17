@@ -1,5 +1,7 @@
 import iconChevron from '../../assets/nav/icon-chevron-16.svg';
 import mapDelivery from '../../assets/address/map-delivery.jpg';
+import mapMarkerDot from '../../assets/address/map-marker-dot.svg';
+import mapMarkerPointer from '../../assets/address/map-marker-pointer.svg';
 import mapPickup from '../../assets/address/map-pickup.jpg';
 import type { AddressRole } from '../../data/models/order';
 
@@ -11,16 +13,17 @@ interface MapPreviewProps {
 /** 占位地图 + 定位气泡(1082:9499):地址已选后展示。 */
 export function MapPreview({ role, poi }: MapPreviewProps) {
   const isPickup = role === 'pickup';
+
   return (
-    <div className="relative h-[141px] w-full overflow-hidden">
+    <div className="relative h-[139px] w-full overflow-hidden">
       <img
         src={isPickup ? mapPickup : mapDelivery}
         alt=""
         className="size-full object-cover"
         style={{ objectPosition: isPickup ? 'center 22%' : 'center 42%' }}
       />
-      <div className="absolute inset-x-0 top-8 flex flex-col items-center">
-        <span className="flex items-center gap-1 rounded-full bg-bg-container p-1 pr-2 shadow-[0_0_2px_rgba(27,29,33,0.2)]">
+      <div className="absolute top-[45px] left-1/2 -translate-x-1/2">
+        <span className="relative z-10 flex items-center gap-1 rounded-[23px] bg-bg-container p-1 shadow-[0_0_2px_rgba(27,29,33,0.2)]">
           <span
             className={`flex size-6 items-center justify-center rounded-full text-caption font-semibold ${
               isPickup
@@ -35,8 +38,16 @@ export function MapPreview({ role, poi }: MapPreviewProps) {
           </span>
           <img src={iconChevron} alt="" className="size-4" />
         </span>
-        <span className="h-3 w-0.5 rounded-full bg-bg-black" />
-        <span className="size-2 rounded-full border-2 border-bg-container bg-bg-black shadow-[0_0_2px_rgba(27,29,33,0.3)]" />
+        <img
+          src={mapMarkerPointer}
+          alt=""
+          className="pointer-events-none absolute top-8 left-1/2 h-[14px] w-2.5 -translate-x-1/2"
+        />
+        <img
+          src={mapMarkerDot}
+          alt=""
+          className="pointer-events-none absolute top-10 left-1/2 size-2.5 -translate-x-1/2"
+        />
       </div>
     </div>
   );

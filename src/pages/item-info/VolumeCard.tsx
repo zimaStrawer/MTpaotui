@@ -39,7 +39,11 @@ export function VolumeCard({
   const deliveryStatus = classifyVolumeDelivery(volume);
 
   return (
-    <section className="flex w-full flex-col gap-2 rounded-16 bg-bg-container px-4 py-3">
+    <section
+      className={`w-full rounded-16 bg-bg-container px-4 py-3 ${
+        expanded ? 'flex flex-col gap-2' : 'relative h-[194px]'
+      }`}
+    >
       <FieldHeader
         label="体积/规格"
         right={
@@ -56,29 +60,33 @@ export function VolumeCard({
 
       {!expanded ? (
         <>
-          <p className="text-caption-sm text-text-tertiary">
+          <p className="absolute top-11 right-4 left-4 text-caption-sm text-text-tertiary">
             请参考配送箱尺寸，
             <span className="text-accent-primary">
               如物品尺寸大于配送箱请录入详细尺寸
             </span>
           </p>
-          <div className="flex items-center gap-1">
-            <img
-              src={photoDeliveryBox}
-              alt="骑手与配送箱"
-              className="w-[122px] shrink-0"
-            />
-            <div className="flex flex-col gap-2 text-caption text-text-secondary">
+          <div className="absolute top-[66px] right-4 left-4 h-[116px] overflow-hidden rounded-8 bg-bg-page">
+            <div className="absolute top-[26px] right-5 left-[119px] text-caption text-text-secondary">
               <p className="font-medium">配送箱尺寸：</p>
-              <p>
-                长{DEFAULT_DELIVERY_BOX_VOLUME.l}cm * 宽
-                {DEFAULT_DELIVERY_BOX_VOLUME.w}cm * 高
-                {DEFAULT_DELIVERY_BOX_VOLUME.h}cm
-              </p>
-              <p className="flex items-center gap-1">
-                <img src={iconCheckGreen} alt="" className="size-4.5" />
-                1箱矿泉水、电脑主机、大号文件箱
-              </p>
+              <div className="mt-[3px] flex flex-col gap-2">
+                <p>
+                  长{DEFAULT_DELIVERY_BOX_VOLUME.l}cm * 宽
+                  {DEFAULT_DELIVERY_BOX_VOLUME.w}cm * 高
+                  {DEFAULT_DELIVERY_BOX_VOLUME.h}cm
+                </p>
+                <p className="flex items-start gap-1 whitespace-nowrap">
+                  <img src={iconCheckGreen} alt="" className="size-4.5" />
+                  1箱矿泉水、大号文件箱
+                </p>
+              </div>
+            </div>
+            <div className="absolute top-0 -left-[7px] h-[116px] w-[122px] overflow-hidden">
+              <img
+                src={photoDeliveryBox}
+                alt="骑手与配送箱"
+                className="h-[126px] w-[122px] max-w-none"
+              />
             </div>
           </div>
         </>
