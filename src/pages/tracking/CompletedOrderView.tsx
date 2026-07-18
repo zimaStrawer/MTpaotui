@@ -14,14 +14,20 @@ import { OrderInfoCard } from './OrderInfoCard';
 import { TrackingNavigation } from './TrackingNavigation';
 
 function SignedThumbnail({
+  onClick,
   role,
   src,
 }: {
+  onClick: () => void;
   role: 'pickup' | 'delivery';
   src: string;
 }) {
   return (
-    <div className="relative size-[69px] shrink-0 overflow-hidden rounded-8 max-[350px]:size-14">
+    <button
+      type="button"
+      onClick={onClick}
+      className="relative size-[69px] shrink-0 overflow-hidden rounded-8 max-[350px]:size-14"
+    >
       <img
         src={src}
         alt={role === 'pickup' ? '取件物品凭证' : '收件物品凭证'}
@@ -33,7 +39,7 @@ function SignedThumbnail({
       <span className="absolute right-0 bottom-0 flex size-4 items-center justify-center rounded-[5px] bg-text-primary">
         <img src={iconExpand} alt="" className="size-3" />
       </span>
-    </div>
+    </button>
   );
 }
 
@@ -45,15 +51,8 @@ interface CompletedOrderViewProps {
   note?: string;
   pickup: Address;
   onBack: () => void;
-  onBookmark: () => void;
-  onCall: () => void;
-  onClaim: () => void;
-  onEdit: () => void;
-  onMessage: () => void;
-  onMore: () => void;
-  onShare: () => void;
-  onSupport: () => void;
   onTip: () => void;
+  onUnavailable: () => void;
 }
 
 /** 订单完成页(frame 1380:21404)。 */
@@ -65,25 +64,24 @@ export function CompletedOrderView({
   note,
   pickup,
   onBack,
-  onBookmark,
-  onCall,
-  onClaim,
-  onEdit,
-  onMessage,
-  onMore,
-  onShare,
-  onSupport,
   onTip,
+  onUnavailable,
 }: CompletedOrderViewProps) {
   const [tipVisible, setTipVisible] = useState(true);
 
   return (
-    <div className="mx-auto min-h-dvh max-w-md bg-bg-page pt-[env(safe-area-inset-top)]">
+    <div
+      className="mx-auto min-h-dvh max-w-md pt-[env(safe-area-inset-top)]"
+      style={{
+        backgroundImage:
+          'linear-gradient(to bottom, var(--color-bg-container) 0, var(--color-bg-page) 50dvh)',
+      }}
+    >
       <TrackingNavigation
         bookmarked={bookmarked}
         onBack={onBack}
-        onBookmark={onBookmark}
-        onSupport={onSupport}
+        onBookmark={onUnavailable}
+        onSupport={onUnavailable}
       />
       <main className="flex flex-col gap-2 px-2 pb-8">
         <section className="rounded-b-16 bg-bg-container pb-3 pl-4">
@@ -104,6 +102,7 @@ export function CompletedOrderView({
               </span>
               <button
                 type="button"
+                onClick={onUnavailable}
                 className="mt-1 flex h-5 items-center self-start text-caption text-text-tertiary"
               >
                 查看详情
@@ -111,17 +110,25 @@ export function CompletedOrderView({
               </button>
             </div>
             <div className="ml-auto flex gap-3 max-[350px]:gap-2">
-              <SignedThumbnail role="pickup" src={proofPickup} />
-              <SignedThumbnail role="delivery" src={proofDelivery} />
+              <SignedThumbnail
+                role="pickup"
+                src={proofPickup}
+                onClick={onUnavailable}
+              />
+              <SignedThumbnail
+                role="delivery"
+                src={proofDelivery}
+                onClick={onUnavailable}
+              />
             </div>
           </div>
 
           <div className="mt-3 mr-4">
             <OrderActions
-              onMore={onMore}
-              onEdit={onEdit}
-              onClaim={onClaim}
-              onShare={onShare}
+              onMore={onUnavailable}
+              onEdit={onUnavailable}
+              onClaim={onUnavailable}
+              onShare={onUnavailable}
             />
           </div>
         </section>
@@ -129,9 +136,9 @@ export function CompletedOrderView({
         <CourierCard
           courier={courier}
           showTip={tipVisible}
-          onCall={onCall}
+          onCall={onUnavailable}
           onDismissTip={() => setTipVisible(false)}
-          onMessage={onMessage}
+          onMessage={onUnavailable}
           onTip={onTip}
         />
 
@@ -140,9 +147,15 @@ export function CompletedOrderView({
           delivery={delivery}
           note={note}
           feeYuan={feeYuan}
+          onShowDetails={onUnavailable}
         />
 
-        <section className="relative h-[411px] overflow-hidden rounded-16 bg-bg-container">
+        <button
+          type="button"
+          aria-label="查看订单帮助"
+          onClick={onUnavailable}
+          className="relative h-[411px] overflow-hidden rounded-16 bg-bg-container text-left"
+        >
           <img
             src={helpTopics}
             alt="遇到问题需要帮助"
@@ -154,7 +167,7 @@ export function CompletedOrderView({
               top: '-189.05%',
             }}
           />
-        </section>
+        </button>
       </main>
     </div>
   );

@@ -17,16 +17,16 @@ export function TrackingNavigation({
   onSupport,
 }: TrackingNavigationProps) {
   return (
-    <header className="relative z-30 flex h-11 items-center justify-between px-2">
+    <header className="relative z-30 h-11">
       <button
         type="button"
         aria-label="返回"
         onClick={onBack}
-        className="flex size-11 items-center justify-center"
+        className="absolute top-0 left-0.5 flex size-11 items-center justify-center"
       >
         <img src={iconBack} alt="" className="size-6" />
       </button>
-      <div className="flex -space-x-2">
+      <div className="absolute top-0 right-0 flex -space-x-4">
         <button
           type="button"
           aria-label={bookmarked ? '取消收藏订单' : '收藏订单'}
@@ -34,13 +34,7 @@ export function TrackingNavigation({
           onClick={onBookmark}
           className="flex size-11 items-center justify-center"
         >
-          <img
-            src={iconBookmark}
-            alt=""
-            className={`size-5 transition-opacity duration-200 motion-reduce:transition-none ${
-              bookmarked ? 'opacity-100' : 'opacity-75'
-            }`}
-          />
+          <img src={iconBookmark} alt="" className="size-5" />
         </button>
         <button
           type="button"

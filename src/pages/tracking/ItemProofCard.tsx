@@ -44,14 +44,14 @@ function ProofThumbnail({ confirmed, role, src }: ProofThumbnailProps) {
 interface ItemProofCardProps {
   pickupCode: string;
   stage: TrackingStage;
-  onViewBenefits: () => void;
+  onItemIssue: () => void;
 }
 
 /** 物品凭证三变体(node 1541:28177):待取件 / 待收件 / 已送达。 */
 export function ItemProofCard({
   pickupCode,
   stage,
-  onViewBenefits,
+  onItemIssue,
 }: ItemProofCardProps) {
   const stageIndex = TRACKING_STAGE_FLOW.indexOf(stage);
   const pickupConfirmed = stageIndex >= TRACKING_STAGE_FLOW.indexOf('picked');
@@ -62,8 +62,11 @@ export function ItemProofCard({
     <section className="relative h-[102px] w-full overflow-hidden rounded-16 bg-bg-container">
       <div className="absolute inset-x-0 top-0 h-[27px] bg-bg-page" />
       <div
-        className="absolute top-0 left-0 h-[27px] w-[275px] bg-insurance-secondary"
-        style={{ clipPath: 'polygon(0 0, 85% 0, 96% 100%, 100% 100%, 0 100%)' }}
+        className="absolute top-[-2px] left-0 h-[29px] max-w-[256px] rounded-tl-16 bg-insurance-secondary"
+        style={{
+          width: 'calc(100% - 103px)',
+          borderTopRightRadius: '21px 29px',
+        }}
       />
       <img
         src={logoInsurance}
@@ -72,15 +75,15 @@ export function ItemProofCard({
       />
       <button
         type="button"
-        onClick={onViewBenefits}
-        className="absolute top-0.5 right-2 flex h-6 items-center px-1 text-caption-sm text-text-tertiary"
+        onClick={onItemIssue}
+        className="absolute top-0 right-4 flex h-6 items-center text-caption-sm whitespace-nowrap text-text-tertiary"
       >
-        查看权益
-        <img src={iconChevron} alt="" className="ml-0.5 size-3" />
+        物品异常处理
+        <img src={iconChevron} alt="" className="size-3" />
       </button>
 
       <div className="absolute top-[43px] left-4 flex flex-col gap-1">
-        <div className="flex h-[29px] items-center gap-2">
+        <div className="flex items-center gap-2">
           <span className="text-tab font-medium text-text-primary">收货码</span>
           <span
             className={`font-number font-bold text-accent-primary ${

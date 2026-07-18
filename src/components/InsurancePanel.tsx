@@ -69,7 +69,7 @@ export function InsurancePanel({ value, fragile, onChange }: InsurancePanelProps
           未保价最高赔付<span className="text-accent-primary">5倍</span>配送费
         </p>
       )}
-      <div className="mt-2 flex gap-2 overflow-x-auto pb-0.5">
+      <div className="scrollbar-hidden mt-2 flex gap-2 overflow-x-auto pb-0.5">
         {INSURANCE_OPTIONS.map((option) => {
           const selected = value === option.tier;
           return (

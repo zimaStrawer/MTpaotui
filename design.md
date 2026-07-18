@@ -38,7 +38,7 @@ typography:
   title:             { fontFamily: "PingFang SC", fontSize: 18px, fontWeight: 600, lineHeight: 1.4, letterSpacing: 0 }
   title-brand:       { fontFamily: "Meituan Type", fontSize: 20px, fontWeight: 400, lineHeight: 1.4, letterSpacing: 0 }
   # 标签 Tab
-  tab-active:        { fontFamily: "PingFang SC", fontSize: 16px, fontWeight: 500, lineHeight: 1.4, letterSpacing: 0 }
+  tab-active:        { fontFamily: "PingFang SC", fontSize: 16px, fontWeight: 600, lineHeight: 1.4, letterSpacing: 0 }
   tab:               { fontFamily: "PingFang SC", fontSize: 16px, fontWeight: 400, lineHeight: 1.4, letterSpacing: 0 }
   # 正文 Body
   body:              { fontFamily: "PingFang SC", fontSize: 14px, fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 }
@@ -225,21 +225,22 @@ components:
 | `{typography.headline}` | PingFang | 22 | 500 | 1.4 | 地址强调、页面大标题 |
 | `{typography.title}` | PingFang | 18 | 600 | 1.4 | 页面标题 |
 | `{typography.title-brand}` | Meituan Type | 20 | 400 | 1.4 | 导航栏品牌标题 |
-| `{typography.tab-active}` / `{typography.tab}` | PingFang | 16 | 500 / 400 | 1.4 | 业务 Tab 选中 / 未选中 |
+| `{typography.tab-active}` / `{typography.tab}` | PingFang | 16 | 600 / 400 | 1.4 | 业务 Tab 选中 / 未选中 |
 | `{typography.body}` / `{typography.body-secondary}` | PingFang | 14 | 500 / 400 | 1.5 | 正文 / 次要正文 |
 | `{typography.caption-strong}` / `{typography.caption}` / `{typography.caption-icon}` | PingFang | 12 | 500 / 400 / 600 | 1.5 | 注释强调 / 注释 / 图标字 |
 | `{typography.caption-sm}` | PingFang | 11 | 400 | 1.5 | 小注释 |
 | `{typography.caption-xs-strong}` / `{typography.caption-xs}` | PingFang | 10 | 500 / 400 | 1.5 | 极小注释(下限字号) |
 | `{typography.number}` / `{typography.number-sm}` / `{typography.number-xs}` | SF Pro | 14 / 12 / 11 | 500 / 400 / 400 | 1.2 | 价格/时间/里程等数字 |
+| `{typography.display}` | SF Pro | 24 | 700 | 20px | 收货码、实付款等展示数字 |
 | `{typography.decorative}` | Alimama | 12 | 700 | 1.3 | 装饰标签 |
 
 ### 原则 Principles
 - **层级靠字重、不靠字号堆砌。** 同为 12px 的 `caption-strong`(500)与 `caption`(400)通过字重拉开主次,避免字号碎片化。
 - **数字交给 SF Pro。** 价格、时间、里程用等宽感更强的 SF Pro,与中文正文形成信息分区。
 - **10px 是下限。** `caption-xs` 是可用的最小中文字号;9px 及以下仅限极特殊角标(见 Known Gaps),不进 token。
-- **行高:正文松、数字紧。** 正文/注释 1.5 便于阅读;数字 1.2 让金额/时间更紧凑。
+- **行高:正文松、数字紧。** 正文/注释 1.5 便于阅读;常规数字为 1.2,展示数字 `display` 固定为 20px。
 
-> Figma 中所有文字样式行高设为 **Auto**,上表为对应的推荐渲染值(PingFang Auto ≈ 1.4–1.5)。
+> Figma 中大部分文字样式行高设为 **Auto**,上表为对应的推荐渲染值(PingFang Auto ≈ 1.4–1.5);`display` 使用固定 20px 字高。
 
 ## 布局 · Layout
 

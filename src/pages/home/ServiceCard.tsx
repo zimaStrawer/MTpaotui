@@ -126,7 +126,7 @@ export function ServiceCard({
                 <span
                   className={`text-tab transition-colors duration-300 motion-reduce:transition-none ${
                     active
-                      ? 'font-medium text-text-primary'
+                      ? 'font-semibold text-text-primary'
                       : 'text-text-secondary'
                   }`}
                 >

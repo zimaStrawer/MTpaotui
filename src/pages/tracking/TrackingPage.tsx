@@ -6,7 +6,10 @@ import { resolveDeliveryService } from '../../data/models/order';
 import type { TrackingStage } from '../../data/models/tracking';
 import { orderRepository } from '../../data/repositories';
 import { useOrderDraftStore } from '../../store/order-draft-store';
-import { Toast } from '../../components/Toast';
+import {
+  Toast,
+  UNAVAILABLE_FEATURE_MESSAGE,
+} from '../../components/Toast';
 import { CompletedOrderView } from './CompletedOrderView';
 import { CourierCard } from './CourierCard';
 import { OrderInfoCard } from './OrderInfoCard';
@@ -25,7 +28,10 @@ export function TrackingPage() {
 
   const [stage, setStage] = useState<TrackingStage>('accepting');
   const [bookmarked, setBookmarked] = useState(false);
-  const [notice, setNotice] = useState<string | null>(null);
+  const [notice, setNotice] = useState<{
+    id: number;
+    message: string;
+  } | null>(null);
 
   const ready =
     receipt !== null && pickup !== null && delivery !== null && item !== null;
@@ -60,6 +66,12 @@ export function TrackingPage() {
   const serviceKey = resolveDeliveryService(serviceMode, vehicle);
   const feeYuan = SERVICE_QUOTES[serviceKey].feeYuan;
 
+  const showNotice = (message: string) =>
+    setNotice((current) => ({
+      id: (current?.id ?? 0) + 1,
+      message,
+    }));
+
   const handleShare = async () => {
     try {
       if (navigator.share) {
@@ -70,11 +82,11 @@ export function TrackingPage() {
         });
       } else {
         await navigator.clipboard.writeText(window.location.href);
-        setNotice('订单链接已复制');
+        showNotice('订单链接已复制');
       }
     } catch (error) {
       if (!(error instanceof DOMException && error.name === 'AbortError')) {
-        setNotice('分享暂时不可用');
+        showNotice('分享暂时不可用');
       }
     }
   };
@@ -85,13 +97,13 @@ export function TrackingPage() {
     onCall: () => {
       window.location.href = 'tel:10109777';
     },
-    onClaim: () => setNotice('理赔服务已为您打开'),
+    onClaim: () => showNotice('理赔服务已为您打开'),
     onEdit: () => navigate('/order-confirm'),
-    onMessage: () => setNotice(`正在联系${receipt.courier.name}`),
-    onMore: () => setNotice('更多订单服务已展开'),
+    onMessage: () => showNotice(`正在联系${receipt.courier.name}`),
+    onMore: () => showNotice('更多订单服务已展开'),
     onShare: handleShare,
-    onSupport: () => setNotice('正在为您接入客服'),
-    onTip: () => setNotice('感谢红包已送达骑手'),
+    onSupport: () => showNotice('正在为您接入客服'),
+    onTip: () => showNotice('感谢红包已送达骑手'),
   };
 
   let content: React.ReactNode;
@@ -104,7 +116,9 @@ export function TrackingPage() {
         delivery={delivery}
         note={item.note}
         feeYuan={feeYuan}
-        {...commonActions}
+        onBack={commonActions.onBack}
+        onTip={commonActions.onTip}
+        onUnavailable={() => showNotice(UNAVAILABLE_FEATURE_MESSAGE)}
       />
     );
   } else {
@@ -116,8 +130,8 @@ export function TrackingPage() {
           bookmarked={bookmarked}
           onBack={commonActions.onBack}
           onBookmark={commonActions.onBookmark}
+          onItemIssue={() => showNotice(UNAVAILABLE_FEATURE_MESSAGE)}
           onSupport={commonActions.onSupport}
-          onViewBenefits={() => setNotice('省心送保价权益保障中')}
         />
         <main className="relative z-10 flex flex-col gap-2 px-2 pb-8">
           {stage !== 'accepting' && (
@@ -144,7 +158,8 @@ export function TrackingPage() {
       {content}
       {notice && (
         <Toast
-          message={notice}
+          key={notice.id}
+          message={notice.message}
           className="bottom-[calc(24px+env(safe-area-inset-bottom))]"
         />
       )}

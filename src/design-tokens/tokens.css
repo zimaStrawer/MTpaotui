@@ -72,7 +72,7 @@
   --text-number-lg: 16px;
   --text-number-lg--line-height: 1.2;
   --text-display: 24px;
-  --text-display--line-height: 1.2;
+  --text-display--line-height: 20px;
   --text-display-xl: 36px;
   --text-display-xl--line-height: 1;
   --text-display-lg: 32px; /* 组件库 数字/display-lg(重量/尺寸大数字) */

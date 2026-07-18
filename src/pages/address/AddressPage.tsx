@@ -104,7 +104,7 @@ export function AddressPage() {
   return (
     <div className="mx-auto flex min-h-dvh max-w-md flex-col pt-[env(safe-area-inset-top)]">
       <NavigationBar
-        title="地址信息"
+        title={role === 'pickup' ? '取件信息' : '收件信息'}
         badge={<RoleBadge role={role} />}
         onBack={() => navigate(-1)}
       />

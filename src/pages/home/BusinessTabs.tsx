@@ -35,7 +35,7 @@ export function BusinessTabs({ onUnavailableSelect }: BusinessTabsProps) {
               />
             )}
             <span
-              className={`text-tab text-text-primary ${active ? 'font-medium' : ''}`}
+              className={`text-tab text-text-primary ${active ? 'font-semibold' : ''}`}
             >
               {business}
             </span>

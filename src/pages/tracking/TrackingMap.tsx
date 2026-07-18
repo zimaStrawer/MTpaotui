@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { MapMarker } from '../../components/MapMarker';
-import iconFlower from '../../assets/item-info/icon-category-flower.svg';
+import acceptingCourierMascot from '../../assets/tracking/accepting-courier-mascot.png';
 import iconChevron from '../../assets/nav/icon-chevron.svg';
 import iconAnnounce from '../../assets/tracking/icon-announce.svg';
 import courierScooter from '../../assets/tracking/courier-scooter.png';
@@ -97,23 +97,12 @@ function AcceptingSonar() {
           />
         ))}
       </div>
-      <span className="absolute top-1/2 left-1/2 z-10 flex size-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand-primary shadow-[0_2px_8px_rgba(28,30,33,0.10)]">
-        <span
-          role="img"
-          aria-label="鲜花订单定位"
-          className="size-8 bg-accent-primary"
-          style={{
-            WebkitMaskImage: `url("${iconFlower}")`,
-            maskImage: `url("${iconFlower}")`,
-            WebkitMaskPosition: 'center',
-            maskPosition: 'center',
-            WebkitMaskRepeat: 'no-repeat',
-            maskRepeat: 'no-repeat',
-            WebkitMaskSize: 'contain',
-            maskSize: 'contain',
-          }}
-        />
-      </span>
+      <img
+        src={acceptingCourierMascot}
+        alt="正在为您寻找骑手"
+        draggable={false}
+        className="pointer-events-none absolute top-1/2 left-1/2 z-10 size-12 -translate-x-1/2 -translate-y-1/2 object-contain select-none"
+      />
     </div>
   );
 }
@@ -154,8 +143,8 @@ interface TrackingMapProps {
   stage: ActiveTrackingStage;
   onBack: () => void;
   onBookmark: () => void;
+  onItemIssue: () => void;
   onSupport: () => void;
-  onViewBenefits: () => void;
 }
 
 /** 物流地图区(frame 1507:20230/20684/21772/22206)。 */
@@ -165,8 +154,8 @@ export function TrackingMap({
   stage,
   onBack,
   onBookmark,
+  onItemIssue,
   onSupport,
-  onViewBenefits,
 }: TrackingMapProps) {
   const accepting = stage === 'accepting';
   const arrived = stage === 'arrived';
@@ -196,7 +185,7 @@ export function TrackingMap({
           <ItemProofCard
             pickupCode={pickupCode}
             stage={stage}
-            onViewBenefits={onViewBenefits}
+            onItemIssue={onItemIssue}
           />
         </div>
       )}

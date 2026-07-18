@@ -46,7 +46,7 @@ export function MapMarker({
       />
       <span
         aria-hidden
-        className={`absolute top-1.5 left-[9px] text-caption leading-none font-semibold ${
+        className={`absolute top-1.5 left-[9px] text-caption font-semibold ${
           isPickup ? 'text-bg-container' : 'text-text-primary'
         } ${
           isPickup && premium

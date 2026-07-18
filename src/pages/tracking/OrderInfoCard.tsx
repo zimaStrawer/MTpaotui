@@ -30,6 +30,7 @@ interface OrderInfoCardProps {
   delivery: Address;
   feeYuan: number;
   note?: string;
+  onShowDetails?: () => void;
   pickup: Address;
 }
 
@@ -38,6 +39,7 @@ export function OrderInfoCard({
   delivery,
   feeYuan,
   note,
+  onShowDetails,
   pickup,
 }: OrderInfoCardProps) {
   return (
@@ -68,6 +70,7 @@ export function OrderInfoCard({
       </div>
       <button
         type="button"
+        onClick={onShowDetails}
         className="mx-auto mt-auto flex h-7 items-center text-caption font-medium text-text-tertiary"
       >
         订单号/下单时间/费用明细

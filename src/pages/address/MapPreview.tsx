@@ -3,6 +3,7 @@ import mapDelivery from '../../assets/address/map-delivery.jpg';
 import mapMarkerDot from '../../assets/address/map-marker-dot.svg';
 import mapMarkerPointer from '../../assets/address/map-marker-pointer.svg';
 import mapPickup from '../../assets/address/map-pickup.jpg';
+import { RoleBadge } from '../../components/RoleBadge';
 import type { AddressRole } from '../../data/models/order';
 
 interface MapPreviewProps {
@@ -22,17 +23,9 @@ export function MapPreview({ role, poi }: MapPreviewProps) {
         className="size-full object-cover"
         style={{ objectPosition: isPickup ? 'center 22%' : 'center 42%' }}
       />
-      <div className="absolute top-[45px] left-1/2 -translate-x-1/2">
-        <span className="relative z-10 flex items-center gap-1 rounded-[23px] bg-bg-container p-1 shadow-[0_0_2px_rgba(27,29,33,0.2)]">
-          <span
-            className={`flex size-6 items-center justify-center rounded-full text-caption font-semibold ${
-              isPickup
-                ? 'bg-bg-black text-bg-container'
-                : 'bg-brand-primary text-text-primary'
-            }`}
-          >
-            {isPickup ? '取' : '收'}
-          </span>
+      <div className="absolute top-[79px] left-1/2 -translate-x-1/2">
+        <span className="relative z-10 flex -translate-y-full items-center gap-1 rounded-8 bg-bg-container p-1 shadow-[0_0_2px_rgba(27,29,33,0.2)]">
+          <RoleBadge role={role} />
           <span className="text-caption font-medium text-text-primary">
             {poi}
           </span>
@@ -41,12 +34,12 @@ export function MapPreview({ role, poi }: MapPreviewProps) {
         <img
           src={mapMarkerPointer}
           alt=""
-          className="pointer-events-none absolute top-8 left-1/2 h-[14px] w-2.5 -translate-x-1/2"
+          className="pointer-events-none absolute top-0 left-1/2 h-[14px] w-2.5 -translate-x-1/2"
         />
         <img
           src={mapMarkerDot}
           alt=""
-          className="pointer-events-none absolute top-10 left-1/2 size-2.5 -translate-x-1/2"
+          className="pointer-events-none absolute top-2 left-1/2 size-2.5 -translate-x-1/2"
         />
       </div>
     </div>
