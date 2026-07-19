@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router';
 
 import heroBg from '../../assets/home/hero-bg.png';
 import marketingCard from '../../assets/home/marketing-card.png';
-import servicesRow from '../../assets/home/services-row.png';
-import tabBar from '../../assets/home/tab-bar.png';
 import {
   Toast,
   UNAVAILABLE_FEATURE_MESSAGE,
@@ -14,13 +12,15 @@ import {
   type AddressRole,
 } from '../../data/models/order';
 import { useOrderDraftStore } from '../../store/order-draft-store';
+import { AdditionalServices } from './AdditionalServices';
+import { BottomTabBar } from './BottomTabBar';
 import { BusinessTabs } from './BusinessTabs';
 import { HomeNavBar } from './HomeNavBar';
 import { ServiceCard } from './ServiceCard';
 
 /**
- * 首页(frame 913:7841)。品牌视觉区 / 服务宫格 / 营销卡 / TabBar
- * 为设计稿整图(纯展示);交互集中在服务选择卡。
+ * 首页(frame 913:7841，顶部运营 1674:33164)。品牌视觉区 / 服务宫格 / 营销卡 / TabBar
+ * 顶部运营与营销卡保留设计稿图片，其余交互区域使用独立组件。
  */
 export function HomePage() {
   const navigate = useNavigate();
@@ -38,6 +38,8 @@ export function HomePage() {
     vehicle,
     pickup,
   });
+  const showUnavailableNotice = () =>
+    setUnavailableNoticeId((noticeId) => (noticeId ?? 0) + 1);
 
   useEffect(() => {
     if (unavailableNoticeId === null) return;
@@ -69,9 +71,7 @@ export function HomePage() {
         <HomeNavBar />
         <div className="mt-2">
           <BusinessTabs
-            onUnavailableSelect={() =>
-              setUnavailableNoticeId((noticeId) => (noticeId ?? 0) + 1)
-            }
+            onUnavailableSelect={showUnavailableNotice}
           />
         </div>
         {/* 品牌口号与吉祥物区域(在 hero 整图内),布局级留白 */}
@@ -89,10 +89,8 @@ export function HomePage() {
             onSubmit={handleSubmit}
           />
           <div className="flex flex-col gap-2">
-            <img
-              src={servicesRow}
-              alt="点餐帮取 / 帮取快递 / 取送数码 / 取送文件 / 更多服务"
-              className="w-full rounded-16"
+            <AdditionalServices
+              onUnavailableSelect={showUnavailableNotice}
             />
             <img
               src={marketingCard}
@@ -102,8 +100,8 @@ export function HomePage() {
           </div>
         </main>
       </div>
-      <div className="fixed inset-x-0 bottom-0 z-10 mx-auto max-w-md bg-bg-container pb-[env(safe-area-inset-bottom)]">
-        <img src={tabBar} alt="跑腿 / 订单 / 我的" className="w-full" />
+      <div className="fixed inset-x-0 bottom-0 z-10 mx-auto max-w-md">
+        <BottomTabBar onUnavailableSelect={showUnavailableNotice} />
       </div>
       {unavailableNoticeId !== null && (
         <Toast

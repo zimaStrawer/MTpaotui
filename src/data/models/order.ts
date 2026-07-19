@@ -94,6 +94,21 @@ export function isFragileCategory(category: ItemCategory): boolean {
  */
 export type InsuranceTier = 'none' | 'tier1' | 'tier2' | 'custom';
 
+/** 物流页物品凭证顶部服务标识。汽车配送暂沿用普通服务标识。 */
+export type ItemProofServiceVariant =
+  | 'standard'
+  | 'insurance'
+  | 'express';
+
+/** 一对一急送优先于保价展示；其余已保价订单展示保价服务。 */
+export function resolveItemProofServiceVariant(
+  serviceMode: ServiceMode,
+  insurance: InsuranceTier,
+): ItemProofServiceVariant {
+  if (serviceMode === 'express') return 'express';
+  return insurance === 'none' ? 'standard' : 'insurance';
+}
+
 /** 三维尺寸,单位 cm */
 export interface Volume {
   l: number;

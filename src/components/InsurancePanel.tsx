@@ -119,7 +119,7 @@ export function InsuranceCollapsedBar({ tier, onExpand }: InsuranceCollapsedBarP
     <button
       type="button"
       onClick={onExpand}
-      className="flex w-full items-center justify-between rounded-8 bg-bg-page p-2 text-left"
+      className="flex w-full items-center justify-between rounded-8 bg-bg-page px-3 py-2 text-left"
     >
       <span className="flex items-center gap-1 text-caption font-medium text-text-primary">
         保价费

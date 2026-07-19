@@ -7,11 +7,11 @@ interface CheckoutBarProps {
   onSubmit: () => void;
 }
 
-/** 底部支付栏(1496:26347):红包/支付方式行 + 深色结算胶囊。 */
+/** 底部支付栏(1554:4789):红包/支付方式行 + 深色结算胶囊。 */
 export function CheckoutBar({ quote, submitting, onSubmit }: CheckoutBarProps) {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-10 mx-auto max-w-md border-t border-divider bg-bg-container pb-[env(safe-area-inset-bottom)]">
-      <div className="flex h-10 items-center justify-around">
+    <div className="fixed inset-x-0 bottom-0 z-10 mx-auto h-[calc(88px+max(32px,env(safe-area-inset-bottom)))] max-w-md border-t border-divider bg-bg-container">
+      <div className="absolute inset-x-0 top-[-2px] grid h-[41px] grid-cols-2 place-items-center">
         <span className="flex items-center text-caption text-text-primary">
           暂无可用红包
           <img src={iconChevron} alt="" className="size-3" />
@@ -21,7 +21,7 @@ export function CheckoutBar({ quote, submitting, onSubmit }: CheckoutBarProps) {
           <img src={iconChevron} alt="" className="size-3" />
         </span>
       </div>
-      <div className="mx-2 mb-3 flex h-12 items-center overflow-hidden rounded-full bg-text-primary">
+      <div className="absolute inset-x-2 top-[39px] flex h-12 items-center overflow-hidden rounded-full bg-text-primary">
         <span className="flex items-end gap-2 pl-4">
           <span className="flex items-end gap-0.5 text-bg-container">
             <span className="font-number text-tab font-bold">¥</span>

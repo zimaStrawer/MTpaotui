@@ -1,11 +1,13 @@
 import { useState } from 'react';
 
-import iconBadgeRabbit from '../../assets/home/icon-badge-rabbit.png';
 import iconFlash from '../../assets/home/icon-flash.svg';
 import iconPrivacy from '../../assets/home/icon-privacy.svg';
 import iconSwap from '../../assets/home/icon-swap.svg';
 import logoExpressGray from '../../assets/home/logo-express-gray.svg';
-import logoExpressYellow from '../../assets/home/logo-express-yellow.svg';
+import logoExpressActive from '../../assets/home/logo-express-active.svg';
+import tabSelectedExpress from '../../assets/home/tab-selected-express.svg';
+import tabSelectedPick from '../../assets/home/tab-selected-pick.svg';
+import tabSelectedSend from '../../assets/home/tab-selected-send.svg';
 import {
   supportsVehicleSelection,
   type Address,
@@ -32,24 +34,16 @@ interface ServiceCardProps {
 }
 
 const TABS: ServiceMode[] = ['send', 'pick', 'express'];
-const TAB_TRANSLATE: Record<ServiceMode, string> = {
-  send: 'translate-x-0',
-  pick: 'translate-x-full',
-  express: 'translate-x-[200%]',
+const TAB_INDICATOR_ASSET: Record<ServiceMode, string> = {
+  send: tabSelectedSend,
+  pick: tabSelectedPick,
+  express: tabSelectedExpress,
 };
-
-/** 选中页签左右两侧的外翻圆角(文件夹页签形),凹弧半径对齐 radius-16 */
-function TabFillet({ side }: { side: 'left' | 'right' }) {
-  return (
-    <span
-      className={
-        side === 'left'
-          ? 'absolute bottom-0 -left-4 size-4 bg-[radial-gradient(circle_at_top_left,transparent_16px,var(--color-bg-container)_16px)]'
-          : 'absolute -right-4 bottom-0 size-4 bg-[radial-gradient(circle_at_top_right,transparent_16px,var(--color-bg-container)_16px)]'
-      }
-    />
-  );
-}
+const TAB_INDICATOR_POSITION: Record<ServiceMode, string> = {
+  send: 'left-0 w-[132px]',
+  pick: 'left-[107px] w-[145px]',
+  express: 'left-[227px] w-[132px]',
+};
 
 const CARD_CORNER: Record<ServiceMode, string> = {
   send: 'rounded-tl-none',
@@ -74,7 +68,6 @@ export function ServiceCard({
 }: ServiceCardProps) {
   const premium = mode === 'express';
   const vehicleSelectable = supportsVehicleSelection(mode);
-  const activeTabIndex = TABS.indexOf(mode);
   const [addressSwapVersion, setAddressSwapVersion] = useState(0);
 
   const handleModeChange = (nextMode: ServiceMode) => {
@@ -88,25 +81,21 @@ export function ServiceCard({
   };
 
   return (
-    <section className="relative w-full">
+    <section className="relative h-[324px] w-full">
       <div className="absolute inset-x-0 top-0.5 h-24 rounded-16 border-x border-t border-bg-container bg-bg-page" />
-      <div className="absolute -top-2 right-0 z-10 flex items-center gap-0.5 rounded-tl-4 rounded-tr-4 rounded-br-4 bg-decorative-secondary px-1 py-0.5">
-        <img src={iconBadgeRabbit} alt="" className="size-3" />
-        {/* 装饰字体 Alimama ShuHeiTi,无授权时以粗体近似 */}
-        <span className="text-caption font-bold text-decorative-primary">
-          更快更安心
+      <div className="absolute -top-[11px] right-0 z-10 flex h-[23px] w-[60px] items-center rounded-tl-4 rounded-tr-4 rounded-br-4 bg-decorative-secondary px-1.5 py-[3px]">
+        <span className="font-decorative text-decorative font-bold text-decorative-primary">
+          专人更快
         </span>
       </div>
 
-      <div className="relative flex h-[42px]">
-        <span
+      <div className="relative grid h-11 grid-cols-[120px_119px_120px]">
+        <img
           aria-hidden
-          className={`absolute inset-y-0 left-0 w-1/3 rounded-t-12 bg-bg-container transition-transform duration-300 ease-out will-change-transform motion-reduce:transition-none ${TAB_TRANSLATE[mode]}`}
-        >
-          {activeTabIndex > 0 && <TabFillet side="left" />}
-          {activeTabIndex < TABS.length - 1 && <TabFillet side="right" />}
-          <span className="absolute bottom-1 left-1/2 h-[3px] w-7 -translate-x-1/2 rounded-full bg-brand-primary" />
-        </span>
+          src={TAB_INDICATOR_ASSET[mode]}
+          alt=""
+          className={`pointer-events-none absolute top-0 h-11 transition-[left,width] duration-300 ease-out will-change-[left,width] motion-reduce:transition-none ${TAB_INDICATOR_POSITION[mode]}`}
+        />
         {TABS.map((tab) => {
           const active = mode === tab;
           return (
@@ -114,13 +103,13 @@ export function ServiceCard({
               key={tab}
               type="button"
               onClick={() => handleModeChange(tab)}
-              className="relative z-10 flex flex-1 items-center justify-center"
+              className="relative z-10 mt-0.5 flex h-[42px] flex-1 items-center justify-center"
             >
               {tab === 'express' ? (
                 <img
-                  src={active ? logoExpressYellow : logoExpressGray}
+                  src={active ? logoExpressActive : logoExpressGray}
                   alt="1对1急送"
-                  className="h-[22px] w-[75px] shrink-0"
+                  className="h-[22px] w-[75px] shrink-0 scale-[1.143]"
                 />
               ) : (
                 <span
@@ -139,80 +128,84 @@ export function ServiceCard({
       </div>
 
       <div
-        className={`relative flex flex-col gap-4 rounded-16 bg-bg-container px-4 pt-4 pb-3 ${CARD_CORNER[mode]}`}
+        className={`absolute inset-x-0 top-11 flex h-[280px] flex-col overflow-hidden rounded-16 bg-bg-container px-4 pt-4 pb-3 ${CARD_CORNER[mode]}`}
       >
-        <div className="flex items-center justify-between gap-2">
-          {vehicleSelectable && (
-            <VehicleCapsule value={vehicle} onChange={onVehicleChange} />
-          )}
-          {capacityInfoState === 'pickup-required' && (
-            <span
-              className={`flex items-center rounded-4 bg-gradient-to-r from-[#f9f9f9] to-transparent p-1.5 text-caption whitespace-nowrap text-text-secondary ${
-                premium ? 'w-full' : ''
-              }`}
-            >
-              填取件地址可查接单时间
-            </span>
-          )}
-          {capacityInfoState === 'visible' && (
-            <span
-              className={`flex items-center gap-1 rounded-4 bg-gradient-to-r from-accent-secondary to-transparent p-1.5 text-caption ${
-                premium ? 'w-full' : ''
-              }`}
-            >
-              <img src={iconFlash} alt="" className="size-4" />
-              <span className="text-text-secondary">
-                {premium && '附近有234位骑手, '}预计
-                <span className="text-accent-primary">1分钟</span>内接单
+        <div className="flex flex-col gap-2">
+          <div className="flex h-8 items-center justify-between gap-2">
+            {vehicleSelectable && (
+              <VehicleCapsule value={vehicle} onChange={onVehicleChange} />
+            )}
+            {capacityInfoState === 'pickup-required' && (
+              <span
+                className={`flex items-center rounded-4 bg-gradient-to-r from-[#f9f9f9] to-transparent p-1.5 text-caption whitespace-nowrap text-text-secondary ${
+                  premium ? 'w-full' : ''
+                }`}
+              >
+                填取件地址可查接单时间
               </span>
-            </span>
-          )}
-        </div>
+            )}
+            {capacityInfoState === 'visible' && (
+              <span
+                className={`flex items-center gap-1 rounded-4 bg-gradient-to-r from-accent-secondary to-transparent p-1.5 text-caption ${
+                  premium ? 'w-full' : ''
+                }`}
+              >
+                <img src={iconFlash} alt="" className="size-4" />
+                <span className="text-text-secondary">
+                  {premium && '附近有234位骑手, '}预计
+                  <span className="text-accent-primary">1分钟</span>内接单
+                </span>
+              </span>
+            )}
+          </div>
 
-        <div className="relative flex flex-col gap-4">
-          <span className="absolute top-9 left-[11px] h-12 border-l border-dashed border-text-quaternary" />
-          <img
-            src={iconSwap}
-            alt=""
-            className="absolute top-[52px] left-[3px] size-4"
-          />
-          <div className="flex items-center gap-2.5">
-            <RoleBadge role="pickup" premium={premium} />
-            <div
-              key={`pickup-${addressSwapVersion}`}
-              className={`flex min-w-0 flex-1 ${
-                addressSwapVersion > 0
-                  ? 'home-address-swap-from-bottom'
-                  : ''
-              }`}
-            >
-              <AddressField
-                address={pickup}
-                placeholder="从哪里取件？"
-                onClick={() => onEditAddress('pickup')}
-              />
+          <div className="relative flex flex-col gap-4">
+            <span className="absolute top-9 left-[11px] h-12 border-l border-dashed border-text-quaternary" />
+            <img
+              src={iconSwap}
+              alt=""
+              className="absolute top-[52px] left-[3px] size-4"
+            />
+            <div className="flex items-center gap-2.5">
+              <RoleBadge role="pickup" premium={premium} />
+              <div
+                key={`pickup-${addressSwapVersion}`}
+                className={`flex min-w-0 flex-1 ${
+                  addressSwapVersion > 0
+                    ? 'home-address-swap-from-bottom'
+                    : ''
+                }`}
+              >
+                <AddressField
+                  address={pickup}
+                  placeholder="从哪里取件？"
+                  onClick={() => onEditAddress('pickup')}
+                />
+              </div>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <RoleBadge role="delivery" premium={premium} />
+              <div
+                key={`delivery-${addressSwapVersion}`}
+                className={`flex min-w-0 flex-1 ${
+                  addressSwapVersion > 0 ? 'home-address-swap-from-top' : ''
+                }`}
+              >
+                <AddressField
+                  address={delivery}
+                  placeholder="送到哪里？"
+                  onClick={() => onEditAddress('delivery')}
+                />
+              </div>
             </div>
           </div>
-          <div className="flex items-center gap-2.5">
-            <RoleBadge role="delivery" premium={premium} />
-            <div
-              key={`delivery-${addressSwapVersion}`}
-              className={`flex min-w-0 flex-1 ${
-                addressSwapVersion > 0 ? 'home-address-swap-from-top' : ''
-              }`}
-            >
-              <AddressField
-                address={delivery}
-                placeholder="送到哪里？"
-                onClick={() => onEditAddress('delivery')}
-              />
-            </div>
-          </div>
         </div>
 
-        <PriceBar mode={mode} onSubmit={onSubmit} />
+        <div className="mt-4 h-12">
+          <PriceBar mode={mode} onSubmit={onSubmit} />
+        </div>
 
-        <p className="flex items-center justify-center gap-1 text-caption-sm text-text-tertiary">
+        <p className="mt-3 flex items-center justify-center gap-1 text-caption-sm leading-none text-text-tertiary">
           <img src={iconPrivacy} alt="" className="size-4" />
           隐藏真实手机号码，保护您的隐私
         </p>

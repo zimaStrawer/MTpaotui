@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import { SERVICE_QUOTES } from '../../data/mock/service-quotes';
-import { resolveDeliveryService } from '../../data/models/order';
+import {
+  resolveDeliveryService,
+  resolveItemProofServiceVariant,
+} from '../../data/models/order';
 import type { TrackingStage } from '../../data/models/tracking';
 import { orderRepository } from '../../data/repositories';
 import { useOrderDraftStore } from '../../store/order-draft-store';
@@ -64,6 +67,10 @@ export function TrackingPage() {
   }
 
   const serviceKey = resolveDeliveryService(serviceMode, vehicle);
+  const serviceVariant = resolveItemProofServiceVariant(
+    serviceMode,
+    item.insurance,
+  );
   const feeYuan = SERVICE_QUOTES[serviceKey].feeYuan;
 
   const showNotice = (message: string) =>
@@ -127,6 +134,7 @@ export function TrackingPage() {
         <TrackingMap
           stage={stage}
           pickupCode={receipt.courier.pickupCode ?? '----'}
+          serviceVariant={serviceVariant}
           bookmarked={bookmarked}
           onBack={commonActions.onBack}
           onBookmark={commonActions.onBookmark}

@@ -43,6 +43,7 @@
     sans-serif;
   --font-number: 'SF Pro', 'SF Pro Text', -apple-system, system-ui, sans-serif;
   --font-brand: 'Meituan Type', 'PingFang SC', system-ui, sans-serif;
+  --font-decorative: 'Meituan Type', 'PingFang SC', system-ui, sans-serif;
 
   /* ── 字号(层级靠字重递进,不靠字号堆砌)── */
   --text-headline: 22px;
@@ -65,6 +66,8 @@
   --text-caption-sm--line-height: 1.5;
   --text-caption-xs: 10px;
   --text-caption-xs--line-height: 1.5;
+  --text-decorative: 12px;
+  --text-decorative--line-height: 17px;
   --text-number: 14px;
   --text-number--line-height: 1.2;
   --text-number-sm: 12px;

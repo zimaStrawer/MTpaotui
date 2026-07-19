@@ -6,6 +6,7 @@ import iconChevron from '../../assets/nav/icon-chevron.svg';
 import iconAnnounce from '../../assets/tracking/icon-announce.svg';
 import courierScooter from '../../assets/tracking/courier-scooter.png';
 import mapRain from '../../assets/tracking/map-rain.png';
+import type { ItemProofServiceVariant } from '../../data/models/order';
 import type { TrackingStage } from '../../data/models/tracking';
 import { ItemProofCard } from './ItemProofCard';
 import { TrackingNavigation } from './TrackingNavigation';
@@ -140,6 +141,7 @@ function CourierStatusBubble({ stage }: { stage: MovingStage }) {
 interface TrackingMapProps {
   bookmarked: boolean;
   pickupCode: string;
+  serviceVariant: ItemProofServiceVariant;
   stage: ActiveTrackingStage;
   onBack: () => void;
   onBookmark: () => void;
@@ -151,6 +153,7 @@ interface TrackingMapProps {
 export function TrackingMap({
   bookmarked,
   pickupCode,
+  serviceVariant,
   stage,
   onBack,
   onBookmark,
@@ -184,6 +187,7 @@ export function TrackingMap({
         <div className="absolute inset-x-2 top-[calc(57px+env(safe-area-inset-top))] z-10">
           <ItemProofCard
             pickupCode={pickupCode}
+            serviceVariant={serviceVariant}
             stage={stage}
             onItemIssue={onItemIssue}
           />

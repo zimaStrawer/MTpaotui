@@ -55,7 +55,7 @@ typography:
   number-sm:         { fontFamily: "SF Pro", fontSize: 12px, fontWeight: 400, lineHeight: 1.2, letterSpacing: 0 }
   number-xs:         { fontFamily: "SF Pro", fontSize: 11px, fontWeight: 400, lineHeight: 1.2, letterSpacing: 0 }
   # 装饰 Decorative
-  decorative:        { fontFamily: "Alimama ShuHeiTi", fontSize: 12px, fontWeight: 700, lineHeight: 1.3, letterSpacing: 0 }
+  decorative:        { fontFamily: "Meituan Type", fontSize: 12px, fontWeight: 700, lineHeight: 17px, letterSpacing: 0 }
 
 rounded:
   "2": 2px      # 角标、细节
@@ -214,7 +214,7 @@ components:
 - **PingFang SC** — 中文主字体。字重轴取 Regular(400)/ Medium(500)/ Semibold(600) 三档,层级靠字重递进。
 - **SF Pro** — 数字与拉丁字符专用(价格、时间、里程、倒计时),高信息密度场景。
 - **Meituan Type** — 品牌字,仅用于导航栏品牌标题(`title-brand`)。
-- **Alimama ShuHeiTi** — 装饰字,仅用于营销/装饰标签(`decorative`)。
+- **Meituan Type Bold** — 装饰字,用于营销/装饰标签(`decorative`)。
 
 > **替代字体**:无 PingFang / Meituan Type 授权时,中文用 **Noto Sans SC**;数字保留 SF Pro 或退回 system-ui;装饰字可用任意粗黑体近似。
 
@@ -232,7 +232,7 @@ components:
 | `{typography.caption-xs-strong}` / `{typography.caption-xs}` | PingFang | 10 | 500 / 400 | 1.5 | 极小注释(下限字号) |
 | `{typography.number}` / `{typography.number-sm}` / `{typography.number-xs}` | SF Pro | 14 / 12 / 11 | 500 / 400 / 400 | 1.2 | 价格/时间/里程等数字 |
 | `{typography.display}` | SF Pro | 24 | 700 | 20px | 收货码、实付款等展示数字 |
-| `{typography.decorative}` | Alimama | 12 | 700 | 1.3 | 装饰标签 |
+| `{typography.decorative}` | Meituan Type | 12 | 700 | 17px | 装饰标签 |
 
 ### 原则 Principles
 - **层级靠字重、不靠字号堆砌。** 同为 12px 的 `caption-strong`(500)与 `caption`(400)通过字重拉开主次,避免字号碎片化。

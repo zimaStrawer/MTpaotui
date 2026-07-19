@@ -48,12 +48,11 @@ export function PriceBar({ mode, onSubmit }: PriceBarProps) {
         </span>
         <span className="text-caption font-medium text-text-secondary">起</span>
       </span>
-      <span className="absolute top-4 left-[108px] z-10 flex h-5 items-center rounded-tl-10 rounded-tr-10 rounded-br-10 bg-alert px-2 text-caption-sm whitespace-nowrap text-bg-container">
+      <span className="absolute top-4 left-[96px] z-10 flex h-5 items-center rounded-tl-10 rounded-tr-10 rounded-br-10 bg-alert px-2 text-caption-sm whitespace-nowrap text-bg-container">
         最高减20元
       </span>
       <span className="absolute inset-y-0 right-0 z-10 flex w-[100px] items-center justify-center">
-        {/* 去下单为装饰字体(DingTalk JinBuTi),无授权时以粗体近似 */}
-        <span className="text-[22px] font-bold tracking-[-1.76px] text-text-primary">
+        <span className="text-title font-semibold text-text-primary">
           去下单
         </span>
       </span>

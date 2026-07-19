@@ -1,5 +1,6 @@
 import { RoleBadge } from '../../components/RoleBadge';
 import iconChevron from '../../assets/nav/icon-chevron.svg';
+import logoExpress from '../../assets/order/logo-express.svg';
 import iconExpand from '../../assets/tracking/icon-expand.svg';
 import iconHelp from '../../assets/tracking/icon-help.svg';
 import logoInsurance from '../../assets/tracking/logo-insurance.svg';
@@ -11,6 +12,59 @@ import {
   TRACKING_STAGE_FLOW,
   type TrackingStage,
 } from '../../data/models/tracking';
+import type { ItemProofServiceVariant } from '../../data/models/order';
+
+const SERVICE_HEADER_COLOR: Record<ItemProofServiceVariant, string> = {
+  standard: 'text-brand-secondary',
+  insurance: 'text-insurance-secondary',
+  express: 'text-accent-secondary',
+};
+
+function ProofServiceHeader({
+  variant,
+}: {
+  variant: ItemProofServiceVariant;
+}) {
+  return (
+    <>
+      <svg
+        aria-hidden
+        viewBox="0 0 256 29"
+        preserveAspectRatio="none"
+        className={`pointer-events-none absolute top-[-2px] left-0 h-[29px] w-[256px] ${SERVICE_HEADER_COLOR[variant]}`}
+      >
+        <path
+          d="M0 16C0 7.16344 7.16344 0 16 0H216V29H0V16Z"
+          fill="currentColor"
+        />
+        <path
+          d="M216 0H228.268C235.72 0 242.186 5.14487 243.859 12.4067L244.877 16.8203C245.909 21.2986 248.816 25.1168 252.859 27.3022L256 29H216V0Z"
+          fill="currentColor"
+        />
+      </svg>
+
+      {variant === 'express' && (
+        <img
+          src={logoExpress}
+          alt="1对1急送"
+          className="absolute top-0.5 left-4 h-[22px] w-[75px]"
+        />
+      )}
+      {variant === 'insurance' && (
+        <img
+          src={logoInsurance}
+          alt="省心送保价服务"
+          className="absolute top-0 left-4 h-[25px] w-[92px]"
+        />
+      )}
+      {variant === 'standard' && (
+        <span className="absolute top-[3px] left-4 flex h-5 w-14 items-center text-body leading-5 font-semibold whitespace-nowrap text-text-primary">
+          普通帮送
+        </span>
+      )}
+    </>
+  );
+}
 
 interface ProofThumbnailProps {
   confirmed: boolean;
@@ -43,6 +97,7 @@ function ProofThumbnail({ confirmed, role, src }: ProofThumbnailProps) {
 
 interface ItemProofCardProps {
   pickupCode: string;
+  serviceVariant: ItemProofServiceVariant;
   stage: TrackingStage;
   onItemIssue: () => void;
 }
@@ -50,6 +105,7 @@ interface ItemProofCardProps {
 /** 物品凭证三变体(node 1541:28177):待取件 / 待收件 / 已送达。 */
 export function ItemProofCard({
   pickupCode,
+  serviceVariant,
   stage,
   onItemIssue,
 }: ItemProofCardProps) {
@@ -61,18 +117,7 @@ export function ItemProofCard({
   return (
     <section className="relative h-[102px] w-full overflow-hidden rounded-16 bg-bg-container">
       <div className="absolute inset-x-0 top-0 h-[27px] bg-bg-page" />
-      <div
-        className="absolute top-[-2px] left-0 h-[29px] max-w-[256px] rounded-tl-16 bg-insurance-secondary"
-        style={{
-          width: 'calc(100% - 103px)',
-          borderTopRightRadius: '21px 29px',
-        }}
-      />
-      <img
-        src={logoInsurance}
-        alt="省心送保价服务"
-        className="absolute top-0 left-4 h-[25px] w-[92px]"
-      />
+      <ProofServiceHeader variant={serviceVariant} />
       <button
         type="button"
         onClick={onItemIssue}
