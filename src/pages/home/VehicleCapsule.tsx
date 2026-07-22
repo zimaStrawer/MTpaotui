@@ -30,7 +30,7 @@ export function VehicleCapsule({ value, onChange }: VehicleCapsuleProps) {
             type="button"
             onClick={() => onChange(option.vehicle)}
             aria-pressed={selected}
-            className="relative z-10 flex h-7 items-center justify-center gap-1 rounded-full px-3"
+            className="relative z-10 flex h-7 items-center justify-center gap-1 rounded-full px-3 max-[374px]:px-1.5"
           >
             <span
               aria-hidden

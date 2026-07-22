@@ -23,7 +23,7 @@ export function BusinessTabs({ onUnavailableSelect }: BusinessTabsProps) {
             }}
             className={
               active
-                ? 'flex items-center gap-1 rounded-full bg-bg-container py-0.5 pr-4 pl-3'
+                ? 'flex shrink-0 items-center rounded-full bg-bg-container px-[13px] py-0.5'
                 : 'flex h-9 w-[90px] items-center justify-center rounded-full bg-divider'
             }
           >

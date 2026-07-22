@@ -71,6 +71,21 @@
     animation-name: home-address-swap-from-top;
   }
 
+  @keyframes home-hero-slogan-slide-left {
+    from {
+      transform: translateX(16px);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  .home-hero-slogan-slide-left {
+    animation: home-hero-slogan-slide-left 300ms
+      cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    will-change: transform;
+  }
+
   @keyframes tracking-sonar-pulse {
     0% {
       opacity: 0;
@@ -111,7 +126,8 @@
     }
 
     .home-address-swap-from-bottom,
-    .home-address-swap-from-top {
+    .home-address-swap-from-top,
+    .home-hero-slogan-slide-left {
       animation: none;
     }
 

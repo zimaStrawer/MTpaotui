@@ -33,7 +33,7 @@ interface InsurancePanelProps {
 type PanelState = 'reminder' | 'suggest' | 'benefit';
 
 const chipBase =
-  'relative flex h-16 w-30 shrink-0 flex-col justify-center gap-1 overflow-hidden rounded-12 border px-2 text-left';
+  'relative flex h-[65px] w-30 shrink-0 flex-col justify-center gap-1 overflow-hidden rounded-12 border px-2 text-left';
 const chipSelected = 'border-brand-primary bg-brand-secondary';
 const chipIdle = 'border-text-quaternary bg-bg-container';
 
@@ -46,7 +46,7 @@ export function InsurancePanel({ value, fragile, onChange }: InsurancePanelProps
     onChange(value === tier ? 'none' : tier);
 
   return (
-    <div className="relative w-full overflow-hidden rounded-8 bg-bg-page p-3">
+    <div className="relative h-[139px] w-full shrink-0 overflow-hidden rounded-8 bg-bg-page px-3 pt-2.5 pb-3">
       <div className="flex items-center gap-1">
         <img
           src={logoShengxinsong}
@@ -69,7 +69,7 @@ export function InsurancePanel({ value, fragile, onChange }: InsurancePanelProps
           未保价最高赔付<span className="text-accent-primary">5倍</span>配送费
         </p>
       )}
-      <div className="scrollbar-hidden mt-2 flex gap-2 overflow-x-auto pb-0.5">
+      <div className="scrollbar-hidden mt-1.5 flex gap-2 overflow-x-auto">
         {INSURANCE_OPTIONS.map((option) => {
           const selected = value === option.tier;
           return (

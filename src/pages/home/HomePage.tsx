@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import heroBg from '../../assets/home/hero-bg.png';
-import marketingCard from '../../assets/home/marketing-card.png';
 import {
   Toast,
   UNAVAILABLE_FEATURE_MESSAGE,
@@ -15,12 +13,14 @@ import { useOrderDraftStore } from '../../store/order-draft-store';
 import { AdditionalServices } from './AdditionalServices';
 import { BottomTabBar } from './BottomTabBar';
 import { BusinessTabs } from './BusinessTabs';
+import { HeroPromo } from './HeroPromo';
+import { HomeBrandMark } from './HomeBrandMark';
 import { HomeNavBar } from './HomeNavBar';
 import { ServiceCard } from './ServiceCard';
 
 /**
- * 首页(frame 913:7841，顶部运营 1674:33164)。品牌视觉区 / 服务宫格 / 营销卡 / TabBar
- * 顶部运营与营销卡保留设计稿图片，其余交互区域使用独立组件。
+ * 首页(frame 913:7841)。顶部运营区使用左右锚定的独立视觉图层，
+ * 服务宫格、品牌标识与 TabBar 保持现有交互组件。
  */
 export function HomePage() {
   const navigate = useNavigate();
@@ -61,45 +61,40 @@ export function HomePage() {
   };
 
   return (
-    <div className="relative mx-auto min-h-dvh max-w-md pb-28">
-      <img
-        src={heroBg}
-        alt=""
-        className="absolute top-0 left-0 w-full"
-      />
-      <div className="relative flex flex-col pt-[env(safe-area-inset-top)]">
-        <HomeNavBar />
-        <div className="mt-2">
-          <BusinessTabs
-            onUnavailableSelect={showUnavailableNotice}
-          />
-        </div>
-        {/* 品牌口号与吉祥物区域(在 hero 整图内),布局级留白 */}
-        <div className="h-[104px]" />
-        <main className="flex flex-col gap-4 px-2">
-          <ServiceCard
-            mode={serviceMode}
-            pickup={pickup}
-            delivery={delivery}
-            vehicle={vehicle}
-            capacityInfoState={capacityInfoState}
-            onModeChange={setServiceMode}
-            onVehicleChange={setVehicle}
-            onEditAddress={handleEditAddress}
-            onSubmit={handleSubmit}
-          />
-          <div className="flex flex-col gap-2">
-            <AdditionalServices
-              onUnavailableSelect={showUnavailableNotice}
-            />
-            <img
-              src={marketingCard}
-              alt="企业跑腿优惠 / 充值赠券"
-              className="w-full rounded-16"
+    <div className="relative mx-auto min-h-dvh max-w-md overflow-x-hidden bg-bg-page pb-28">
+      <section
+        className={`relative overflow-hidden rounded-b-[20px] transition-colors duration-300 motion-reduce:transition-none ${
+          serviceMode === 'express' ? 'bg-[#fde1cd]' : 'bg-[#fef775]'
+        }`}
+      >
+        <div className="relative flex flex-col pt-[env(safe-area-inset-top)]">
+          <div className="relative z-10">
+            <HomeNavBar />
+          </div>
+          <div className="relative z-10 mt-2">
+            <BusinessTabs onUnavailableSelect={showUnavailableNotice} />
+          </div>
+          <HeroPromo mode={serviceMode} />
+          <div className="relative z-10 px-2">
+            <ServiceCard
+              mode={serviceMode}
+              pickup={pickup}
+              delivery={delivery}
+              vehicle={vehicle}
+              capacityInfoState={capacityInfoState}
+              onModeChange={setServiceMode}
+              onVehicleChange={setVehicle}
+              onEditAddress={handleEditAddress}
+              onSubmit={handleSubmit}
             />
           </div>
-        </main>
-      </div>
+          <div className="h-2" />
+        </div>
+      </section>
+      <main className="mt-2 px-2">
+        <AdditionalServices onUnavailableSelect={showUnavailableNotice} />
+        <HomeBrandMark />
+      </main>
       <div className="fixed inset-x-0 bottom-0 z-10 mx-auto max-w-md">
         <BottomTabBar onUnavailableSelect={showUnavailableNotice} />
       </div>

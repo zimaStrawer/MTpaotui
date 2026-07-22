@@ -40,9 +40,9 @@ const TAB_INDICATOR_ASSET: Record<ServiceMode, string> = {
   express: tabSelectedExpress,
 };
 const TAB_INDICATOR_POSITION: Record<ServiceMode, string> = {
-  send: 'left-0 w-[132px]',
-  pick: 'left-[107px] w-[145px]',
-  express: 'left-[227px] w-[132px]',
+  send: 'left-0 w-[36.77%]',
+  pick: 'left-[29.81%] w-[40.39%]',
+  express: 'left-[63.23%] w-[36.77%]',
 };
 
 const CARD_CORNER: Record<ServiceMode, string> = {
@@ -89,12 +89,14 @@ export function ServiceCard({
         </span>
       </div>
 
-      <div className="relative grid h-11 grid-cols-[120px_119px_120px]">
+      <div className="relative grid h-11 grid-cols-[120fr_119fr_120fr]">
         <img
           aria-hidden
           src={TAB_INDICATOR_ASSET[mode]}
           alt=""
-          className={`pointer-events-none absolute top-0 h-11 transition-[left,width] duration-300 ease-out will-change-[left,width] motion-reduce:transition-none ${TAB_INDICATOR_POSITION[mode]}`}
+          className={`pointer-events-none absolute top-0 h-11 transition-[left,width] duration-300 ease-out will-change-[left,width] motion-reduce:transition-none ${TAB_INDICATOR_POSITION[mode]} ${
+            mode === 'express' ? '-scale-y-100 rotate-180' : ''
+          }`}
         />
         {TABS.map((tab) => {
           const active = mode === tab;
@@ -131,7 +133,7 @@ export function ServiceCard({
         className={`absolute inset-x-0 top-11 flex h-[280px] flex-col overflow-hidden rounded-16 bg-bg-container px-4 pt-4 pb-3 ${CARD_CORNER[mode]}`}
       >
         <div className="flex flex-col gap-2">
-          <div className="flex h-8 items-center justify-between gap-2">
+          <div className="flex h-8 items-center justify-between gap-2 max-[374px]:gap-0">
             {vehicleSelectable && (
               <VehicleCapsule value={vehicle} onChange={onVehicleChange} />
             )}

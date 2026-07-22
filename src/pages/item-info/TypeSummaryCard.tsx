@@ -36,7 +36,7 @@ export function TypeSummaryCard({
   const categoryIcon = CATEGORY_ICON[category];
 
   return (
-    <section className="flex w-full flex-col gap-3 rounded-16 bg-bg-container px-4 py-3">
+    <section className="flex h-[276px] w-full flex-col gap-3 overflow-hidden rounded-16 bg-bg-container px-4 py-3">
       <div className="flex flex-col gap-2">
         <FieldHeader
           label="类型"
@@ -84,46 +84,48 @@ export function TypeSummaryCard({
         <ProhibitedNote />
       </div>
 
-      <div className="flex items-center gap-3">
-        {category === '鲜花' && (
-          <span className="relative shrink-0">
-            <img
-              src={photoBouquet}
-              alt="物品照片"
-              className="size-12 rounded-8 object-cover"
-            />
-            <span className="absolute -top-1.5 -right-1.5 flex size-3.5 items-center justify-center rounded-full bg-bg-black">
-              <span
-                aria-hidden
-                className="size-3 bg-bg-container"
-                style={{
-                  WebkitMaskImage: `url("${iconClose}")`,
-                  maskImage: `url("${iconClose}")`,
-                  WebkitMaskPosition: 'center',
-                  maskPosition: 'center',
-                  WebkitMaskRepeat: 'no-repeat',
-                  maskRepeat: 'no-repeat',
-                  WebkitMaskSize: 'contain',
-                  maskSize: 'contain',
-                }}
+      <div className="flex h-[195px] shrink-0 flex-col gap-2">
+        <div className="flex h-12 shrink-0 items-center gap-3">
+          {category === '鲜花' && (
+            <span className="relative shrink-0">
+              <img
+                src={photoBouquet}
+                alt="物品照片"
+                className="size-12 rounded-8 object-cover"
               />
+              <span className="absolute -top-1.5 -right-1.5 flex size-3.5 items-center justify-center rounded-full bg-bg-black">
+                <span
+                  aria-hidden
+                  className="size-3 bg-bg-container"
+                  style={{
+                    WebkitMaskImage: `url("${iconClose}")`,
+                    maskImage: `url("${iconClose}")`,
+                    WebkitMaskPosition: 'center',
+                    maskPosition: 'center',
+                    WebkitMaskRepeat: 'no-repeat',
+                    maskRepeat: 'no-repeat',
+                    WebkitMaskSize: 'contain',
+                    maskSize: 'contain',
+                  }}
+                />
+              </span>
             </span>
-          </span>
-        )}
-        <textarea
-          value={note}
-          onChange={(event) => onNoteChange(event.target.value)}
-          placeholder="可备注物品描述、配送要求等"
-          rows={2}
-          className="h-12 flex-1 resize-none rounded-8 bg-bg-page p-2 text-caption-sm text-text-primary placeholder:text-text-tertiary focus:outline-none"
+          )}
+          <textarea
+            value={note}
+            onChange={(event) => onNoteChange(event.target.value)}
+            placeholder="可备注物品描述、配送要求等"
+            rows={2}
+            className="h-12 flex-1 resize-none rounded-8 bg-bg-page p-2 text-caption-sm text-text-primary placeholder:text-text-tertiary focus:outline-none"
+          />
+        </div>
+
+        <InsurancePanel
+          value={insurance}
+          fragile={isFragileCategory(category)}
+          onChange={onInsuranceChange}
         />
       </div>
-
-      <InsurancePanel
-        value={insurance}
-        fragile={isFragileCategory(category)}
-        onChange={onInsuranceChange}
-      />
     </section>
   );
 }
