@@ -1,133 +1,132 @@
 ---
-version: alpha
+version: beta
 name: Meituan-Errand-Redesign
-description: "一套以'确定性'而非'速度'为核心的跑腿代办 App 设计系统。品牌以美团黄(#FEE42B)为唯一强调锚点,承载在一整套统一色相(H220)的蓝调中性灰之上——蓝调让大面积浅色界面更干净、长时间阅读更护眼。文字层级不靠加粗堆砌,而靠 PingFang 的字重(Regular / Medium / Semibold)递进;数字与英文交由 SF Pro,承担价格、时间、里程等高信息密度场景。整套系统服务于一个判断:把独一无二的物品托付给陌生人会产生焦虑,界面要回答的是'物可见、人可信、事可感'的信任三角,而不是复制打车软件的地图优先范式。"
+description: "项目启动阶段从 Figma Variables、Text Styles 与组件库提取的设计系统说明。第一部分提供可直接用于工程的具体 Token，第二部分解释 Token 语义、组件固有属性和通用还原原则，不绑定具体页面。"
 
-# ─────────────────────────────────────────────
-# TOKENS
-# ─────────────────────────────────────────────
-
+# PART 1 · MACHINE-READABLE DESIGN SYSTEM
+# 本区是本项目具体参数的单一来源；正文不重复抄写相同数值。
 colors:
   # 主题色 Brand
-  brand-primary: "#FEE42B"     # 品牌主色 · 美团黄
-  brand-secondary: "#FFFBE4"   # 品牌浅底
-  accent-primary: "#F58B1D"    # 强调橙 · 价格/时间/紧迫
-  accent-secondary: "#FFF5E9"  # 强调橙浅底
+  brand-primary: "#FEE42B"
+  brand-secondary: "#FFFBE4"
+  accent-primary: "#F58B1D"
+  accent-secondary: "#FFF5E9"
 
-  # 中性色 Neutral (统一色相 H220,浅→深饱和度递增)
-  text-primary: "#1B1D21"      # 主文字
-  text-secondary: "#595D65"    # 次要文字
-  text-tertiary: "#8C9098"     # 三级/占位文字
-  text-quaternary: "#DDE0E6"   # 四级/失效文字、浅填充
-  bg-page: "#F4F5F7"           # 页面底
-  bg-container: "#FBFCFE"      # 卡片/容器底
-  bg-black: "#282B31"          # 深色底/深色卡片、遮罩基色
-  divider: "rgba(27,29,33,0.05)"   # 分隔线/描边 (#1B1D21 @5%)
+  # 中性色 Neutral
+  text-primary: "#1B1D21"
+  text-secondary: "#595D65"
+  text-tertiary: "#8C9098"
+  text-quaternary: "#DDE0E6"
+  bg-page: "#F4F5F7"
+  bg-container: "#FBFCFE"
+  bg-black: "#282B31"
+  divider: "rgba(27,29,33,0.05)"
 
   # 辅助色 Functional
-  decorative-primary: "#804D30"    # 插画/装饰-棕
-  decorative-secondary: "#FDD4B8"  # 插画/装饰-肤
-  decorative-tertiary: "#FFF4EE"   # 插画/装饰-肤浅
-  alert: "#FF090D"                 # 提醒(功能语义色,非通用 error)
-  insurance-primary: "#079968"     # 保价(功能语义色,非通用 success)
-  insurance-secondary: "#E7FFF2"   # 保价浅底
+  decorative-primary: "#804D30"
+  decorative-secondary: "#FDD4B8"
+  decorative-tertiary: "#FFF4EE"
+  alert: "#FF090D"
+  insurance-primary: "#079968"
+  insurance-secondary: "#E7FFF2"
 
 typography:
-  # 标题 Title
-  headline:          { fontFamily: "PingFang SC", fontSize: 22px, fontWeight: 500, lineHeight: 1.4, letterSpacing: 0 }
-  title:             { fontFamily: "PingFang SC", fontSize: 18px, fontWeight: 600, lineHeight: 1.4, letterSpacing: 0 }
-  title-brand:       { fontFamily: "Meituan Type", fontSize: 20px, fontWeight: 400, lineHeight: 1.4, letterSpacing: 0 }
-  # 标签 Tab
-  tab-active:        { fontFamily: "PingFang SC", fontSize: 16px, fontWeight: 600, lineHeight: 1.4, letterSpacing: 0 }
-  tab:               { fontFamily: "PingFang SC", fontSize: 16px, fontWeight: 400, lineHeight: 1.4, letterSpacing: 0 }
-  # 正文 Body
-  body:              { fontFamily: "PingFang SC", fontSize: 14px, fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 }
-  body-secondary:    { fontFamily: "PingFang SC", fontSize: 14px, fontWeight: 400, lineHeight: 1.5, letterSpacing: 0 }
-  # 注释 Caption
+  # 中文标题
+  headline:    { fontFamily: "PingFang SC", fontSize: 22px, fontWeight: 500, lineHeight: 1.4, letterSpacing: 0 }
+  title:       { fontFamily: "PingFang SC", fontSize: 18px, fontWeight: 600, lineHeight: 1.4, letterSpacing: 0 }
+  title-sm:    { fontFamily: "PingFang SC", fontSize: 16px, fontWeight: 600, lineHeight: 1.4, letterSpacing: 0 }
+  title-max:   { fontFamily: "PingFang SC", fontSize: 30px, fontWeight: 600, lineHeight: 1.4, letterSpacing: 0 }
+  title-brand: { fontFamily: "Meituan Type", fontSize: 20px, fontWeight: 400, lineHeight: 1.4, letterSpacing: 0 }
+
+  # 页签
+  tab-active: { fontFamily: "PingFang SC", fontSize: 16px, fontWeight: 600, lineHeight: 1.4, letterSpacing: 0 }
+  tab:        { fontFamily: "PingFang SC", fontSize: 16px, fontWeight: 400, lineHeight: 1.4, letterSpacing: 0 }
+
+  # 正文
+  body:           { fontFamily: "PingFang SC", fontSize: 14px, fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 }
+  body-secondary: { fontFamily: "PingFang SC", fontSize: 14px, fontWeight: 400, lineHeight: 1.5, letterSpacing: 0 }
+
+  # 注释
   caption-strong:    { fontFamily: "PingFang SC", fontSize: 12px, fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 }
   caption:           { fontFamily: "PingFang SC", fontSize: 12px, fontWeight: 400, lineHeight: 1.5, letterSpacing: 0 }
   caption-icon:      { fontFamily: "PingFang SC", fontSize: 12px, fontWeight: 600, lineHeight: 1.5, letterSpacing: 0 }
   caption-sm:        { fontFamily: "PingFang SC", fontSize: 11px, fontWeight: 400, lineHeight: 1.5, letterSpacing: 0 }
   caption-xs-strong: { fontFamily: "PingFang SC", fontSize: 10px, fontWeight: 500, lineHeight: 1.5, letterSpacing: 0 }
   caption-xs:        { fontFamily: "PingFang SC", fontSize: 10px, fontWeight: 400, lineHeight: 1.5, letterSpacing: 0 }
-  # 数字 Number (SF Pro)
-  number:            { fontFamily: "SF Pro", fontSize: 14px, fontWeight: 500, lineHeight: 1.2, letterSpacing: 0 }
-  number-sm:         { fontFamily: "SF Pro", fontSize: 12px, fontWeight: 400, lineHeight: 1.2, letterSpacing: 0 }
-  number-xs:         { fontFamily: "SF Pro", fontSize: 11px, fontWeight: 400, lineHeight: 1.2, letterSpacing: 0 }
-  # 装饰 Decorative
-  decorative:        { fontFamily: "Meituan Type", fontSize: 12px, fontWeight: 700, lineHeight: 17px, letterSpacing: 0 }
+
+  # 数字 / 英文
+  number:     { fontFamily: "SF Pro", fontSize: 14px, fontWeight: 500, lineHeight: 1.2, letterSpacing: 0 }
+  number-sm:  { fontFamily: "SF Pro", fontSize: 12px, fontWeight: 400, lineHeight: 1.2, letterSpacing: 0 }
+  number-xs:  { fontFamily: "SF Pro", fontSize: 11px, fontWeight: 400, lineHeight: 1.2, letterSpacing: 0 }
+  number-lg:  { fontFamily: "SF Pro", fontSize: 16px, fontWeight: 500, lineHeight: 1.2, letterSpacing: 0 }
+  display:    { fontFamily: "SF Pro", fontSize: 24px, fontWeight: 700, lineHeight: 20px, letterSpacing: 0 }
+  display-lg: { fontFamily: "SF Pro", fontSize: 32px, fontWeight: 500, lineHeight: 1, letterSpacing: 0 }
+  display-xl: { fontFamily: "SF Pro", fontSize: 36px, fontWeight: 700, lineHeight: 1, letterSpacing: 0 }
+
+  # 装饰
+  decorative: { fontFamily: "Meituan Type", fontSize: 12px, fontWeight: 700, lineHeight: 17px, letterSpacing: 0 }
 
 rounded:
-  "2": 2px      # 角标、细节
-  "4": 4px      # 小标签、chip
-  "6": 6px      # 输入框、列表项
-  "8": 8px      # 卡片、图片框
+  "2": 2px
+  "4": 4px
+  "6": 6px
+  "8": 8px
   "10": 10px
-  "12": 12px    # 大卡片、弹层
-  "16": 16px    # 大图容器、底部面板
+  "12": 12px
+  "16": 16px
   "20": 20px
-  full: 9999px  # 胶囊按钮、圆形头像/角标
+  full: 9999px
 
 spacing:
   "2": 2px
-  "4": 4px      # 基础栅格(4 的体系)
+  "4": 4px
   "6": 6px
-  "8": 8px      # ★ 全局基准:页面左右边距 & 并列组件上下间距
-  "10": 10px    # 美团常用节奏
+  "8": 8px
+  "10": 10px
   "12": 12px
   "16": 16px
   "20": 20px
   "24": 24px
 
-# 从实际组件库(Figma node 960:7565)提取,非推测。仅列主要具名组件。
+# 初始组件提取只记录已确认的稳定外层属性。
+# 整体尺寸与 Fixed/Hug/Fill 模式当时未被系统记录，不能在此反推或猜测。
+# 复杂组件不得使用单一 typography 字段；文字样式由子文字槽位引用 typography Token。
 components:
-  # 框架 Frame
   NavigationBar:
     textColor: "{colors.text-primary}"
-  Tab-Bar:                  # 底部标签栏
+  Tab-Bar:
     backgroundColor: "{colors.bg-container}"
 
-  # 物可见 · 物品 Item
   物品类型选择:
     backgroundColor: "{colors.bg-container}"
     rounded: "{rounded.16}"
     padding: 12px 16px
     gap: 10px
-    typography: "{typography.body-secondary}"
     chipBackground: "{colors.bg-page}"
   物品凭证:
     backgroundColor: "{colors.bg-container}"
     rounded: "{rounded.16}"
     accentColor: "{colors.brand-primary}"
-    typography: "{typography.tab-active}"
   物品重量:
     backgroundColor: "{colors.bg-container}"
     rounded: "{rounded.16}"
     accentColor: "{colors.brand-primary}"
-    typography: "{typography.body}"
   物品确认按钮:
     backgroundColor: "{colors.bg-container}"
     accentColor: "{colors.brand-primary}"
-    typography: "{typography.title}"
 
-  # 人可信 · 骑手 Courier
-  高信用骑士:               # 注意:绿底,非白底卡片
+  高信用骑士:
     backgroundColor: "{colors.insurance-secondary}"
     textColor: "{colors.insurance-primary}"
-    typography: "{typography.caption}"
     padding: 8px 12px
-
-  # 事可感 · 进度 Progress
   进度条:
     activeColor: "{colors.brand-primary}"
     doneColor: "{colors.text-tertiary}"
     pendingColor: "{colors.text-quaternary}"
 
-  # 地址 Address
   地址识别:
     backgroundColor: "{colors.bg-container}"
     rounded: "{rounded.16}"
-    typography: "{typography.body-secondary}"
   地址簿:
     backgroundColor: "{colors.bg-container}"
     rounded: "{rounded.16}"
@@ -135,223 +134,333 @@ components:
     gap: 10px
     accentColor: "{colors.accent-primary}"
 
-  # 订单 Order
   订单信息:
     backgroundColor: "{colors.bg-container}"
     rounded: "{rounded.16}"
     padding: 12px 16px
     gap: 10px
-    typography: "{typography.body}"
-    priceType: "{typography.number-sm}"
   缩略地图:
     backgroundColor: "{colors.bg-container}"
     rounded: "{rounded.16}"
     accentColor: "{colors.brand-primary}"
 
-  # 保价 Insurance
   保价:
     backgroundColor: "{colors.bg-page}"
     accentColor: "{colors.insurance-primary}"
     rounded: "{rounded.8}"
-    typography: "{typography.body}"
 
-  # 标签 & 载具 Label & Vehicle
-  取收标签:                 # 取/送 角标(深底白字)
+  取收标签:
     backgroundColor: "{colors.text-primary}"
-    typography: "{typography.caption-icon}"
     rounded: "{rounded.6}"
   载具切换胶囊:
     backgroundColor: "{colors.bg-page}"
-    rounded: "{rounded.full}"   # 实测 40px 胶囊
+    rounded: "{rounded.full}"
   品牌心智:
     backgroundColor: "{colors.bg-container}"
     rounded: "{rounded.16}"
     accentColor: "{colors.brand-primary}"
-    typography: "{typography.caption-strong}"
 ---
 
-# 美团跑腿代办 · 设计系统 (Design Tokens)
+# 美团跑腿代办：设计系统
 
-> 面向后续开发的 single source of truth。Figma 里按类别分组(`主题色 / 中性色 / 辅助色`、`标题 / 正文 / 注释 / 数字 / 标签 / 装饰`),导出为 CSS 自定义属性时取语义叶子名:`中性色/text-primary` → `--color-text-primary`。组名只是设计端的收纳,不进变量名。
+> **PART 2 · HUMAN-READABLE GUIDANCE**
+> 本文形成于项目启动阶段，描述可从 Design Token 与组件库中确认的设计系统信息，不预判 Token 将出现在哪些具体页面。
+> 产品业务与交互规则见 `product.md`；研发实现见 `MTprototype-tech-spec.md`。
+
+---
+
+## 文档使用方式
+
+### 能从初始设计系统确认的内容
+
+- Token 的名称、类型、数值、模式和语义分组。
+- Text Style 的字体、字号、字重、行高和字距。
+- 已检查组件的整体容器、内边距、子项间距、圆角、背景和描边。
+- 组件集已经定义的变体轴和公共资源。
+
+### 初始阶段不能确认的内容
+
+- 每个 Token 在所有页面中的完整使用位置。
+- 尚未检查页面中的局部例外和未来新增用法。
+- 某个组件在页面中的外边距；外边距通常由父容器决定。
+- 没有在组件库中绑定或命名的隐含设计意图。
+
+### 事实优先级
+
+1. 最新 Figma Variables、Text Styles 与组件库。
+2. 本文件顶部结构化 Token。
+3. 本文的语义和使用原则。
+4. 开发具体页面时读取的目标 Figma 节点。
+5. 当前代码只用于定位实现，不作为设计正确性的证据。
+
+---
 
 ## 设计理念 · Principles
 
-整套系统由一个判断驱动:**跑腿代办的核心用户需求是"确定性",不是"速度"。** 物品往往独一无二、不可替代,却要交给一个陌生人——这本身制造焦虑。所有设计决策都在回答**委托信任三角**:
+本项目使用“物可见、人可信、事可感”作为设计方向，通过清晰的信息层级和连续反馈提高委托体验的确定性。完整业务论述属于 `product.md`。
 
-- **物可见** — 被托付的物品要在下单、确认、跟踪各环节持续可视(`物品凭证` / `物品类型选择`)。
-- **人可信** — 骑手的身份、评分、轨迹要清晰可感(`高信用骑士`)。
-- **事可感** — 进度要以时间轴/状态机的形式让人随时感知(`进度条`)。
+通用设计原则：
 
+- 语义优先于装饰。
+- 关键状态保持清晰、连续、可识别。
+- 信息层级依靠字重、颜色和间距共同建立。
+- 公共组件优先于页面内重复绘制。
+
+---
 
 ## 色彩 · Color
 
-### 主题色 Brand
-- **brand-primary** (`{colors.brand-primary}`) — 美团黄,唯一的品牌强调色。仅用于主 CTA(`button-primary`)、选中态、关键强调。**不作装饰性滥用。**
-- **brand-secondary** (`{colors.brand-secondary}`) — 品牌浅底,用于选中项背景、轻提示区。
-- **accent-primary** (`{colors.accent-primary}`) — 强调橙,专用于价格、时间、里程等"需要一眼看到的数字/紧迫信息",与主黄区分开。
-- **accent-secondary** (`{colors.accent-secondary}`) — 强调橙浅底。
+### 主题色
 
-### 中性色 Neutral
-统一色相 **H220**,浅端到深端饱和度递增(约 2% → 16%),构造上用 `RGB=(M−3t, M−2t, M)` 锁死色相,保证 Figma 里每一档 H 都精确等于 220。文字四级、背景两级、深色底一档、分隔线一档:
+- `brand-primary` 用于品牌锚点、主操作和明确选中态。
+- `brand-secondary` 用于品牌浅底和轻量选中背景。
+- 品牌色不应因单个页面的装饰需要被随意扩展。
 
-- **text-primary** (`{colors.text-primary}`) — 主文字。
-- **text-secondary** (`{colors.text-secondary}`) — 次要文字。
-- **text-tertiary** (`{colors.text-tertiary}`) — 三级/占位文字。
-- **text-quaternary** (`{colors.text-quaternary}`) — 四级/失效文字,也可作浅填充(值很浅,勿用于关键正文)。
-- **bg-page** (`{colors.bg-page}`) — 页面底,衬托白色卡片。
-- **bg-container** (`{colors.bg-container}`) — 卡片与容器底(取代纯白)。
-- **bg-black** (`{colors.bg-black}`) — 深色底/深色卡片;也作遮罩基色(叠透明度使用)。
-- **divider** (`{colors.divider}`) — 分隔线/描边,`#1B1D21` 叠 5% 透明(可跟随任意底色)。
+### 强调色
 
-### 辅助色 Functional
-- **insurance-primary / -secondary** (`{colors.insurance-primary}`) — **保价**功能色(绿)。产品语义色,非通用 success:绿色在本系统中专指保价路径。
-- **alert** (`{colors.alert}`) — **提醒**功能色(红),用于警示/召回类信息。
-- **decorative-primary / -secondary / -tertiary** — 插画与装饰专用(棕 / 肤 / 肤浅),不参与功能语义。
+- `accent-primary` 表达需要优先注意的信息。
+- `accent-secondary` 是对应的浅色承载面。
+- 强调色与品牌色职责分开，避免所有重点都使用同一种黄色。
+
+### 中性色
+
+- `text-primary → text-quaternary` 表达四级文字和失效层级。
+- `bg-page` 用作页面背景，`bg-container` 用作容器背景。
+- `bg-black` 用作深色面或遮罩基色。
+- `divider` 用于轻量分隔和描边。
+
+### 功能与装饰色
+
+- `insurance-*`、`alert` 是具名功能色，不能扩展成通用成功/错误色。
+- `decorative-*` 只用于插画和装饰，不承担功能状态。
+
+新增颜色前先判断是否存在新的稳定语义。单个素材或组件内部渐变不应为了“统一”强行上升为全局 Token。
+
+---
 
 ## 文字 · Typography
 
-### 字体族 Font Family
-- **PingFang SC** — 中文主字体。字重轴取 Regular(400)/ Medium(500)/ Semibold(600) 三档,层级靠字重递进。
-- **SF Pro** — 数字与拉丁字符专用(价格、时间、里程、倒计时),高信息密度场景。
-- **Meituan Type** — 品牌字,仅用于导航栏品牌标题(`title-brand`)。
-- **Meituan Type Bold** — 装饰字,用于营销/装饰标签(`decorative`)。
+### 字体分工
 
-> **替代字体**:无 PingFang / Meituan Type 授权时,中文用 **Noto Sans SC**;数字保留 SF Pro 或退回 system-ui;装饰字可用任意粗黑体近似。
+- PingFang SC：中文标题、正文、页签和注释。
+- SF Pro：价格、时间、里程、评分和展示数字。
+- Meituan Type：品牌和明确的装饰文字。
 
-### 层级 Hierarchy
+### 文字层级
 
-| Token | 字体 | 字号 | 字重 | 行高 | 用途 |
-|---|---|---|---|---|---|
-| `{typography.headline}` | PingFang | 22 | 500 | 1.4 | 地址强调、页面大标题 |
-| `{typography.title}` | PingFang | 18 | 600 | 1.4 | 页面标题 |
-| `{typography.title-brand}` | Meituan Type | 20 | 400 | 1.4 | 导航栏品牌标题 |
-| `{typography.tab-active}` / `{typography.tab}` | PingFang | 16 | 600 / 400 | 1.4 | 业务 Tab 选中 / 未选中 |
-| `{typography.body}` / `{typography.body-secondary}` | PingFang | 14 | 500 / 400 | 1.5 | 正文 / 次要正文 |
-| `{typography.caption-strong}` / `{typography.caption}` / `{typography.caption-icon}` | PingFang | 12 | 500 / 400 / 600 | 1.5 | 注释强调 / 注释 / 图标字 |
-| `{typography.caption-sm}` | PingFang | 11 | 400 | 1.5 | 小注释 |
-| `{typography.caption-xs-strong}` / `{typography.caption-xs}` | PingFang | 10 | 500 / 400 | 1.5 | 极小注释(下限字号) |
-| `{typography.number}` / `{typography.number-sm}` / `{typography.number-xs}` | SF Pro | 14 / 12 / 11 | 500 / 400 / 400 | 1.2 | 价格/时间/里程等数字 |
-| `{typography.display}` | SF Pro | 24 | 700 | 20px | 收货码、实付款等展示数字 |
-| `{typography.decorative}` | Meituan Type | 12 | 700 | 17px | 装饰标签 |
+| 信息角色 | Token 组 |
+|---|---|
+| 标题 | `headline / title / title-sm / title-max / title-brand` |
+| 页签 | `tab-active / tab` |
+| 正文 | `body / body-secondary` |
+| 注释 | `caption-strong / caption / caption-sm / caption-xs` |
+| 数字 | `number / number-sm / number-xs / number-lg` |
+| 展示数字 | `display / display-lg / display-xl` |
+| 装饰文字 | `decorative` |
 
-### 原则 Principles
-- **层级靠字重、不靠字号堆砌。** 同为 12px 的 `caption-strong`(500)与 `caption`(400)通过字重拉开主次,避免字号碎片化。
-- **数字交给 SF Pro。** 价格、时间、里程用等宽感更强的 SF Pro,与中文正文形成信息分区。
-- **10px 是下限。** `caption-xs` 是可用的最小中文字号;9px 及以下仅限极特殊角标(见 Known Gaps),不进 token。
-- **行高:正文松、数字紧。** 正文/注释 1.5 便于阅读;常规数字为 1.2,展示数字 `display` 固定为 20px。
+### 为什么组件不能只有一个 Typography
 
-> Figma 中大部分文字样式行高设为 **Auto**,上表为对应的推荐渲染值(PingFang Auto ≈ 1.4–1.5);`display` 使用固定 20px 字高。
+一个组件通常同时包含标题、正文、注释、数字和状态标签。给组件写一个笼统的 `typography` 会产生两个问题：
+
+1. 无法表达多个文字层级。
+2. 容易让开发把整个组件错误地套用同一字号和字重。
+
+正确方式：
+
+- 字体参数由独立 Text Style / Typography Token 管理。
+- 组件只在稳定文字槽位上记录引用，例如 `titleStyle`、`bodyStyle`、`valueStyle`。
+- 如果槽位样式会随内容或变体变化，则不写死在组件固有属性中，开发具体页面时读取组件实例。
+
+文字还原必须同时核对字体、字号、字重、行高、字距和颜色，不能只核对字号。
+
+---
 
 ## 布局 · Layout
 
-### 间距 Spacing
-- **基础栅格 4px**,含 2px 半档;并保留 **10px** 作为美团式节奏。
-- Tokens:`{spacing.2}` · `{spacing.4}` · `{spacing.6}` · `{spacing.8}` · `{spacing.10}` · `{spacing.12}` · `{spacing.16}` · `{spacing.20}` · `{spacing.24}`。
-- 卡片内边距常用 `{spacing.16}`;列表项/输入框内边距常用 `{spacing.12}`;紧密信息块用 `{spacing.8}` / `{spacing.4}`。
-- 大数值(如页面区块间距 24+ 以上)属于布局级,不进 token。
+### 间距体系
 
-### 栅格与容器
-- 移动端单列为主,内容宽度撑满屏幕。
-- **布局常量(全局基准)**:所有页面**左右边距统一 `{spacing.8}`(8px)**;多个并列组件之间的**上下间距统一 `{spacing.8}`(8px)**。这是整套界面的节奏基准,优先级高于个别场景的间距选择。
-- 订单确认页采用**信息优先**布局:物品/委托信息在上,地图/骑手在下(反地图优先)。
+- 基础栅格为 4px，允许 2px 半档和 10px 节奏。
+- 页面与同级区块可使用语义一致的间距 Token。
+- 组件内部 padding 和 gap 属于组件固有属性，可在组件库中记录。
+- 组件外边距通常属于父级布局，不应写入组件本身。
+
+### 尺寸与 Sizing Mode
+
+组件库初始提取时，应优先记录：
+
+1. 整体宽度和高度。
+2. 宽高是 Fixed、Hug 还是 Fill。
+3. 最小/最大尺寸和宽高比。
+4. Auto Layout 方向、对齐和分布。
+5. 四边内边距和子项 gap。
+6. 影响布局的描边、圆角和裁切。
+
+本项目最初没有系统记录全部组件尺寸和 Sizing Mode，因此当前结构化区只保留已确认属性；缺失值必须回到组件库读取，不能猜测。
+
+---
 
 ## 立体与深度 · Elevation
 
 | 层级 | 处理 | 用途 |
 |---|---|---|
-| 0 (flat) | 无阴影无边框 | 页面底、普通区块 |
-| 1 (hairline) | 1px `{colors.divider}` 描边于 `{colors.bg-container}` | 卡片、输入框 |
-| 2 (soft) | 轻投影,**带一点色相**(非纯黑透明),约 `0 4px 16px rgba(28,30,33,0.06)` | 浮层、下拉、底部面板 |
-| 3 (modal) | 更强投影 + 遮罩(`{colors.bg-black}` 叠 ~55% 透明) | 弹窗、图片预览 |
+| Flat | 无阴影 | 普通背景和区块 |
+| Hairline | 轻描边 | 卡片、输入与分隔 |
+| Soft | 轻投影 | 浮层、气泡和悬浮面板 |
+| Modal | 投影与遮罩 | 弹窗和预览 |
 
-> 投影原则:**不用纯黑叠透明度**,阴影带一点中性蓝调色相,与整套 H220 中性色一致,视觉更干净。遮罩用 `bg-black` 作基色叠透明度(系统未单列 mask token)。
+具体阴影参数应作为 Effect Style 或组件固有属性读取，不根据页面截图猜测。
+
+---
 
 ## 形状 · Shapes
 
-### 圆角 Border Radius
+- 小圆角用于角标、Chip 和细节。
+- 中等圆角用于输入框、图片框和普通卡片。
+- 大圆角用于主容器和面板。
+- `full` 用于胶囊、头像和圆形标记。
+- 圆角属于组件固有属性，应记录 Token 引用而不是视觉描述。
 
-| Token | 值 | 用途 |
-|---|---|---|
-| `{rounded.2}` | 2px | 角标、细节 |
-| `{rounded.4}` | 4px | 小标签、chip、保价角标 |
-| `{rounded.6}` | 6px | 输入框、列表项 |
-| `{rounded.8}` | 8px | 卡片、按钮、图片框 |
-| `{rounded.12}` | 12px | 大卡片、信息卡、弹层 |
-| `{rounded.16}` | 16px | 大图容器、底部面板 |
-| `{rounded.20}` | 20px | 超大容器 |
-| `{rounded.full}` | 9999px | 圆形头像、圆形角标、胶囊标签 |
+---
 
 ## 组件 · Components
 
-> 以下组件**从实际组件库(Figma node `960:7565`)提取**——名称、圆角、内边距、token 绑定均为真实值,非推测。仅列主要具名组件;`Frame 20900xxx` 类未命名子片段未收录。
+### 组件固有属性
 
-### 框架 Frame
-- **NavigationBar** — 导航栏,文字 `{colors.text-primary}`。
-- **Tab Bar** — 底部标签栏,`{colors.bg-container}` 底。
+适合在项目启动阶段记录：
 
-### 物可见 · 物品
-- **物品类型选择** — `{colors.bg-container}` 底,圆角 `{rounded.16}`,内边距 12/16、间距 10;内部 chip 用 `{colors.bg-page}`,`{typography.body-secondary}`。
-- **物品凭证 / 物品重量 / 物品体积** — 物品参数卡,`{colors.bg-container}`,圆角 `{rounded.16}`,强调用 `{colors.brand-primary}`。
-- **物品确认按钮** — `{colors.bg-container}` 底 + `{colors.brand-primary}` 强调 + `{typography.title}`。
+- 整体尺寸及 Fixed/Hug/Fill。
+- Auto Layout 方向、对齐、分布。
+- 内边距与子项 gap。
+- 背景、描边、阴影、圆角和裁切。
+- 变体轴、布尔属性、实例交换和可覆盖槽位。
+- 图标、图片等资源的固定尺寸与比例。
 
-### 人可信 · 骑手
-- **高信用骑士** — ⚠ **绿底**组件:`{colors.insurance-secondary}` 底 + `{colors.insurance-primary}` 文字,内边距 8/12,`{typography.caption}`。用绿色把"高信用"与保价信用体系呼应,**不是白底卡片**。
+不适合写成组件固有属性：
 
-### 事可感 · 进度
-- **进度条** — 进行中 `{colors.brand-primary}`、已完成 `{colors.text-tertiary}`、未开始 `{colors.text-quaternary}`。
+- 组件在某个页面中的外边距和绝对位置。
+- 页面业务决定的显隐条件。
+- 所有子文字共用的单一字号。
+- 某个页面实例临时覆盖的文案、颜色或尺寸。
 
-### 地址
-- **地址识别 / 地址簿 / 地址填写-居中** — `{colors.bg-container}`,圆角 `{rounded.16}`。地址簿为纵向自动布局,内边距 16/0、间距 10,强调用 `{colors.accent-primary}`。
+### 复杂组件的文字记录
 
-### 订单
-- **订单信息 / 下单页其余** — `{colors.bg-container}`,圆角 `{rounded.16}`,内边距 12/16、间距 10;金额用 `{typography.number-sm}`。
-- **缩略地图** — `{colors.bg-container}`,圆角 `{rounded.16}`,强调 `{colors.brand-primary}`。
+需要记录文字时，应按槽位拆分：
 
-### 保价
-- **保价 / 大保价** — `{colors.bg-page}` 底,圆角 `{rounded.8}`,强调 `{colors.insurance-primary}`,`{typography.body}`。
-- **三变体**(node `1496:29632`,由「是否已选档位 × 物品是否易损」派生):
-  - `未保价-提示`(默认)— 副标题"未保价最高赔付**5倍**配送费",5倍用 `{colors.accent-primary}`。
-  - `未保价-建议`(易损品类:鲜花/蛋糕/数码)— 副标题"物品易损 建议您保价",整句 `{colors.alert}`。
-  - `已保价-权益`(已选任一档位)— 副标题"享**高信用**骑手配送 物丢物损**全额赔**",强调词 `{colors.insurance-primary}`;选中 chip 为 `{colors.brand-secondary}` 底 + `{colors.brand-primary}` 描边 + 右上角勾角标。
+```yaml
+ExampleComponent:
+  titleStyle: "{typography.title}"
+  bodyStyle: "{typography.body-secondary}"
+  valueStyle: "{typography.number-lg}"
+```
 
-### 标签 & 载具
-- **取收标签** — 取/送角标,`{colors.text-primary}` 深底白字,圆角 `{rounded.6}`,`{typography.caption-icon}`。
-- **载具切换胶囊** — `{colors.bg-page}` 底,胶囊圆角(实测 40px → `{rounded.full}`)。
-- **品牌心智 / 动态催促标签** — `{colors.bg-container}` / 强调 `{colors.brand-primary}`,`{typography.caption-strong}`。
+只有组件库中已经明确绑定并长期稳定的槽位才写入；否则保持在 Text Style 层，避免重复事实来源。
+
+### 当前结构化组件数据
+
+顶部 `components` 仅保留项目初始提取时已确认的背景、圆角、padding、gap 和功能色。未记录的整体尺寸不代表不存在，而是需要从 Figma 组件库按需读取。
+
+---
 
 ## 该做 / 不该做 · Do's and Don'ts
 
 ### Do
-- 把 `{colors.brand-primary}` 留给真正的主 CTA 和选中态,不做装饰性铺色。
-- 价格/时间/里程一律用 `{colors.accent-primary}` + `{typography.number}`(SF Pro),形成信息分区。
-- 层级用 PingFang 字重(400/500/600)表达,而不是不断加大字号。
-- 中性色只用这套 H220 蓝调阶梯;需要新灰时从阶梯里取,不要临时目测新灰。
-- 页面左右边距、并列组件上下间距一律 `{spacing.8}`(8px)。
-- 订单确认页保持"物品信息优先、地图其次"的反地图优先布局。
+
+- 先理解 Token 语义，再读取具体数值。
+- 组件优先记录尺寸、Sizing Mode、padding、gap、圆角和变体。
+- 文字样式通过独立 Token 或明确槽位引用。
+- 新页面开发时读取目标节点，补充组件库无法提供的局部信息。
+- 修改 Token 或组件时同步更新结构化数据与工程映射。
 
 ### Don't
-- 不用纯黑 `#000` / 纯白 `#fff`;主文字是 `text-primary`,容器底是 `bg-container`。
-- 不给中性色临时目测新值——散装灰/散装黄是这套系统之前最大的一致性问题。
-- 投影不用纯黑叠透明度,要带一点色相(见 Elevation)。
-- `insurance-primary`(绿)/`alert`(红)是**产品语义色**,不要当通用 success/error 到处用。
-- `text-quaternary` 很浅,不要用于关键正文;它是失效态/浅填充用途。
-- 中文正文字号不低于 10px(`caption-xs`)。
+
+- 不在项目启动时编造 Token 对应的全部页面位置。
+- 不把复杂组件概括成一个 Typography。
+- 不把父级外边距写成组件固有属性。
+- 不用页面截图反推已经可以从 Variables 或组件库读取的数据。
+- 不把产品规则和研发架构混入设计系统文件。
+
+---
 
 ## 响应式 · Responsive
 
-- 目标平台为移动端 App(iOS/Android),单列布局。计划以 **React + TypeScript + Vite** 构建 PWA 原型用于可用性测试。
-- 触控目标:主要按钮/可点区域保证 ≥ 44px 高。
-- 数字/时间等信息在小屏优先缩小而非折行。
+项目启动阶段只定义跨页面成立的基础规则；具体页面的组件尺寸、特殊间距和素材锚点，开发时以目标 Figma 页面为准。
+
+### 基础规则
+
+- 以移动端为主要目标，页面在支持范围内铺满可用宽度，不对整张页面做等比例缩放。
+- 屏幕宽度小于或等于 `448px` 时，页面内容铺满可用屏幕宽度。
+- 屏幕宽度大于 `448px` 时，页面内容保持约 `448px` 宽，并在桌面浏览器中水平居中显示。
+- 页面左右内容边缘默认使用 `spacing-8`，即 `8px`；这是页面外边缘留白，不属于组件内部 padding。页面节点明确给出其他值时，以页面设计为准。
+- 普通内容区域默认采用 `width: Fill`、`height: Hug`，由内部内容决定高度。
+- 输入框、按钮、页签、导航栏等交互控件可以使用稳定的固定高度；图片、插画和地图可以使用固定比例或明确的展示区域。
+- 当前 Figma 实例尺寸只作为 referenceSize，不能直接推导成所有屏幕都适用的固定尺寸。
+- 字号、字重和图标尺寸默认不随视口线性缩放；优先通过 Fill、间距、换行和裁切适配宽度。
+- 文本变长时优先换行或使用设计稿规定的截断策略，不压缩字号，也不让文字遮挡相邻内容。
+- 图片和 SVG 保持原始宽高比；需要适配时使用明确的裁切、缩放或左右锚定规则，禁止非等比拉伸。
+- 页面高度随内容增长；需要占满屏幕时使用最小高度，而不是把页面内容锁定为固定高度。
+- 固定在视口边缘的底部操作区必须为安全区预留空间，不能遮挡页面内容。
+
+### 检查范围
+
+- 至少检查 `320px`、`375px`、`390px`、`414px` 和 `448px` 宽度。
+- 重点检查左右边距、内容换行、固定栏覆盖、横向溢出、图片比例和安全区。
+- `448px` 以上属于桌面浏览器或更宽容器的预览场景，不应因此把移动端文字和控件整体放大。
+
+### 规则边界
+
+- 本节不记录某个具体组件的内部布局、页面特殊高度或素材绝对坐标。
+- 公共组件的稳定变体和可替换槽位写在组件契约中；具体组件响应式规则在读取页面 Figma 节点时补充。
+- AppShell、固定栏容器和安全区的代码组织属于 `MTprototype-tech-spec.md`，不在本文件中规定实现方式。
+
+---
 
 ## 交付与集成 · Handoff
 
-- **Figma → CSS**:变量与样式名对应 `--color-*`、`--space-*`、`--radius-*`;文字暴露为 `--font-size-*` / `--font-weight-*` / `--font-family-*` 原语,复合样式(`body`、`title` 等)在组件层组合。
-- **数据层建议**:token 单独成文件(如本 `design.md` 或 `tokens.css`),UI 与业务分离,便于将 mock 换成真实接口时只改一处。
-- 完整 CSS `:root {}` 变量清单见配套 `tokens.css`(可由本文件 frontmatter 生成)。
+- Figma Variables / Text Styles → 本文件顶部结构化 Token。
+- 结构化 Token → `src/design-tokens/tokens.css`。
+- Figma Component Properties → 组件 Props 与变体类型。
+- 组件外壳属性与文字 Token 分开记录，避免重复和错误覆盖。
+- 开发具体页面时再读取页面节点，不在初始设计系统中预写页面映射。
 
-## 已知缺口 · Known Gaps
+---
 
-- **展示型大数字**(SF Pro 20/24/32、DINPro 评分)尚未建为独立 token;当前散落在营销/详情场景,建议补一组 `数字/display-*`。
-- **9px 取/送角标**与 **iOS 状态栏时间(SF Pro Semibold 15)** 属系统级/极特殊,刻意不进 token 体系。
-- **组件规格**已从实际组件库(`960:7565`)提取(名称/圆角/内边距/token 绑定为真实值);但组件**内部逐元素**的精确间距/尺寸未逐一记录,以 Figma 为准。未命名的 `Frame 20900xxx` 子片段未收录。
-- **暗色模式**未定义;`bg-black` 提供了深色底基础,但完整深色主题尚未建立。
+## 附录 A：以后提取组件库的必填模板
+
+```yaml
+ComponentName:
+  dimensions:
+    width: 0px
+    height: 0px
+    widthMode: fixed | hug | fill
+    heightMode: fixed | hug | fill
+    minWidth: null
+    maxWidth: null
+    aspectRatio: null
+  autoLayout:
+    direction: horizontal | vertical | none
+    align: start | center | end | stretch
+    justify: start | center | end | space-between
+    padding: 0px
+    gap: 0px
+  appearance:
+    background: "{colors.*}"
+    border: null
+    radius: "{rounded.*}"
+    effect: null
+    clipContent: false
+  variants: []
+  assets: []
+  textSlots:
+    titleStyle: "{typography.*}"
+    bodyStyle: "{typography.*}"
+```
+
+该模板是下一个项目建立 `design.md` 时的通用复盘产物。没有读取到的字段写 `null`，不能猜值。
+
+## 附录 B：低频设计说明
+
+- 中性色采用 H220 蓝调灰，用于约束扩展时保持统一色相；开发阶段不重新计算色值。
+- 缺少 PingFang SC 时使用 Noto Sans SC / system-ui；固定品牌字优先导出轮廓 SVG。
+- 阴影保持中性蓝调，具体参数以 Effect Style 或组件定义为准。
+- 暗色模式尚未定义。
+- 9px 特殊角标和系统状态栏文字不纳入常规 Typography Token。

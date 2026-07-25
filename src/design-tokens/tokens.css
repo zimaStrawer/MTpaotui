@@ -1,5 +1,5 @@
 /**
- * 设计 Token(§4)· 三层 primitive → semantic → component。
+ * 设计 Token 见 design.md：三层 primitive → semantic → component。
  * 值经 Figma MCP 从组件库(node 960:7565)拉取,与 design.md 交叉校验一致。
  * Figma 中文分组(主题色/中性色/辅助色)→ CSS 英文语义名,组名不进变量名。
  */
@@ -72,6 +72,8 @@
   --text-number--line-height: 1.2;
   --text-number-sm: 12px;
   --text-number-sm--line-height: 1.2;
+  --text-number-xs: 11px;
+  --text-number-xs--line-height: 1.2;
   --text-number-lg: 16px;
   --text-number-lg--line-height: 1.2;
   --text-display: 24px;

@@ -17,7 +17,7 @@ import { TypeSummaryCard } from './TypeSummaryCard';
 import { VolumeCard } from './VolumeCard';
 import { WeightCard } from './WeightCard';
 
-/** 页内分段(§6):选类型 → 详情表单(重量/体积/保价),同一路由一个状态字段。 */
+/** 页内分段见 product.md §6.3：选类型 → 详情表单，同一路由一个状态字段。 */
 type Segment = 'category' | 'detail';
 
 /**

@@ -120,6 +120,114 @@
     will-change: opacity, transform;
   }
 
+  @keyframes tracking-rain-fall-far {
+    to {
+      transform: translate3d(-1px, 520px, 0);
+    }
+  }
+
+  @keyframes tracking-rain-fall-near {
+    to {
+      transform: translate3d(2px, 520px, 0);
+    }
+  }
+
+  .tracking-rain {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 56px,
+      #000 104px,
+      #000 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 56px,
+      #000 104px,
+      #000 100%
+    );
+    contain: paint;
+  }
+
+  .tracking-rain-layer {
+    position: absolute;
+    top: -520px;
+    left: 0;
+    width: 1px;
+    border-radius: 999px;
+    background: transparent;
+    will-change: transform;
+  }
+
+  .tracking-rain-layer-far {
+    height: 16px;
+    box-shadow:
+      18px 34px rgba(255, 255, 255, 0.28),
+      64px 188px rgba(255, 255, 255, 0.22),
+      109px 72px rgba(255, 255, 255, 0.18),
+      151px 312px rgba(255, 255, 255, 0.24),
+      197px 146px rgba(255, 255, 255, 0.2),
+      239px 402px rgba(255, 255, 255, 0.27),
+      286px 236px rgba(255, 255, 255, 0.18),
+      328px 98px rgba(255, 255, 255, 0.24),
+      371px 356px rgba(255, 255, 255, 0.2),
+      419px 210px rgba(255, 255, 255, 0.26),
+      42px 448px rgba(255, 255, 255, 0.17),
+      132px 252px rgba(255, 255, 255, 0.22),
+      220px 22px rgba(255, 255, 255, 0.17),
+      306px 474px rgba(255, 255, 255, 0.21),
+      393px 38px rgba(255, 255, 255, 0.18),
+      451px 420px rgba(255, 255, 255, 0.24),
+      18px 554px rgba(255, 255, 255, 0.28),
+      64px 708px rgba(255, 255, 255, 0.22),
+      109px 592px rgba(255, 255, 255, 0.18),
+      151px 832px rgba(255, 255, 255, 0.24),
+      197px 666px rgba(255, 255, 255, 0.2),
+      239px 922px rgba(255, 255, 255, 0.27),
+      286px 756px rgba(255, 255, 255, 0.18),
+      328px 618px rgba(255, 255, 255, 0.24),
+      371px 876px rgba(255, 255, 255, 0.2),
+      419px 730px rgba(255, 255, 255, 0.26),
+      42px 968px rgba(255, 255, 255, 0.17),
+      132px 772px rgba(255, 255, 255, 0.22),
+      220px 542px rgba(255, 255, 255, 0.17),
+      306px 994px rgba(255, 255, 255, 0.21),
+      393px 558px rgba(255, 255, 255, 0.18),
+      451px 940px rgba(255, 255, 255, 0.24);
+    animation: tracking-rain-fall-far 1.15s linear infinite;
+  }
+
+  .tracking-rain-layer-near {
+    height: 28px;
+    box-shadow:
+      31px 118px rgba(255, 255, 255, 0.4),
+      89px 380px rgba(255, 255, 255, 0.32),
+      143px 34px rgba(255, 255, 255, 0.38),
+      205px 276px rgba(255, 255, 255, 0.45),
+      266px 448px rgba(255, 255, 255, 0.36),
+      318px 172px rgba(255, 255, 255, 0.42),
+      382px 326px rgba(255, 255, 255, 0.34),
+      438px 64px rgba(255, 255, 255, 0.4),
+      58px 492px rgba(255, 255, 255, 0.31),
+      176px 206px rgba(255, 255, 255, 0.37),
+      294px 18px rgba(255, 255, 255, 0.33),
+      405px 454px rgba(255, 255, 255, 0.41),
+      31px 638px rgba(255, 255, 255, 0.4),
+      89px 900px rgba(255, 255, 255, 0.32),
+      143px 554px rgba(255, 255, 255, 0.38),
+      205px 796px rgba(255, 255, 255, 0.45),
+      266px 968px rgba(255, 255, 255, 0.36),
+      318px 692px rgba(255, 255, 255, 0.42),
+      382px 846px rgba(255, 255, 255, 0.34),
+      438px 584px rgba(255, 255, 255, 0.4),
+      58px 1012px rgba(255, 255, 255, 0.31),
+      176px 726px rgba(255, 255, 255, 0.37),
+      294px 538px rgba(255, 255, 255, 0.33),
+      405px 974px rgba(255, 255, 255, 0.41);
+    animation: tracking-rain-fall-near 0.75s linear -0.38s infinite;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .toast-enter {
       animation: none;
@@ -138,6 +246,16 @@
     }
 
     .tracking-sonar-wave:not(:first-child) {
+      display: none;
+    }
+
+    .tracking-rain-layer {
+      animation: none;
+      transform: translate3d(0, 520px, 0);
+      will-change: auto;
+    }
+
+    .tracking-rain-layer-near {
       display: none;
     }
   }

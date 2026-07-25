@@ -1,222 +1,449 @@
-# 跑腿改版原型 · 技术需求与工程规范 (v2)
+# 跑腿改版原型：研发技术规格（v4）
 
-> Claude Code 项目上下文。建议保存为仓库根目录 `CLAUDE.md`。
-> 本文档只覆盖**工程侧**。设计侧(视觉、token 值、组件规格、交互细节)以 `design.md` 与 Figma 源文件为准;冲突时以 Figma 为准。
-> Figma 文件 key:`kA4fPhh917AHnA73fwT4HD`;改版稿根节点:`1524:27664`;组件库:`960:7565`。
-
----
-
-## 0. 定位与目标(决定一切取舍)
-
-- **是什么**:美团跑腿(帮取送)自主改版原型,用于可用性测试(n=8,拉丁方,"七夕送花"场景锚点)。**本期只做「帮取送」这一条主流程,单方案,不做 A/B。**
-- **双重成功标准**:① 跑通测试;② 仓库被招聘方读到时,是"能上工程的真实项目",不是能跑的 demo。**后者的分主要来自代码怎么被读(§10),不是运行时功能。**
-- **必须守住的产品命题**:核心用户需求是**确定性**而非速度。分析主线是**委托信任三角**,已落到具体 UI:
-  - **物可见**:物品凭证、收货码、照片位("取件后生成"灰显占位)。
-  - **人可信**:骑手卡片 + 徽章(信用骑手 / 鲜花使者 / 大件御用 / 极速神通)。
-  - **事可感**:进度条 + 时间轴(预计取件 / 预计送达 / 到达 / 完成) + 情境提示("细雨连绵,骑手赶路不易")。
+> 本文是项目的研发事实来源，回答“工程如何组织、状态和数据如何流动、怎样验证与交付”。
+> 产品业务与页面交互见 `product.md`；视觉还原、Token 和组件规范见 `design.md`。
 
 ---
 
-## 1. 技术栈(锁定)
+## 0. 文档边界
+
+| 文档 | 单一职责 |
+|---|---|
+| `product.md` | 领域对象、业务规则、用户流程、页面交互和状态机 |
+| `design.md` | 设计原则、Token、组件、响应式和视觉还原 |
+| `MTprototype-tech-spec.md` | 技术栈、架构、代码组织、数据实现、测试和部署 |
+
+研发文档不重复定义汽车推荐阈值、体积语录、收货码变化等产品规则。代码实现必须满足 `product.md`，视觉实现必须满足 `design.md` 与最新 Figma。
+
+---
+
+## 1. 工程目标
+
+### 1.1 交付目标
+
+- 支持核心流程在桌面浏览器、手机浏览器和 PWA 环境中稳定运行。
+- 在没有真实后端的情况下提供可重复的完整测试体验。
+- 保持清晰的数据边界，使 Mock 可替换为真实 HTTP 服务。
+- 让项目目录、类型和提交历史能够直接说明架构意图。
+
+### 1.2 工程优先级
+
+`P0 核心流程正确 > P1 追踪状态稳定 > P2 交互手感 > P3 视觉还原 > P4 代码整理`
+
+该顺序用于时间冲突时的取舍，不代表视觉还原可以忽略。
+
+---
+
+## 2. 技术栈与运行环境
 
 | 层 | 选型 |
 |---|---|
-| 框架 | React + TypeScript(`strict: true`) |
+| UI | React |
+| 语言 | TypeScript，`strict: true` |
 | 构建 | Vite |
 | 路由 | React Router |
-| UX 状态 | Zustand(**仅内存,不落盘**) |
-| 样式 | Tailwind,颜色/间距/圆角全部映射自 Figma Token(§4) |
-| 数据 | Mock 数据层,藏在类型化接口后(§5) |
-| 包管理 / 运行时 | pnpm / Node 20+ |
+| 客户端状态 | Zustand |
+| 样式 | Tailwind CSS + CSS Custom Properties |
+| 数据访问 | Repository 接口 + Mock 实现 |
+| 包管理 | pnpm |
+| Node.js | 20+ |
 
-**分发分三期**(与业务代码解耦,一套代码通吃):Vercel 发链接 → PWA 添加到主屏幕(`manifest` + `display:standalone` + iOS `apple-touch-icon`)→ Capacitor 打本地包。前期只做前两步。
+常用命令以 `package.json` 为准：
+
+```bash
+pnpm install
+pnpm dev
+pnpm build
+```
 
 ---
 
-## 2. 目录结构
+## 3. 总体架构
 
+### 3.1 依赖方向
+
+```text
+app/router
+    │
+    ▼
+pages ───────────────► components
+  │                       │
+  ├─► store               └─► design-tokens
+  ├─► data/models
+  └─► data/repositories ──► data/mock
 ```
+
+约束：
+
+- 页面可以组合组件、读取 Store、调用领域纯函数和 Repository。
+- 共享组件通过 props 接收数据和事件，不直接读取 Mock。
+- Store 不依赖页面组件。
+- Repository 接口不依赖具体页面。
+- Mock 实现可以依赖领域类型和 Mock fixtures。
+- 设计 Token 不依赖业务或页面。
+
+### 3.2 运行时数据流
+
+```text
+用户操作
+  → 页面本地表单状态
+  → Zustand 订单草稿
+  → 页面组装 Order
+  → OrderRepository.submitOrder()
+  → OrderReceipt
+  → OrderRepository.watchTracking()
+  → TrackingPage 渲染阶段状态
+```
+
+---
+
+## 4. 目录结构
+
+```text
 src/
-  app/            # 路由、全局 Provider、根级 ErrorBoundary
-  pages/          # 5 个路由(见 §6),每个一个目录
-  components/     # 跨路由复用的受控组件(纯 props 函数)
-  design-tokens/  # 从 Figma 导出的 token(§4)
+  app/
+    App.tsx
+    AppErrorBoundary.tsx
+    router.tsx
+  pages/
+    home/
+    address/
+    item-info/
+    order-confirm/
+    tracking/
+  components/
+  design-tokens/
+    tokens.css
   data/
-    models/       # 领域类型(§5)
-    repositories/ # 接口定义 + mock 实现(换真后端只动这里)
-    mock/         # mock 数据
-  store/          # Zustand,UX 状态(仅内存)
-  lib/            # 纯工具函数
+    models/
+      order.ts
+      tracking.ts
+    repositories/
+      order-repository.ts
+      mock-order-repository.ts
+      index.ts
+    mock/
+      fixtures.ts
+      recommend-vehicle.ts
+      service-quotes.ts
+      tracking-timeline.ts
+  store/
+    order-draft-store.ts
+  lib/
+  assets/
 ```
 
-拆分依据:**按复用拆组件,不按重渲染拆**。
+职责：
+
+- `pages`：路由级编排、页面临时状态和导航。
+- `components`：跨页面复用或具备独立语义的受控组件。
+- `data/models`：把 `product.md` 的领域对象和纯业务判断转成类型与函数。
+- `data/repositories`：提交订单和订阅追踪的数据边界。
+- `data/mock`：当前原型环境的数据、报价、推荐和时间轴。
+- `store`：跨路由共享的订单草稿和订单回执。
+- `design-tokens`：`design.md` 的工程映射。
 
 ---
 
-## 3. 工程约束
+## 5. 产品模型的代码映射
 
-- `strict: true`,禁止 `any` / `@ts-ignore`。
-- 单文件 ~150 行为准,过长即拆(准则,非纪律)。
-- **数据边界**:组件不在内部直接请求数据;数据来自 store 或 repository,组件只吃 props。
-- **互斥状态用一个 enum / union,不堆多个 Boolean。**
-- **无魔法数字**:所有色值/间距/圆角走 token。
-- 埋点虽本期不做(§14),但组件里**事件从一处流出**的写法先保持(不要在组件里散记),将来集中接 `track()`。
+产品定义以 `product.md` 为准；研发层只规定代码落点。
+
+| 产品概念 | 代码位置 |
+|---|---|
+| 业务、服务、地址、物品、保价、载具、订单 | `src/data/models/order.ts` |
+| 配送阶段与骑手 | `src/data/models/tracking.ts` |
+| 服务切换、地址交换、体积分类等纯判断 | `src/data/models/order.ts` |
+| 车型推荐 | `src/data/mock/recommend-vehicle.ts` |
+| 报价与预计时间 | `src/data/mock/service-quotes.ts` |
+| 场景地址、骑手和环境数据 | `src/data/mock/fixtures.ts` |
+| 追踪阶段持续时间 | `src/data/mock/tracking-timeline.ts` |
+
+实现约束：
+
+- 领域类型使用 union、interface 和只读常量表达。
+- 可复用的业务判断写成无副作用纯函数。
+- 页面不复制阈值或重新编写等价判断。
+- 互斥业务状态使用单个 union，不使用多个 Boolean 组合。
+- 产品规则修改时，先更新 `product.md`，再更新模型、Mock 和测试。
 
 ---
 
-## 4. 设计 Token 契约
+## 6. 状态管理
 
-三层:**primitive → semantic → component**。Figma 分组用中文语义名(主题色/中性色/辅助色,对齐 TDesign),**CSS 导出名用英文**,两者分离。中性色为蓝调灰(H=220);已有 Spacing、Radius 变量集合。保留领域中文标签(保价、提醒 等)。**实际 token 值让 Claude Code 通过 Figma MCP 从组件库(`960:7565`)现拉,不要手写猜值。**
+### 6.1 Zustand Store
+
+`src/store/order-draft-store.ts` 保存跨路由订单草稿：
+
+- 当前业务和服务模式。
+- 配送载具。
+- 取件与收件地址。
+- 物品信息。
+- 提交成功后的订单回执。
+
+Store Actions：
+
+- `setServiceMode`
+- `setVehicle`
+- `setAddress`
+- `swapAddresses`
+- `setItem`
+- `setReceipt`
+- `reset`
+
+`setServiceMode` 内部调用领域纯函数处理地址转换，页面只负责触发模式变化和播放动画。
+
+### 6.2 页面本地状态
+
+以下状态保留在页面或组件内部：
+
+- 尚未确认的表单输入。
+- 展开/收起状态。
+- 当前 Toast。
+- 当前动画版本或方向。
+- 提交中状态。
+- 仅影响当前组件的提示条关闭状态。
+
+判断原则：需要跨路由保持的订单事实放 Store；关闭组件即可丢弃的展示状态放本地。
+
+### 6.3 持久化
+
+- 当前 Store 仅内存，不写 Local Storage。
+- 刷新、关闭或重开应用允许回到干净起点。
+- 该策略服务于连续可用性测试，不代表正式产品的数据策略。
 
 ---
 
-## 5. 领域模型与数据层(最关键的"缝")
+## 7. Repository 与 Mock
 
-"能上工程"最硬的证据:**mock 藏在接口后,换真后端 = 换一个文件。** 领域模型据真实设计稿定义:
+### 7.1 接口
 
 ```ts
-type BusinessType = '帮取送' | '帮我买' | '帮个忙';   // 首页业务 tab,本期只做「帮取送」
-type ServiceMode = 'send' | 'pick' | 'express';       // 帮送 / 帮取 / 1对1急送
-
-type AddressRole = 'pickup' | 'delivery';            // 取件 / 收件(同一路由两种角色)
-interface Address {
-  role: AddressRole;
-  contactName: string;
-  phone: string;
-  detail: string;                                    // 如「景顺铂悦城9号楼」
-}
-
-type ItemCategory = '鲜花' | '文件' | '数码' | '食品' | '其他';
-type InsuranceTier = 'none' | 'free_5x' | 'paid';    // 未保价最高赔5倍跑腿费 / 保价
-interface Item {
-  category: ItemCategory;
-  weightKg?: number;
-  volume?: { l: number; w: number; h: number };      // 三维体积
-  insurance: InsuranceTier;
-  note?: string;                                      // 物品描述 / 配送要求
-}
-
-type DeliveryVehicle = 'ebike' | 'car';              // 车型推荐规则见下
-interface Order {
-  business: BusinessType;
-  serviceMode: ServiceMode;
-  pickup: Address;
-  delivery: Address;
-  item: Item;
-  vehicle: DeliveryVehicle;
-  feeYuan: number;
-}
-
-type TrackingStage =
-  | 'accepting' | 'accepted' | 'picked' | 'delivering' | 'arrived' | 'completed';
-
-interface Courier {
-  name: string;
-  rating: number;
-  badges: string[];                                  // 信用骑手 / 鲜花使者 / 大件御用 / 极速神通
-  pickupCode?: string;                               // 取件前 ✱✱✱✱,取件后 4 位数字
+interface OrderRepository {
+  submitOrder(order: Order): Promise<OrderReceipt>;
+  watchTracking(
+    orderId: string,
+    onStage: (stage: TrackingStage) => void,
+  ): Unsubscribe;
 }
 ```
 
-- **Repository 模式**:`OrderRepository` 是接口,`MockOrderRepository` 是实现;页面/store 只依赖接口。接真 API 新增 `HttpOrderRepository`,改一处注入即可。
-- **车型推荐规则**(mock 层一条纯函数):物品尺寸大 / 过重 / 易损 / 距离遥远 / 天气恶劣 → 推荐汽车配送(下单页顶部提示条)。
-- **服务模式规则**:一对一急送不开放载具切换并继承当前取/收地址;仅帮送与帮取直接互切时交换地址角色。
-- **体积规则**:默认配送箱为 `41×30×31cm`;任一边超过 `100cm` 建议汽车,三边和超过 `150cm` 判定超限。
-- **运力信息规则**:未填写取件地址时显示“填取件地址可查接单时间”;填写后帮送/帮取选择汽车时隐藏,其余状态展示运力信息。
+`OrderRepository` 是页面访问订单数据的唯一入口。
+
+### 7.2 当前实现
+
+`MockOrderRepository` 负责：
+
+- 模拟提交延迟。
+- 生成递增订单号。
+- 返回固定测试骑手与收货码。
+- 根据 Mock 时间轴依次通知配送阶段。
+- 返回取消订阅函数，供页面卸载时清理。
+
+注入点位于：
+
+```ts
+// src/data/repositories/index.ts
+export const orderRepository: OrderRepository = new MockOrderRepository();
+```
+
+未来接入真实服务时新增 `HttpOrderRepository` 并替换注入，不修改页面调用方式。
+
+### 7.3 Mock 与产品规则
+
+- Mock 的业务阈值和时间参数必须与 `product.md` 保持一致。
+- Mock 数据只用于测试，不应散落在 JSX 中。
+- 页面不得根据“当前是 Mock”写特殊业务分支。
+- 具有业务含义的 Mock 常量应集中命名并可测试。
 
 ---
 
-## 6. 页面 / 路由模型(14 个 Figma frame → 5 个路由)
+## 8. 路由与页面组织
 
-设计稿把每个状态各画一个 frame;代码里**同一屏幕的多个 frame = 一个路由 + 一个状态字段**,不是多个路由。
+### 8.1 路由
 
-| 路由 | 组件 | Figma frame(node id) | 页内状态 / 分段 |
-|---|---|---|---|
-| 首页 | `HomePage` | 首页 `913:7841` | 帮取送固定为核心业务;其他入口使用全局通用 Toast 提示,不切换草稿业务 |
-| 地址 | `AddressPage` | 取件 `878:5645`、收件 `885:6377` | 同一路由,`role = pickup / delivery`,流程中走两次 |
-| 物品信息 | `ItemInfoPage` | 类型 `1380:20261`、重量 `1380:20291`、体积 `1380:20301` | 分段填写:类型 → 重量 → 体积 → 保价(slot) |
-| 下单确认 | `OrderConfirmPage` | 下单页1 `856:1453`、页2 `1507:10832`、页3 `864:7899` | 物品区展开/精简、地址栏有无等状态 + 车型推荐提示 |
-| 配送追踪 | `TrackingPage` | 配送页1 `1507:20230`、页2 `1507:20684`、页3 `1507:21772`、页4 `1507:22206`、页5 `1380:21404` | 时间轴 5 态(§8),订单完成是终态 |
+| 路由 | 页面 | 主要职责 |
+|---|---|---|
+| `/` | `HomePage` | 创建订单草稿入口 |
+| `/address/:role` | `AddressPage` | 复用取件/收件两种地址角色 |
+| `/item-info` | `ItemInfoPage` | 编辑并提交完整物品信息 |
+| `/order-confirm` | `OrderConfirmPage` | 汇总草稿、选择服务、提交订单 |
+| `/tracking` | `TrackingPage` | 订阅并展示配送状态 |
 
-**先建的共享组件**(跨路由复用):`StatusBar`、`NavigationBar`、`TabBar`、`HomeIndicator`、业务选择、地址填写-居中、物品类型选择、物品体积、保价、进度条、骑手卡片、物品凭证、取收标签、车型推荐提示条。
+### 8.2 Figma Frame 与路由
 
----
+同一页面的多个 Figma Frame 实现为一个路由内的显式状态，不为每个 Frame 建路由。
 
-## 7. 基本用户使用流程(帮取送 · 七夕送花)
+| 页面 | Figma 节点 |
+|---|---|
+| 首页 | `913:7841` |
+| 取件/收件地址 | `878:5645`、`885:6377` |
+| 物品信息 | `1380:20261`、`1380:20291`、`1476:31660` |
+| 下单确认 | `856:1453` |
+| 配送追踪 | `1507:20230`、`1507:20684`、`1507:21772`、`1507:22206`、`1380:21404` |
 
-1. **首页**:默认选中「帮取送」tab → 点击进入下单。
-2. **地址**:填/确认**取件地址**(`role=pickup`)→ 填/确认**收件地址**(`role=delivery`)。同一路由两次。
-3. **物品信息**:选类型(鲜花)→ 填重量 → 填体积 → 选保价档位;必要时物品描述/配送要求。
-4. **下单确认**:核对取件/收件地址、物品、配送车型、费用、保价;若命中车型推荐规则,顶部出现"推荐使用汽车配送"提示 → 提交订单。
-5. **配送追踪**:时间轴自动推进(§8),全程展示骑手信息与徽章(人可信)、物品凭证与收货码/照片位(物可见)、进度与情境提示(事可感)。
-6. **完成**:时间轴终态"订单已完成"(本次服务 XX 米、XX 分钟)。
+### 8.3 路由守卫
 
-> 这条 happy path 是本期唯一要跑通的流程;异常/失败分支见 §14,本期不做。
+当前使用页面级检查：
 
----
+- 下单确认页缺少地址或物品时重定向首页。
+- 配送追踪页缺少订单回执或订单数据时重定向首页。
 
-## 8. 配送追踪时间轴(该路由的核心内容)
+若后续页面增加，应避免在多个页面复制守卫条件；可抽为 Loader 或共享 Hook。
 
-真骑手流程几十分钟,测试等不了 → 用**压缩时间轴 mock**,下单后每 10–15 秒自动推进一档,对应已画好的 5 个 frame:
+### 8.4 应用画布与页面容器
 
-`待接单(accepting) → 待取件/预计取件(accepted,收货码 ✱✱✱✱) → 已取件/预计送达(picked,收货码显示 4 位) → 配送中/到达收件地(delivering→arrived) → 订单已完成(completed)`
+所有路由共享同一套移动端应用画布约束，由 `AppShell` 统一提供：
 
-- 收货码在 `picked` 时由 ✱✱✱✱ 揭示为 4 位数字。
-- 每档的时间、文案、进度信号按"确定性"设计;情境提示条(天气)贯穿。
-- 这是该路由的**设计内容**,不是额外"状态集";参与者下单后一分钟内看完整条弧线,无需任何跳转工具。
+- `width: 100%`，在 Web 预览场景使用 `max-width: 448px`。
+- `min-height: 100dvh`，不把页面整体高度固定为某个 Figma 画板高度。
+- 宽屏预览时水平居中，移动端视口内铺满。
+- 统一处理横向溢出，默认禁止页面出现横向滚动条。
 
----
+页面组件只负责页面自己的背景、顶部安全区、滚动内容和业务布局，不重复声明 `mx-auto min-h-dvh max-w-md`。当前代码中这些规则仍分散在各页面，后续应抽出 `src/components/AppShell.tsx` 并通过根路由布局统一包裹页面。
 
-## 9. 状态管理
+固定在视口边缘的 Tab Bar、确认栏等区域不依赖页面内容流定位，应使用共享的固定层容器：
 
-- UX 状态放 Zustand,**仅内存**:杀进程重开 = 干净起点。这**替代了 reset 按钮**,切换参与者时全退重开即可。
-- 存储策略:UX 状态**不落盘**;(将来的)埋点数据才落盘。
+- 固定层自身覆盖视口边缘。
+- 固定层内部再次使用 `width: 100%` 和 `max-width: 448px`。
+- 底部高度叠加 `env(safe-area-inset-bottom)`。
+- 页面滚动内容必须预留等量底部空间，避免被固定层遮挡。
 
----
-
-## 10. 仓库呈现(最高杠杆的"真 vs demo")
-
-- **README**:架构图 + token / 领域模型 / 路由模型 / 流程 总览(即本文档)。
-- **commit 历史**:有递进,别一个 `init`。2000 行单文件 + 单次提交 = demo 石锤。
-- **基础可访问性**:点击区域、语义标签、对比度——做一点即可,别过度。
-
----
-
-## 11. 取舍顺序(规则冲突时怎么权衡)
-
-**P0 流程正确(5 路由走通) > P1 配送时间轴稳定复现 > P2 手感真实(转场/弹层) > P3 视觉还原(用 token) > P4 代码干净**
+`AppShell` 只负责应用画布，不承载页面背景渐变、业务状态、页面专属安全区偏移或具体组件尺寸。
 
 ---
 
-## 12. 与 Figma 协作(Claude Code 用 Figma MCP)
+## 9. 定时器、订阅与动效实现
 
-- Claude Code 连 Figma MCP,**做到哪个路由拉哪个 frame**(用 §6 表里的 node id)的设计上下文、尺寸、token 值(Dev Mode / `get_design_context`)。链接就是导出,现读现用。
-- 另需单独导出:图标 / 插画 SVG。
-
----
-
-## 13. 构建顺序
-
-1. **地基**:tokens、领域模型、repository(mock)、store、ErrorBoundary、一套共享组件(§6 底部清单)。
-2. **第一条纵切**:建议 **物品信息页** 或 **下单确认页**(承载最想验证的交互)端到端跑通。
-3. 其余路由 → **配送追踪时间轴**(§8)→ PWA 打磨 → Capacitor 打包。
+- 所有 `setTimeout`、`setInterval`、媒体查询监听和 Repository 订阅必须在卸载时清理。
+- 配送阶段只由 Repository 推进，页面不另建第二条阶段时间轴。
+- 阶段内地图快照由追踪组件维护，并在阶段变化时重置。
+- 同一次位置刷新所需的坐标、预计时间和距离保存在同一快照对象中。
+- 动效必须支持 `prefers-reduced-motion` 降级。
+- 用 CSS transition/keyframes 实现展示动效；业务状态变化仍由 React 状态驱动。
+- 不使用动画完成回调作为唯一业务提交入口。
 
 ---
 
-## 14. 本期不做 / 延后
+## 10. Design Token 集成
 
-- **feature flags / A/B 变体**——单方案。
-- **每页完整 loading / empty / error 状态集**——只做流程 happy path(配送时间轴除外,它是设计内容)。
-- **失败 / 异常态**(骑手异常、地址识别失败等)——延后。
-- **埋点**——最后再做,本期只保留"事件从一处流出"的写法习惯,不实现 `track()`。
-- 性能预算 / 虚拟滚动 / 懒加载(除非真出现超长列表);分析 SDK;reset / 跳转运营工具;真后端 / 鉴权。
+- `design.md` 是 Token 和视觉规范来源。
+- `src/design-tokens/tokens.css` 是运行时代码映射。
+- Tailwind 类应引用语义 Token，例如 `bg-bg-page`、`text-text-primary`。
+- 不为近似颜色新建散装色值。
+- Figma 特定素材的装饰颜色或渐变可作为组件级值，但应有来源注释。
+- 字体、字号、字重、行高、颜色、间距和圆角不得目测猜测。
+- SVG 保持 `viewBox` 与宽高比，禁止通过不匹配的宽高拉伸。
 
+---
 
-## 15. 开发里程碑
-- M0 脚手架	Vite + React + strict TS + Tailwind + Router 骨架 + Vercel 先发链接
-- M1 地基	Figma MCP 拉 tokens、领域模型、Repository 接口 + Mock、Zustand、14 个共享组件
-- M2 第一纵切	物品信息页(类型→重量→体积→保价 分段状态机)
-- M3 首页 + 地址页	地址页同一路由走两次(pickup/delivery)
-- M4 下单确认页	车型推荐提示 + 提交订单,happy path 全通
-- M5 配送追踪时间轴	P1 核心:5 态每 10–15 秒自动推进、收货码揭示、信任三角全量呈现
-- M6 收尾	PWA、可访问性、README
+## 11. 编码约束
+
+- 保持 TypeScript `strict: true`。
+- 禁止 `any` 和 `@ts-ignore`。
+- 组件通过 props 接收数据与事件，不在内部直接请求或导入 Mock。
+- 页面负责数据编排，组件负责展示和局部交互。
+- 单文件约 150 行是拆分提示，不是硬性指标；按职责边界拆分。
+- 事件入口集中，避免同一业务动作散落多个匿名处理器。
+- 不修改与当前任务无关的文件或重构。
+- 资源文件使用清楚的领域目录和语义命名。
+- 手机安全区使用 `env(safe-area-inset-*)`，不在页面伪造系统 Home Indicator。
+
+---
+
+## 12. 测试与验收
+
+### 12.1 静态检查
+
+- TypeScript 编译通过。
+- 生产构建通过。
+- Git diff 无空白错误。
+- 没有未清理的类型忽略或调试代码。
+
+### 12.2 业务测试
+
+业务验收用例以 `product.md` 为准，优先为纯函数补充测试：
+
+- 服务模式切换与地址转换。
+- 运力信息派生。
+- 体积状态优先级。
+- 保价与物品凭证变体优先级。
+- 汽车推荐各触发条件。
+- 配送阶段顺序与终态。
+
+### 12.3 页面链路
+
+- 首页到订单完成的核心流程可连续运行。
+- 返回修改地址或物品后，草稿保持一致。
+- 防重复提交有效。
+- 页面卸载后定时器和订阅停止。
+
+### 12.4 视觉与响应式
+
+- 使用 320、375、390、414、448px 宽度检查。
+- 无横向滚动、文本遮挡、固定底栏覆盖和安全区错误。
+- 对关键 Figma 节点进行截图对比。
+- 图片、SVG 和 Canvas（如有）均非空且比例正确。
+
+---
+
+## 13. 部署与分发
+
+### 13.1 Vercel
+
+- 使用仓库锁定的 pnpm 与 Node.js 版本。
+- 生产构建命令与本地一致。
+- 部署失败先检查包管理器声明、Lockfile 和 Node Engine。
+
+### 13.2 PWA
+
+计划包含：
+
+- Web App Manifest。
+- `display: standalone`。
+- iOS `apple-touch-icon`。
+- `viewport-fit=cover`。
+- 真机添加到主屏幕验证。
+
+### 13.3 Capacitor
+
+本期不作为前置交付。PWA 流程稳定后，再评估本地包、权限和原生导航。
+
+---
+
+## 14. 开发工作流
+
+1. 从 `product.md` 确认业务规则和验收结果。
+2. 从 `design.md` 与 Figma 获取视觉规格和资源。
+3. 阅读目标页面、共享组件、模型和 Store 的现有实现。
+4. 更新模型或纯函数，再更新页面。
+5. 运行构建、业务链路和响应式截图检查。
+6. 在提交说明中记录产品规则、视觉节点和工程改动。
+
+Git 操作由用户明确发起。工作区存在无关改动时，不回退、不覆盖，也不混入提交。
+
+---
+
+## 15. 当前里程碑
+
+| 里程碑 | 内容 | 状态 |
+|---|---|---|
+| M0 | Vite、React、严格 TS、Router、Vercel | 已完成 |
+| M1 | Token、模型、Repository、Zustand、共享组件 | 已完成，持续校准 |
+| M2 | 物品信息纵向流程 | 已完成，持续视觉打磨 |
+| M3 | 首页与地址页 | 已完成，持续响应式打磨 |
+| M4 | 下单确认与订单提交 | 已完成 |
+| M5 | 配送追踪状态机与动态地图 | 进行中 |
+| M6 | PWA、可访问性、README 和测试整理 | 待完成 |
+
+具体未实现的产品项见 `product.md`“需求与当前实现差异”。
+
+---
+
+## 16. 仓库呈现
+
+- README 应提供三份核心文档入口。
+- 架构图、数据流、路由和运行方式以本文为准。
+- 产品规则不应只存在于代码注释中。
+- Figma 精确规格不应复制到研发文档形成第二事实来源。
+- Commit 保持功能递进，避免巨型初始化提交。

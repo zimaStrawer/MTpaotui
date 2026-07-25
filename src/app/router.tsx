@@ -7,7 +7,7 @@ import { OrderConfirmPage } from '../pages/order-confirm/OrderConfirmPage';
 import { TrackingPage } from '../pages/tracking/TrackingPage';
 
 /**
- * 路由模型(§6):14 个 Figma frame → 5 个路由。
+ * 路由实现见 MTprototype-tech-spec.md §8:多个 Figma frame → 5 个路由。
  * 同一屏幕的多个 frame = 一个路由 + 一个状态字段。
  */
 export const router = createBrowserRouter([

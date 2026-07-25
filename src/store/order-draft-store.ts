@@ -12,7 +12,7 @@ import {
 import type { OrderReceipt } from '../data/repositories';
 
 /**
- * 下单流程草稿(UX 状态,仅内存,§9):
+ * 下单流程草稿(仅内存,见 MTprototype-tech-spec.md §6):
  * 首页选业务/服务/载具 → 地址页两次(取 / 收)→ 物品信息 → 下单确认页读取汇总。
  * 不落盘;全退重开即干净起点,替代 reset 按钮。
  */
