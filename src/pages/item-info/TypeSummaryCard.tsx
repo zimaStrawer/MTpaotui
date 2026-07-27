@@ -36,7 +36,7 @@ export function TypeSummaryCard({
   const categoryIcon = CATEGORY_ICON[category];
 
   return (
-    <section className="flex h-[276px] w-full flex-col gap-3 overflow-hidden rounded-16 bg-bg-container px-4 py-3">
+    <section className="flex h-[276px] w-full flex-col gap-3 overflow-hidden rounded-16 bg-container-bg px-4 py-3">
       <div className="flex flex-col gap-2">
         <FieldHeader
           label="类型"
@@ -49,7 +49,7 @@ export function TypeSummaryCard({
             >
               <span
                 aria-hidden
-                className="size-5 shrink-0 bg-accent-primary"
+                className="size-5 shrink-0 bg-highlight-primary"
                 style={{
                   WebkitMaskImage: `url("${categoryIcon.src}")`,
                   maskImage: `url("${categoryIcon.src}")`,
@@ -61,12 +61,12 @@ export function TypeSummaryCard({
                   maskSize: 'contain',
                 }}
               />
-              <span className="text-body font-medium text-accent-primary">
+              <span className="text-body font-medium text-highlight-primary">
                 {category}
               </span>
               <span
                 aria-hidden
-                className="size-4 shrink-0 bg-accent-primary"
+                className="size-4 shrink-0 bg-highlight-primary"
                 style={{
                   WebkitMaskImage: `url("${iconChevron}")`,
                   maskImage: `url("${iconChevron}")`,
@@ -93,10 +93,10 @@ export function TypeSummaryCard({
                 alt="物品照片"
                 className="size-12 rounded-8 object-cover"
               />
-              <span className="absolute -top-1.5 -right-1.5 flex size-3.5 items-center justify-center rounded-full bg-bg-black">
+              <span className="absolute -top-1.5 -right-1.5 flex size-3.5 items-center justify-center rounded-full bg-mask-bg">
                 <span
                   aria-hidden
-                  className="size-3 bg-bg-container"
+                  className="size-3 bg-container-bg"
                   style={{
                     WebkitMaskImage: `url("${iconClose}")`,
                     maskImage: `url("${iconClose}")`,
@@ -116,7 +116,7 @@ export function TypeSummaryCard({
             onChange={(event) => onNoteChange(event.target.value)}
             placeholder="可备注物品描述、配送要求等"
             rows={2}
-            className="h-12 flex-1 resize-none rounded-8 bg-bg-page p-2 text-caption-sm text-text-primary placeholder:text-text-tertiary focus:outline-none"
+            className="h-12 flex-1 resize-none rounded-8 bg-page-bg p-2 text-caption-sm text-text-primary placeholder:text-text-tertiary focus:outline-none"
           />
         </div>
 

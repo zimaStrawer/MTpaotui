@@ -25,21 +25,21 @@ export function OrderActions({
         <button
           type="button"
           onClick={onEdit}
-          className="h-7 w-20 rounded-full border border-divider bg-bg-container text-body font-medium text-text-primary max-[350px]:w-[72px]"
+          className="h-7 w-20 rounded-full border border-border-divider bg-container-bg text-body font-medium text-text-primary max-[350px]:w-[72px]"
         >
           修改订单
         </button>
         <button
           type="button"
           onClick={onClaim}
-          className="h-7 w-20 rounded-full border border-divider bg-bg-container text-body font-medium text-text-primary max-[350px]:w-[72px]"
+          className="h-7 w-20 rounded-full border border-border-divider bg-container-bg text-body font-medium text-text-primary max-[350px]:w-[72px]"
         >
           申请理赔
         </button>
         <button
           type="button"
           onClick={onShare}
-          className="h-7 w-20 rounded-full border border-accent-primary bg-bg-container text-body font-medium text-accent-primary max-[350px]:w-[72px]"
+          className="h-7 w-20 rounded-full border border-highlight-primary bg-container-bg text-body font-medium text-highlight-primary max-[350px]:w-[72px]"
         >
           分享订单
         </button>

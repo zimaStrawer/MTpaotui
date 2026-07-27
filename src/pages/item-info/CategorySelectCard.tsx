@@ -16,7 +16,7 @@ interface CategorySelectCardProps {
  */
 export function CategorySelectCard({ onSelect }: CategorySelectCardProps) {
   return (
-    <section className="w-full rounded-16 bg-bg-container px-4 pt-3 pb-4">
+    <section className="w-full rounded-16 bg-container-bg px-4 pt-3 pb-4">
       <div className="flex flex-col gap-2">
         <FieldHeader
           label="类型"
@@ -31,7 +31,7 @@ export function CategorySelectCard({ onSelect }: CategorySelectCardProps) {
         <ProhibitedNote />
       </div>
 
-      <div className="mt-2 flex h-12 items-center gap-2 rounded-8 bg-bg-page px-3">
+      <div className="mt-2 flex h-12 items-center gap-2 rounded-8 bg-page-bg px-3">
         <span className="relative shrink-0">
           <img src={iconCamera} alt="" className="size-6" />
           <img
@@ -54,7 +54,7 @@ export function CategorySelectCard({ onSelect }: CategorySelectCardProps) {
               key={category}
               type="button"
               onClick={() => onSelect(category)}
-              className="flex aspect-square min-w-0 flex-col items-center justify-center rounded-8 bg-bg-page text-body font-normal text-text-primary transition-colors active:bg-text-primary/5 motion-reduce:transition-none"
+              className="flex aspect-square min-w-0 flex-col items-center justify-center rounded-8 bg-page-bg text-body font-normal text-text-primary transition-colors active:bg-text-primary/5 motion-reduce:transition-none"
             >
               <span className="flex size-8 items-center justify-center">
                 <img

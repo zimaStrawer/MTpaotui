@@ -14,7 +14,7 @@ function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-/** Mock 实现：纯内存态，状态策略见 MTprototype-tech-spec.md §6。 */
+/** Mock 实现：纯内存态，状态策略见 tech.md §2。 */
 export class MockOrderRepository implements OrderRepository {
   #orderSeq = 0;
 

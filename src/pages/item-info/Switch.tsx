@@ -18,7 +18,7 @@ export function Switch({ checked, ariaLabel, onChange }: SwitchProps) {
       }`}
     >
       <span
-        className={`block size-5 rounded-full bg-bg-container shadow transition-transform ${
+        className={`block size-5 rounded-full bg-container-bg shadow transition-transform ${
           checked ? 'translate-x-4' : 'translate-x-0'
         }`}
       />

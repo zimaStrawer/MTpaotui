@@ -61,7 +61,7 @@ export function HomePage() {
   };
 
   return (
-    <div className="relative mx-auto min-h-dvh max-w-md overflow-x-hidden bg-bg-page pb-28">
+    <div className="relative mx-auto min-h-dvh max-w-md overflow-x-hidden bg-page-bg pb-28">
       <section
         className={`relative overflow-hidden rounded-b-[20px] transition-colors duration-300 motion-reduce:transition-none ${
           serviceMode === 'express' ? 'bg-[#fde1cd]' : 'bg-[#fef775]'

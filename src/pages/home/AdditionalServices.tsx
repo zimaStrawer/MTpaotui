@@ -17,7 +17,7 @@ export function AdditionalServices({
   onUnavailableSelect,
 }: AdditionalServicesProps) {
   return (
-    <section className="flex h-[85px] w-full items-start justify-between rounded-16 bg-bg-container px-6 pt-4">
+    <section className="flex h-[85px] w-full items-start justify-between rounded-16 bg-container-bg px-6 pt-4">
       {SERVICES.map(({ label, iconLeft }) => (
         <button
           key={label}

@@ -82,7 +82,7 @@ export function ServiceCard({
 
   return (
     <section className="relative h-[324px] w-full">
-      <div className="absolute inset-x-0 top-0.5 h-24 rounded-16 border-x border-t border-bg-container bg-bg-page" />
+      <div className="absolute inset-x-0 top-0.5 h-24 rounded-16 border-x border-t border-container-bg bg-page-bg" />
       <div className="absolute -top-[11px] right-0 z-10 flex h-[23px] w-[60px] items-center rounded-tl-4 rounded-tr-4 rounded-br-4 bg-decorative-secondary px-1.5 py-[3px]">
         <span className="font-decorative text-decorative font-bold text-decorative-primary">
           专人更快
@@ -130,7 +130,7 @@ export function ServiceCard({
       </div>
 
       <div
-        className={`absolute inset-x-0 top-11 flex h-[280px] flex-col overflow-hidden rounded-16 bg-bg-container px-4 pt-4 pb-3 ${CARD_CORNER[mode]}`}
+        className={`absolute inset-x-0 top-11 flex h-[280px] flex-col overflow-hidden rounded-16 bg-container-bg px-4 pt-4 pb-3 ${CARD_CORNER[mode]}`}
       >
         <div className="flex flex-col gap-2">
           <div className="flex h-8 items-center justify-between gap-2 max-[374px]:gap-0">
@@ -148,14 +148,14 @@ export function ServiceCard({
             )}
             {capacityInfoState === 'visible' && (
               <span
-                className={`flex items-center gap-1 rounded-4 bg-gradient-to-r from-accent-secondary to-transparent p-1.5 text-caption ${
+                className={`flex items-center gap-1 rounded-4 bg-gradient-to-r from-highlight-bg to-transparent p-1.5 text-caption ${
                   premium ? 'w-full' : ''
                 }`}
               >
                 <img src={iconFlash} alt="" className="size-4" />
                 <span className="text-text-secondary">
                   {premium && '附近有234位骑手, '}预计
-                  <span className="text-accent-primary">1分钟</span>内接单
+                  <span className="text-highlight-primary">1分钟</span>内接单
                 </span>
               </span>
             )}

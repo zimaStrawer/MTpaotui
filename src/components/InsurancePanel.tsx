@@ -34,8 +34,8 @@ type PanelState = 'reminder' | 'suggest' | 'benefit';
 
 const chipBase =
   'relative flex h-[65px] w-30 shrink-0 flex-col justify-center gap-1 overflow-hidden rounded-12 border px-2 text-left';
-const chipSelected = 'border-brand-primary bg-brand-secondary';
-const chipIdle = 'border-text-quaternary bg-bg-container';
+const chipSelected = 'border-brand-primary bg-brand-bg';
+const chipIdle = 'border-text-quaternary bg-container-bg';
 
 /** 保价 slot(省心送保价服务):档位横滑,再点已选档位可取消。 */
 export function InsurancePanel({ value, fragile, onChange }: InsurancePanelProps) {
@@ -46,7 +46,7 @@ export function InsurancePanel({ value, fragile, onChange }: InsurancePanelProps
     onChange(value === tier ? 'none' : tier);
 
   return (
-    <div className="relative h-[139px] w-full shrink-0 overflow-hidden rounded-8 bg-bg-page px-3 pt-2.5 pb-3">
+    <div className="relative h-[139px] w-full shrink-0 overflow-hidden rounded-8 bg-page-bg px-3 pt-2.5 pb-3">
       <div className="flex items-center gap-1">
         <img
           src={logoShengxinsong}
@@ -62,11 +62,13 @@ export function InsurancePanel({ value, fragile, onChange }: InsurancePanelProps
         </p>
       )}
       {state === 'suggest' && (
-        <p className="mt-1 text-caption-sm text-alert">物品易损 建议您保价</p>
+        <p className="mt-1 text-caption-sm text-alert-primary">
+          物品易损 建议您保价
+        </p>
       )}
       {state === 'reminder' && (
         <p className="mt-1 text-caption-sm text-text-tertiary">
-          未保价最高赔付<span className="text-accent-primary">5倍</span>配送费
+          未保价最高赔付<span className="text-highlight-primary">5倍</span>配送费
         </p>
       )}
       <div className="scrollbar-hidden mt-1.5 flex gap-2 overflow-x-auto">
@@ -119,7 +121,7 @@ export function InsuranceCollapsedBar({ tier, onExpand }: InsuranceCollapsedBarP
     <button
       type="button"
       onClick={onExpand}
-      className="flex w-full items-center justify-between rounded-8 bg-bg-page px-3 py-2 text-left"
+      className="flex w-full items-center justify-between rounded-8 bg-page-bg px-3 py-2 text-left"
     >
       <span className="flex items-center gap-1 text-caption font-medium text-text-primary">
         保价费

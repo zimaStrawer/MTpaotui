@@ -74,7 +74,7 @@ export function CompletedOrderView({
       className="mx-auto min-h-dvh max-w-md pt-[env(safe-area-inset-top)]"
       style={{
         backgroundImage:
-          'linear-gradient(to bottom, var(--color-bg-container) 0, var(--color-bg-page) 50dvh)',
+          'linear-gradient(to bottom, var(--color-container-bg) 0, var(--color-page-bg) 50dvh)',
       }}
     >
       <TrackingNavigation
@@ -84,7 +84,7 @@ export function CompletedOrderView({
         onSupport={onUnavailable}
       />
       <main className="flex flex-col gap-2 px-2 pb-8">
-        <section className="rounded-b-16 bg-bg-container pb-3 pl-4">
+        <section className="rounded-b-16 bg-container-bg pb-3 pl-4">
           <h1 className="text-title-max font-semibold text-text-primary">
             订单已完成
           </h1>
@@ -92,12 +92,12 @@ export function CompletedOrderView({
             本次服务343米，用时28分钟，感谢您使用美团跑腿
           </p>
 
-          <div className="mt-4 mr-4 flex h-[93px] items-center rounded-8 bg-bg-page p-3">
+          <div className="mt-4 mr-4 flex h-[93px] items-center rounded-8 bg-page-bg p-3">
             <div className="flex min-w-[145px] flex-col max-[350px]:min-w-[92px]">
               <span className="text-tab font-medium text-text-primary">
                 签收方式
               </span>
-              <span className="mt-1 text-tab font-medium text-accent-primary">
+              <span className="mt-1 text-tab font-medium text-highlight-primary">
                 本人签收
               </span>
               <button
@@ -154,7 +154,7 @@ export function CompletedOrderView({
           type="button"
           aria-label="查看订单帮助"
           onClick={onUnavailable}
-          className="relative h-[411px] overflow-hidden rounded-16 bg-bg-container text-left"
+          className="relative h-[411px] overflow-hidden rounded-16 bg-container-bg text-left"
         >
           <img
             src={helpTopics}

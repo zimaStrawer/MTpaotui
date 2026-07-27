@@ -12,7 +12,7 @@ interface WeightCardProps {
 /** 重量卡(frame 1380:20298):大数字 + 0–20 公斤刻度滑杆。 */
 export function WeightCard({ weightKg, onChange }: WeightCardProps) {
   return (
-    <section className="relative h-[177px] w-full overflow-hidden rounded-16 bg-bg-container">
+    <section className="relative h-[177px] w-full overflow-hidden rounded-16 bg-container-bg">
       <div className="absolute top-3 right-4 left-4">
         <FieldHeader
           label="重量"

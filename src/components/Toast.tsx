@@ -11,7 +11,7 @@ export function Toast({ message, className = '' }: ToastProps) {
     <div
       role="status"
       aria-live="polite"
-      className={`toast-enter fixed left-1/2 z-50 -translate-x-1/2 rounded-full bg-bg-black px-4 py-2 text-caption whitespace-nowrap text-bg-container shadow-[0_4px_16px_rgba(28,30,33,0.18)] ${className}`}
+      className={`toast-enter fixed left-1/2 z-50 -translate-x-1/2 rounded-full bg-mask-bg px-4 py-2 text-caption whitespace-nowrap text-container-bg shadow-[0_4px_16px_rgba(28,30,33,0.18)] ${className}`}
     >
       {message}
     </div>

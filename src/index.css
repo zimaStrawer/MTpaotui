@@ -7,7 +7,7 @@
     -webkit-tap-highlight-color: transparent;
   }
   body {
-    background: var(--color-bg-page);
+    background: var(--color-page-bg);
     color: var(--color-text-primary);
   }
 }

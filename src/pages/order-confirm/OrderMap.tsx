@@ -26,19 +26,19 @@ function FloatCard({ address, metric, metricLabel, metricBg, onClick }: FloatCar
     <button
       type="button"
       onClick={onClick}
-      className="flex overflow-hidden rounded-8 border border-bg-container text-left shadow-[0_1px_4px_rgba(27,29,33,0.12)]"
+      className="flex overflow-hidden rounded-8 border border-container-bg text-left shadow-[0_1px_4px_rgba(27,29,33,0.12)]"
     >
       <span
         className={`flex flex-col items-center justify-center px-3 py-1.5 ${metricBg}`}
       >
-        <span className="font-number text-body leading-4 font-bold text-accent-primary">
+        <span className="font-number text-body leading-4 font-bold text-highlight-primary">
           {metric}
         </span>
         <span className="text-caption font-medium whitespace-nowrap text-text-primary">
           {metricLabel}
         </span>
       </span>
-      <span className="flex items-center bg-bg-container py-1 pr-1 pl-2">
+      <span className="flex items-center bg-container-bg py-1 pr-1 pl-2">
         <span className="flex flex-col">
           <span className="text-caption font-medium whitespace-nowrap text-text-primary">
             {address.poi}
@@ -87,7 +87,7 @@ export function OrderMap({ pickup, delivery, onBack, onEditAddress }: OrderMapPr
           address={delivery}
           metric={MOCK_DELIVERY_ETA}
           metricLabel="预计送达"
-          metricBg="bg-brand-secondary"
+          metricBg="bg-brand-bg"
           onClick={() => onEditAddress('delivery')}
         />
       </div>
@@ -103,7 +103,7 @@ export function OrderMap({ pickup, delivery, onBack, onEditAddress }: OrderMapPr
             </>
           }
           metricLabel="最快接单"
-          metricBg="bg-bg-page"
+          metricBg="bg-page-bg"
           onClick={() => onEditAddress('pickup')}
         />
       </div>
@@ -114,7 +114,7 @@ export function OrderMap({ pickup, delivery, onBack, onEditAddress }: OrderMapPr
           onClick={onBack}
           className="flex size-11 items-center justify-center"
         >
-          <span className="flex size-8 items-center justify-center rounded-full bg-bg-container">
+          <span className="flex size-8 items-center justify-center rounded-full bg-container-bg">
             <img src={iconBack} alt="" className="size-5" />
           </span>
         </button>

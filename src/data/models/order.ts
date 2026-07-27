@@ -1,4 +1,4 @@
-/** 产品领域模型见 product.md §2；Mock 与将来的真后端共用同一套类型。 */
+/** 产品领域模型见 product.md §10；Mock 与将来的真后端共用同一套类型。 */
 
 /** 首页业务 tab,本期只做「帮取送」 */
 export type BusinessType = '帮取送' | '帮我买' | '帮个忙';

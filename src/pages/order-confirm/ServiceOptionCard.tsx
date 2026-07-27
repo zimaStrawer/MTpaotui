@@ -12,7 +12,7 @@ interface ServiceOptionCardProps {
 function Fee({ yuan }: { yuan: number }) {
   const [int, decimal] = yuan.toFixed(1).split('.');
   return (
-    <span className="flex items-end gap-0.5 text-accent-primary">
+    <span className="flex items-end gap-0.5 text-highlight-primary">
       <span className="text-body font-semibold">¥</span>
       {/* DINPro 展示数字为 token 已知缺口,以 SF Pro 近似 */}
       <span className="font-number text-[20px] leading-5 font-bold">
@@ -48,8 +48,8 @@ function OptionShell({
         tall ? 'h-18' : 'h-14'
       } ${
         selected
-          ? 'border-brand-primary bg-brand-secondary'
-          : 'border-text-quaternary bg-bg-container'
+          ? 'border-brand-primary bg-brand-bg'
+          : 'border-text-quaternary bg-container-bg'
       }`}
     >
       {selected && <CornerCheck />}
@@ -73,7 +73,7 @@ function OptionShell({
  */
 export function ServiceOptionCard({ value, onChange }: ServiceOptionCardProps) {
   return (
-    <section className="w-full rounded-16 bg-bg-container px-3 pt-3 pb-3">
+    <section className="w-full rounded-16 bg-container-bg px-3 pt-3 pb-3">
       {/* 抽屉把手 */}
       <span className="mx-auto mb-3 block h-1 w-8 rounded-full bg-text-quaternary" />
       <div className="flex flex-col gap-2">

@@ -130,7 +130,7 @@ export function TrackingPage() {
     );
   } else {
     content = (
-      <div className="mx-auto min-h-dvh max-w-md bg-bg-page">
+      <div className="mx-auto min-h-dvh max-w-md bg-page-bg">
         <TrackingMap
           stage={stage}
           pickupCode={receipt.courier.pickupCode ?? '----'}

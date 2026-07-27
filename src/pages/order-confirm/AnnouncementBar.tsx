@@ -39,13 +39,13 @@ export function AnnouncementBar() {
     '目前订单较多，骑手紧张，送达时间可能波动',
     '平台保障｜超1分钟赔・物品安全保障',
     <>
-      限时 <span className="text-accent-primary">7.5折</span> 优惠{' '}
-      <span className="font-number text-accent-primary">
+      限时 <span className="text-highlight-primary">7.5折</span> 优惠{' '}
+      <span className="font-number text-highlight-primary">
         {formatCountdown(countdown)}
       </span>
     </>,
     <>
-      本单享 <span className="text-accent-primary">3折</span> 优惠
+      本单享 <span className="text-highlight-primary">3折</span> 优惠
     </>,
     <>
       热评：服务态度好 <span className="text-text-secondary">6.7 万</span>

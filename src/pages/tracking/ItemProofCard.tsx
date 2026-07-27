@@ -15,9 +15,9 @@ import {
 import type { ItemProofServiceVariant } from '../../data/models/order';
 
 const SERVICE_HEADER_COLOR: Record<ItemProofServiceVariant, string> = {
-  standard: 'text-brand-secondary',
-  insurance: 'text-insurance-secondary',
-  express: 'text-accent-secondary',
+  standard: 'text-brand-bg',
+  insurance: 'text-insurance-bg',
+  express: 'text-highlight-bg',
 };
 
 function ProofServiceHeader({
@@ -115,8 +115,8 @@ export function ItemProofCard({
   const codeVisible = pickupConfirmed;
 
   return (
-    <section className="relative h-[102px] w-full overflow-hidden rounded-16 bg-bg-container">
-      <div className="absolute inset-x-0 top-0 h-[27px] bg-bg-page" />
+    <section className="relative h-[102px] w-full overflow-hidden rounded-16 bg-container-bg">
+      <div className="absolute inset-x-0 top-0 h-[27px] bg-page-bg" />
       <ProofServiceHeader variant={serviceVariant} />
       <button
         type="button"
@@ -131,7 +131,7 @@ export function ItemProofCard({
         <div className="flex items-center gap-2">
           <span className="text-tab font-medium text-text-primary">收货码</span>
           <span
-            className={`font-number font-bold text-accent-primary ${
+            className={`font-number font-bold text-highlight-primary ${
               codeVisible ? 'text-display' : 'text-number-lg'
             }`}
           >

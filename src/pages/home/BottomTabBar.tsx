@@ -13,7 +13,7 @@ export function BottomTabBar({
   return (
     <nav
       aria-label="主导航"
-      className="grid h-[calc(48px+max(32px,env(safe-area-inset-bottom)))] w-full grid-cols-3 bg-bg-container"
+      className="grid h-[calc(48px+max(32px,env(safe-area-inset-bottom)))] w-full grid-cols-3 bg-container-bg"
     >
       <button
         type="button"

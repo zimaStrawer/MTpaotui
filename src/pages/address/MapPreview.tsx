@@ -24,7 +24,7 @@ export function MapPreview({ role, poi }: MapPreviewProps) {
         style={{ objectPosition: isPickup ? 'center 22%' : 'center 42%' }}
       />
       <div className="absolute top-[79px] left-1/2 -translate-x-1/2">
-        <span className="relative z-10 flex -translate-y-full items-center gap-1 rounded-8 bg-bg-container p-1 shadow-[0_0_2px_rgba(27,29,33,0.2)]">
+        <span className="relative z-10 flex -translate-y-full items-center gap-1 rounded-8 bg-container-bg p-1 shadow-[0_0_2px_rgba(27,29,33,0.2)]">
           <RoleBadge role={role} />
           <span className="text-caption font-medium text-text-primary">
             {poi}

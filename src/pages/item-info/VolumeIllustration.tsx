@@ -56,12 +56,12 @@ export function VolumeIllustration({ state, volume }: VolumeIllustrationProps) {
   const backTop = frontTop - box.depth;
 
   return (
-    <div className="relative h-[225px] w-full overflow-hidden rounded-8 bg-bg-page">
+    <div className="relative h-[225px] w-full overflow-hidden rounded-8 bg-page-bg">
       <p className="absolute top-1/2 left-3 -translate-y-1/2 text-caption-xs text-text-secondary [writing-mode:vertical-lr]">
         身高175厘米
       </p>
       <div className="absolute top-2 left-1/3 z-10 -translate-x-1/2">
-        <span className="relative block rounded-8 bg-bg-black px-3 py-2 text-caption whitespace-nowrap text-bg-container after:absolute after:-bottom-1 after:left-5 after:size-2 after:rotate-45 after:bg-bg-black">
+        <span className="relative block rounded-8 bg-mask-bg px-3 py-2 text-caption whitespace-nowrap text-container-bg after:absolute after:-bottom-1 after:left-5 after:size-2 after:rotate-45 after:bg-mask-bg">
           {courier.message}
         </span>
       </div>

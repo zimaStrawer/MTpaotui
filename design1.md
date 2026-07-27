@@ -1,4 +1,4 @@
-# 美团跑腿代办 · 初始设计系统
+# 美团跑腿 · 初始设计系统
 
 > 本文用于项目启动阶段。内容来自 Figma Variables、Text Styles 与公共组件库，不绑定具体页面，也不记录产品业务规则或工程实现细节。
 >
@@ -7,14 +7,23 @@
 
 ## 1. 设计理念
 
-本项目以“物可见、人可信、事可感”为设计方向，通过清晰的信息层级、稳定的公共组件和连续的状态反馈，提高用户委托过程中的确定性。
+### 1.1 品牌氛围定位
+美团跑腿代办重设计的整体气质，不是冷静的 B2B 工具，而是一款**用美团黄把“找人跑腿”这件看不见的事变成“看得见、找得到、信得过”的亲切移动服务**。
+这种氛围的关键是“亲切而不廉价，热闹而不乱”：黄色很满，但只作为顶带背景和主按钮；吉祥物增加了人格感，而不是冷冰冰的图标；所有操作都集中在一张大白卡里，不让用户在大片黄色里迷路。整体感觉像一个话不多、但装备整齐的跑腿小哥——一眼就能认出来，下一步该点什么也很清楚。
 
-- **语义优先**：颜色、文字层级和组件状态首先表达信息含义，而不是承担纯装饰作用。
-- **状态连续**：同一任务在不同阶段保持可识别的结构，只改变必要的状态信息。
-- **层级清晰**：使用字重、颜色、间距和容器关系共同建立层级，不依赖单一手段。
-- **组件复用**：相同语义优先复用公共组件，通过变体和槽位适配内容。
-- **内容驱动尺寸**：除稳定交互控件和固定比例素材外，组件高度默认由内容决定。
-- **设计事实可追溯**：Token 以 Figma Styles / Variables 为准，组件以对应 Component 或 Component Set 节点为准。
+- 黄色顶带 + 吉祥物作为首屏品牌锚点。
+- 白色大圆角卡片浮在黄色背景上，形成清晰的“品牌层 / 任务层”分离。
+- 移动优先：所有内容以窄屏卡片为骨架，操作贴近拇指。
+- 热闹但有序：黄色是情绪，红/绿是状态，黑/灰是信息。
+
+### 1.2 标志性视觉手法
+这套设计的招牌手法可以概括为：**“用美团黄顶带和吉祥物建立即时品牌感，再用白色大圆角卡片把复杂的委托流程装成一连串可滑动、可点击、可追踪的任务层”**。
+通用设计原则：
+
+- 语义优先于装饰。
+- 关键状态保持清晰、连续、可识别。
+- 信息层级依靠字重、颜色和间距共同建立。
+- 公共组件优先于页面内重复绘制。
 
 ## 2. 基础规范
 
@@ -22,30 +31,30 @@
 
 表中的“代码名”是工程映射名，“Figma Style”是设计源名称。新增颜色前应先判断是否出现了新的稳定语义。
 
-| 代码名 | Figma Style | 值 | 语义 |
+| 代码名 | Figma  | 值 | 语义 |
 |---|---|---:|---|
 | `brand-primary` | `主题色/brand-primary` | `#FEE42B` | 品牌锚点、主操作、明确选中态 |
-| `brand-secondary` | `主题色/brand-secondary` | `#FFFBE4` | 品牌浅底、轻量选中背景 |
-| `accent-primary` | `主题色/accent-primary` | `#F58B1D` | 需要优先注意的信息 |
-| `accent-secondary` | `主题色/accent-secondary` | `#FFF5E9` | 强调信息的浅色承载面 |
+| `brand-bg` | `主题色/brand-bg` | `#FFFBE4` | 品牌浅底、轻量选中背景 |
+| `highlight-primary` | `主题色/highlight-primary` | `#F58B1D` | 需要优先注意的信息 |
+| `highlight-bg` | `主题色/highlight-bg` | `#FFF5E9` | 强调信息的浅色承载面 |
 | `text-primary` | `中性色/text-primary` | `#1B1D21` | 一级文字与主要图形 |
 | `text-secondary` | `中性色/text-secondary` | `#595D65` | 二级文字 |
 | `text-tertiary` | `中性色/text-tertiary` | `#8C9098` | 三级文字、辅助信息 |
 | `text-quaternary` | `中性色/text-quaternary` | `#DDE0E6` | 禁用、弱提示和浅描边 |
-| `bg-page` | `中性色/bg-page` | `#F4F5F7` | 页面背景 |
-| `bg-container` | `中性色/bg-container` | `#FBFCFE` | 卡片和容器背景 |
-| `bg-black` | `中性色/bg-black` | `#282B31` | 深色面、气泡和遮罩基色 |
-| `divider` | `中性色/divider` | `rgba(27,29,33,0.05)` | 轻量分隔与描边 |
+| `page-bg` | `中性色/page-bg` | `#F4F5F7` | 页面背景 |
+| `container-bg` | `中性色/container-bg` | `#FBFCFE` | 卡片和容器背景 |
+| `mask-bg` | `中性色/mask-bg` | `#282B31` | 深色面、气泡和遮罩基色 |
+| `border-divider` | `中性色/border-divider` | `rgba(27,29,33,0.05)` | 轻量分隔与描边 |
 | `decorative-primary` | `辅助色/decorative-primary` | `#804D30` | 装饰性深色文字 |
 | `decorative-secondary` | `辅助色/decorative-secondary` | `#FDD4B8` | 装饰性浅棕 |
 | `decorative-tertiary` | `辅助色/decorative-tertiary` | `#FFF4EE` | 装饰性浅底 |
-| `alert` | `辅助色/alert` | `#FF090D` | 警示与强提醒 |
+| `alert-primary` | `辅助色/alert-primary` | `#FF090D` | 警示与强提醒 |
 | `insurance-primary` | `辅助色/insurance-primary` | `#079968` | 保价与保障语义 |
-| `insurance-secondary` | `辅助色/insurance-secondary` | `#E7FFF2` | 保价与保障浅底 |
+| `insurance-bg` | `辅助色/insurance-bg` | `#E7FFF2` | 保价与保障浅底 |
 
 说明：
 
-- `insurance-*`、`alert` 是具名功能色，不自动扩展为全局成功色或错误色。
+- `insurance-*`、`alert-primary` 是具名功能色，不自动扩展为全局成功色或错误色。
 - `decorative-*` 只用于装饰和特定权益表达，不承担通用交互状态。
 - 单个插画或组件内部渐变不因复用方便而自动上升为全局颜色 Token。
 - 禁止从截图目测或自行混色；Figma 已存在的颜色必须使用对应 Token。
@@ -112,7 +121,9 @@ Figma Variable Collection：`Spacing 间距`
 规则：
 
 - 基础栅格为 4px，允许 2px 半档和 10px 节奏。
-- 全工程页面最外层左右安全距离统一为 `space-8`。
+- `page gutter` 指页面最外层左右安全距离，全工程统一使用 `space-8`。
+- `inter-component gap` 指同一父级下相邻组件之间的间距，默认使用 `space-8`；纵向堆叠时也可称为 `stack gap`。
+- `padding` 指组件内部边距，不等同于 `page gutter` 或 `inter-component gap`。
 - 组件内部 padding 和 gap 属于组件自身；组件外边距由父级布局负责。
 - Figma 当前实例的绝对坐标不是可复用间距 Token。
 

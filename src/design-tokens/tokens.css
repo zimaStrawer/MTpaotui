@@ -1,29 +1,29 @@
 /**
- * 设计 Token 见 design.md：三层 primitive → semantic → component。
- * 值经 Figma MCP 从组件库(node 960:7565)拉取,与 design.md 交叉校验一致。
+ * 设计 Token 见 design1.md。
+ * Color Styles 经 Figma MCP 从节点 1678:10661 及本地样式清单拉取。
  * Figma 中文分组(主题色/中性色/辅助色)→ CSS 英文语义名,组名不进变量名。
  */
 @theme {
   /* ── 主题色 Brand ── */
   --color-brand-primary: #fee42b; /* 美团黄,仅主 CTA / 选中态 */
-  --color-brand-secondary: #fffbe4;
-  --color-accent-primary: #f58b1d; /* 价格 / 时间 / 紧迫信息专用 */
-  --color-accent-secondary: #fff5e9;
+  --color-brand-bg: #fffbe4;
+  --color-highlight-primary: #f58b1d; /* 价格 / 时间 / 紧迫信息专用 */
+  --color-highlight-bg: #fff5e9;
 
   /* ── 中性色 Neutral(统一色相 H220)── */
   --color-text-primary: #1b1d21;
   --color-text-secondary: #595d65;
   --color-text-tertiary: #8c9098;
   --color-text-quaternary: #dde0e6; /* 失效态 / 浅填充,勿用于正文 */
-  --color-bg-page: #f4f5f7;
-  --color-bg-container: #fbfcfe;
-  --color-bg-black: #282b31; /* 深色底 / 遮罩基色 */
-  --color-divider: rgba(27, 29, 33, 0.05);
+  --color-page-bg: #f4f5f7;
+  --color-container-bg: #fbfcfe;
+  --color-mask-bg: #282b31; /* 深色底 / 遮罩基色 */
+  --color-border-divider: rgba(27, 29, 33, 0.05);
 
   /* ── 辅助色 Functional(产品语义色,非通用 success/error)── */
-  --color-alert: #ff090d; /* 提醒 */
+  --color-alert-primary: #ff090d; /* 提醒 */
   --color-insurance-primary: #079968; /* 保价 */
-  --color-insurance-secondary: #e7fff2;
+  --color-insurance-bg: #e7fff2;
   --color-decorative-primary: #804d30;
   --color-decorative-secondary: #fdd4b8;
   --color-decorative-tertiary: #fff4ee;
@@ -38,7 +38,7 @@
   --radius-16: 16px;
   --radius-20: 20px;
 
-  /* ── 字体族(替代字体策略见 design.md)── */
+  /* ── 字体族(替代字体策略见 design1.md)── */
   --font-app: 'PingFang SC', 'Noto Sans SC', 'Helvetica Neue', system-ui,
     sans-serif;
   --font-number: 'SF Pro', 'SF Pro Text', -apple-system, system-ui, sans-serif;

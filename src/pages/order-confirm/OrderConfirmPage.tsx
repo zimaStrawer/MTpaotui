@@ -102,10 +102,10 @@ export function OrderConfirmPage() {
   };
 
   return (
-    <div className="mx-auto min-h-dvh max-w-md bg-gradient-to-b from-bg-container to-bg-page">
+    <div className="mx-auto min-h-dvh max-w-md bg-gradient-to-b from-container-bg to-page-bg">
       {/* 上滑吸顶态(864:7899):导航公告 + 缩略地图 */}
       <div
-        className={`fixed inset-x-0 top-0 z-20 mx-auto max-w-md bg-bg-page px-2 pt-[env(safe-area-inset-top)] pb-2 shadow-[0_4px_16px_rgba(28,30,33,0.06)] transition-transform duration-200 ${
+        className={`fixed inset-x-0 top-0 z-20 mx-auto max-w-md bg-page-bg px-2 pt-[env(safe-area-inset-top)] pb-2 shadow-[0_4px_16px_rgba(28,30,33,0.06)] transition-transform duration-200 ${
           scrolled ? 'translate-y-0' : 'pointer-events-none -translate-y-full'
         }`}
       >
@@ -116,7 +116,7 @@ export function OrderConfirmPage() {
             onClick={() => navigate(-1)}
             className="absolute left-0 flex size-11 items-center justify-center"
           >
-            <span className="flex size-8 items-center justify-center rounded-full bg-bg-container">
+            <span className="flex size-8 items-center justify-center rounded-full bg-container-bg">
               <img src={iconBack} alt="" className="size-5" />
             </span>
           </button>

@@ -10,7 +10,7 @@ interface CheckoutBarProps {
 /** 底部支付栏(1554:4789):红包/支付方式行 + 深色结算胶囊。 */
 export function CheckoutBar({ quote, submitting, onSubmit }: CheckoutBarProps) {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-10 mx-auto h-[calc(88px+max(32px,env(safe-area-inset-bottom)))] max-w-md border-t border-divider bg-bg-container">
+    <div className="fixed inset-x-0 bottom-0 z-10 mx-auto h-[calc(88px+max(32px,env(safe-area-inset-bottom)))] max-w-md border-t border-border-divider bg-container-bg">
       <div className="absolute inset-x-0 top-[-2px] grid h-[41px] grid-cols-2 place-items-center">
         <span className="flex items-center text-caption text-text-primary">
           暂无可用红包
@@ -23,7 +23,7 @@ export function CheckoutBar({ quote, submitting, onSubmit }: CheckoutBarProps) {
       </div>
       <div className="absolute inset-x-2 top-[39px] flex h-12 items-center overflow-hidden rounded-full bg-text-primary">
         <span className="flex items-end gap-2 pl-4">
-          <span className="flex items-end gap-0.5 text-bg-container">
+          <span className="flex items-end gap-0.5 text-container-bg">
             <span className="font-number text-tab font-bold">¥</span>
             {/* 24px 展示型大数字为 token 已知缺口 */}
             <span className="text-[24px] leading-6 font-semibold">
@@ -43,7 +43,7 @@ export function CheckoutBar({ quote, submitting, onSubmit }: CheckoutBarProps) {
         </span>
         <button
           type="button"
-          className="ml-auto flex h-full items-center bg-bg-black px-4 text-tab font-medium text-brand-primary"
+          className="ml-auto flex h-full items-center bg-mask-bg px-4 text-tab font-medium text-brand-primary"
         >
           找人付
         </button>

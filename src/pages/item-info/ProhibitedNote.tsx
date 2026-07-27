@@ -2,8 +2,8 @@
 export function ProhibitedNote() {
   return (
     <p className="text-caption-sm text-text-tertiary">
-      请勿配送违禁品或超<span className="text-accent-primary">5000元</span>
-      的物品, 未保价最高赔偿<span className="text-accent-primary">5倍</span>
+      请勿配送违禁品或超<span className="text-highlight-primary">5000元</span>
+      的物品, 未保价最高赔偿<span className="text-highlight-primary">5倍</span>
       跑腿费
     </p>
   );

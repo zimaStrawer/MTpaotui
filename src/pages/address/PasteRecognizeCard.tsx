@@ -11,7 +11,7 @@ export function PasteRecognizeCard({ onUnavailable }: PasteRecognizeCardProps) {
     <button
       type="button"
       onClick={onUnavailable}
-      className="flex h-12 w-full items-center gap-4 rounded-16 bg-bg-container px-5 text-left"
+      className="flex h-12 w-full items-center gap-4 rounded-16 bg-container-bg px-5 text-left"
     >
       <img src={iconCamera} alt="" className="size-6" />
       <span className="h-[18px] w-px bg-text-quaternary" />

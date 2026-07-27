@@ -9,7 +9,7 @@ const ROWS: { label: string; value: string; valueMuted?: boolean }[] = [
 /** 订单配置行(955:8152):取件时间 / 收货码 / 小费,本期为视觉占位。 */
 export function OrderConfigCard() {
   return (
-    <section className="flex w-full flex-col gap-4 rounded-16 bg-bg-container px-4 py-3">
+    <section className="flex w-full flex-col gap-4 rounded-16 bg-container-bg px-4 py-3">
       {ROWS.map((row) => (
         <div key={row.label} className="flex items-center justify-between">
           <span className="text-body text-text-primary">{row.label}</span>

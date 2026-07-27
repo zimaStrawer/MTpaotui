@@ -98,11 +98,11 @@ function AcceptingBubble() {
   const countdown = `0:${String(remainingSeconds).padStart(2, '0')}`;
 
   return (
-    <div className="flex h-14 overflow-hidden rounded-8 border border-bg-container bg-bg-container shadow-[0_1px_4px_rgba(28,30,33,0.12)]">
-      <div className="flex w-[72px] flex-col items-center justify-center bg-bg-page px-3 py-1.5">
+    <div className="flex h-14 overflow-hidden rounded-8 border border-container-bg bg-container-bg shadow-[0_1px_4px_rgba(28,30,33,0.12)]">
+      <div className="flex w-[72px] flex-col items-center justify-center bg-page-bg px-3 py-1.5">
         <time
           dateTime={`PT${remainingSeconds}S`}
-          className="font-number text-number font-medium text-accent-primary tabular-nums"
+          className="font-number text-number font-medium text-highlight-primary tabular-nums"
         >
           {countdown}
         </time>
@@ -152,9 +152,9 @@ function CourierStatusBubble({
 }: CourierStatusBubbleProps) {
   const status = MAP_STATUS[stage];
   return (
-    <div className="flex h-[46px] overflow-hidden rounded-8 border border-bg-container shadow-[0_1px_4px_rgba(28,30,33,0.12)]">
-      <div className="flex flex-col items-center justify-center bg-bg-page px-3 py-1.5">
-        <span className="flex items-center gap-0.5 text-accent-primary">
+    <div className="flex h-[46px] overflow-hidden rounded-8 border border-container-bg shadow-[0_1px_4px_rgba(28,30,33,0.12)]">
+      <div className="flex flex-col items-center justify-center bg-page-bg px-3 py-1.5">
+        <span className="flex items-center gap-0.5 text-highlight-primary">
           <span className="font-number text-number font-medium">
             {minutes}
           </span>
@@ -164,12 +164,12 @@ function CourierStatusBubble({
           {status.distanceLabel}
         </span>
       </div>
-      <div className="flex items-center gap-1 bg-bg-container py-1 pr-1 pl-2">
+      <div className="flex items-center gap-1 bg-container-bg py-1 pr-1 pl-2">
         <span className="flex flex-col">
           <span className="text-caption font-medium whitespace-nowrap text-text-primary">
             {status.title}
           </span>
-          <span className="font-number text-caption-sm whitespace-nowrap text-accent-primary">
+          <span className="font-number text-caption-sm whitespace-nowrap text-highlight-primary">
             {distanceMeters}米
           </span>
         </span>
@@ -343,7 +343,7 @@ export function TrackingMap({
         </>
       )}
 
-      <div className="absolute top-[calc(409px+env(safe-area-inset-top))] left-2 z-10 flex h-7 w-[270px] items-center gap-0.5 rounded-full bg-bg-page py-1 pr-2.5 pl-1.5">
+      <div className="absolute top-[calc(409px+env(safe-area-inset-top))] left-2 z-10 flex h-7 w-[270px] items-center gap-0.5 rounded-full bg-page-bg py-1 pr-2.5 pl-1.5">
         <img src={iconAnnounce} alt="" className="size-5 shrink-0" />
         <p className="text-caption whitespace-nowrap text-text-tertiary">
           细雨连绵, 骑手赶路不易, 会尽全力为您配送

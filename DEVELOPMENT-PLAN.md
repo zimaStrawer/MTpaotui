@@ -1,8 +1,8 @@
 # 跑腿改版原型 · 开发计划
 
-> 配套文档:产品需求见 `product.md`,设计还原见 `design.md`,工程规范见 `MTprototype-tech-spec.md`。
+> 配套文档:产品需求见 `product.md`,设计还原见 `design.md`,工程规范见 `tech.md`。
 > 本计划按技术规格的里程碑展开;每页的具体设计信息在**开工该页时**由需求方提供,配合 Figma MCP 现拉对应 frame。
-> 优先级仲裁见技术规格 §1.2:**P0 流程正确 > P1 时间轴稳定 > P2 手感 > P3 视觉还原 > P4 代码干净**。
+> 优先级仲裁见 `tech.md` §1:**P0 流程正确 > P1 时间轴稳定 > P2 手感 > P3 视觉还原 > P4 代码干净**。
 
 ---
 
@@ -27,7 +27,7 @@
 - [ ] pnpm、Node 20+;ESLint(含 `no-explicit-any`)
 - [ ] Tailwind 接入(先空 token 映射,M1 填值)
 - [ ] React Router:5 条路由骨架(空页占位)+ 根级 `ErrorBoundary`
-- [ ] 目录结构按技术规格 §4 建齐:`app / pages / components / design-tokens / data(models·repositories·mock) / store / lib`
+- [ ] 目录结构按 `tech.md` §2 建齐:`app / pages / components / design-tokens / data(models·repositories·mock) / store / lib`
 - [ ] Vercel 部署跑通(发链接是第一分发形态)
 
 **验收**:5 条路由能空转切换;线上链接可访问。
@@ -35,7 +35,7 @@
 ## M1 · 地基
 
 - [x] **Design tokens**:经 Figma MCP 从组件库 `960:7565` 拉取(与 design.md 交叉校验一致),落 `design-tokens/tokens.css`(Tailwind 4 `@theme`)
-- [ ] **领域模型**:按 `product.md` §2 落 `data/models/`(`Order / Address / Item / Courier / TrackingStage` 等 union 类型)
+- [ ] **领域模型**:按 `product.md` 第 10 节落 `data/models/`(`Order / Address / Item / Courier / TrackingStage` 等 union 类型)
 - [ ] **数据层**:`OrderRepository` 接口 + `MockOrderRepository` 实现;车型推荐规则为 mock 层纯函数
 - [ ] **Store**:Zustand 仅内存;互斥状态用 union 不堆 Boolean;事件从一处流出的写法立规
 - [ ] **共享组件全部按需建**(不预建;变体信息随每页开工时提供,Figma 变体 → React props/状态枚举):
@@ -43,7 +43,7 @@
   - `TabBar` 本期流程用不到,不做(设计中出现再议)
   - `NavigationBar` 是应用内 UI(全屏网页无系统返回),各路由显示状态不同,首个用到的页面开工时建
   - 其余(业务选择、地址填写-居中、物品类型选择、物品体积、保价、进度条、骑手卡片、物品凭证、取收标签、车型推荐提示条)同样在首个使用页开工时建
-- [ ] 组件按技术规格 §11 保持纯 props 受控:不直接请求数据、不导入 Mock
+- [ ] 组件按 `tech.md` §3 保持纯 props 受控:不直接请求数据、不导入 Mock
 
 **验收**:token 映射就位,色值/间距/圆角零魔法数字。
 
@@ -104,7 +104,7 @@
 
 ## 工作方式约定
 
-1. **每页开工流程**:从 `product.md` 确认规则 → MCP 拉对应 frame(node id 见技术规格 §8)→ 按 `design.md` 实现 → 按验收标准过检。
+1. **每页开工流程**:从 `product.md` 对应页面章节确认规则 → MCP 拉对应 Figma frame → 按 `design.md` 实现 → 按页面验收标准过检。
 2. **数据层 / mock 随页面演进**:页面开发中发现模型缺字段、mock 缺数据时,由开发侧判断并直接调整,commit 信息说明改动原因;需求方无需关心这一层。
 3. **Commit 纪律**:git 操作(commit/push)一律由需求方发起,开发侧改完并跑完验收后停在工作区等待;提交时仍保持小步递进、一个关切一个 commit,禁止巨型单提交。
-4. **不做清单**以 `product.md` §1.3 为准:无 A/B、无失败态、无埋点实现、无真后端。
+4. **不做清单**以 `product.md` 第 12 节为准:无 A/B、无失败态、无埋点实现、无真后端。

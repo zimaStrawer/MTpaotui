@@ -23,8 +23,8 @@ export function BusinessTabs({ onUnavailableSelect }: BusinessTabsProps) {
             }}
             className={
               active
-                ? 'flex shrink-0 items-center rounded-full bg-bg-container px-[13px] py-0.5'
-                : 'flex h-9 w-[90px] items-center justify-center rounded-full bg-divider'
+                ? 'flex shrink-0 items-center rounded-full bg-container-bg px-[13px] py-0.5'
+                : 'flex h-9 w-[90px] items-center justify-center rounded-full bg-border-divider'
             }
           >
             {active && (

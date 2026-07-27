@@ -10,12 +10,12 @@ export interface OrderReceipt {
 export type Unsubscribe = () => void;
 
 /**
- * 数据层唯一入口见 MTprototype-tech-spec.md §7。页面 / store 只依赖本接口;
+ * 数据层唯一入口见 tech.md §2。页面 / store 只依赖本接口;
  * 接真 API 时新增 HttpOrderRepository,改 index.ts 一处注入即可。
  */
 export interface OrderRepository {
   submitOrder(order: Order): Promise<OrderReceipt>;
-  /** 订阅配送阶段推进；产品状态机见 product.md §7。 */
+  /** 订阅配送阶段推进；产品状态机见 product.md §9。 */
   watchTracking(
     orderId: string,
     onStage: (stage: TrackingStage) => void,

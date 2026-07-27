@@ -54,8 +54,8 @@ export function TrackingStatusCard({
   const copy = STAGE_COPY[stage];
 
   return (
-    <section className="h-[202px] overflow-hidden rounded-16 bg-bg-container">
-      <div className="h-[62px] bg-bg-page px-3 pt-4">
+    <section className="h-[202px] overflow-hidden rounded-16 bg-container-bg">
+      <div className="h-[62px] bg-page-bg px-3 pt-4">
         <TrackingProgress stage={stage} />
       </div>
       <div aria-live="polite" className="px-4 pt-3 max-[350px]:px-2">
@@ -69,7 +69,7 @@ export function TrackingStatusCard({
         </div>
         <p className="mt-2 text-body text-text-primary">{copy.description}</p>
       </div>
-      <div className="mx-4 mt-2.5 border-t border-divider pt-3">
+      <div className="mx-4 mt-2.5 border-t border-border-divider pt-3">
         <OrderActions
           onMore={onMore}
           onEdit={onEdit}

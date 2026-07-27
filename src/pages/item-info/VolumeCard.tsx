@@ -40,7 +40,7 @@ export function VolumeCard({
 
   return (
     <section
-      className={`w-full rounded-16 bg-bg-container px-4 py-3 ${
+      className={`w-full rounded-16 bg-container-bg px-4 py-3 ${
         expanded ? 'flex flex-col gap-2' : 'relative h-[194px]'
       }`}
     >
@@ -62,11 +62,11 @@ export function VolumeCard({
         <>
           <p className="absolute top-11 right-4 left-4 text-caption-sm text-text-tertiary">
             请参考配送箱尺寸，
-            <span className="text-accent-primary">
+            <span className="text-highlight-primary">
               如物品尺寸大于配送箱请录入详细尺寸
             </span>
           </p>
-          <div className="absolute top-[66px] right-4 left-4 h-[116px] overflow-hidden rounded-8 bg-bg-page">
+          <div className="absolute top-[66px] right-4 left-4 h-[116px] overflow-hidden rounded-8 bg-page-bg">
             <div className="absolute top-[26px] right-5 left-[119px] text-caption text-text-secondary">
               <p className="font-medium">配送箱尺寸：</p>
               <div className="mt-[3px] flex flex-col gap-2">
@@ -94,7 +94,7 @@ export function VolumeCard({
         <>
           <p className="text-caption-sm text-text-tertiary">
             物品尺寸
-            <span className="text-accent-primary">
+            <span className="text-highlight-primary">
               三边之和在{VOLUME_MAX_GIRTH_CM}厘米内
             </span>
             可正常配送

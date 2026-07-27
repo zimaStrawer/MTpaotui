@@ -47,7 +47,7 @@ function Side({
 /** 缩略地图(942:8668):取/收摘要,点击回对应地址页修改,中键互换取/收。 */
 export function ThumbnailMap({ pickup, delivery, onEdit, onSwap }: ThumbnailMapProps) {
   return (
-    <div className="flex h-13 w-full items-center justify-center gap-2 rounded-16 bg-bg-container">
+    <div className="flex h-13 w-full items-center justify-center gap-2 rounded-16 bg-container-bg">
       <Side address={pickup} onClick={() => onEdit('pickup')} />
       <button
         type="button"

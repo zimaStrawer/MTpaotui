@@ -14,7 +14,7 @@ export function FieldHeader({ label, required = false, right }: FieldHeaderProps
       <p className="text-tab font-medium text-text-primary">
         {label}
         {required && (
-          <span className="ml-0.5 align-top text-body font-semibold text-accent-primary">
+          <span className="ml-0.5 align-top text-body font-semibold text-highlight-primary">
             *
           </span>
         )}

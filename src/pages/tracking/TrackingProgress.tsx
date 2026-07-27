@@ -33,7 +33,7 @@ function ProgressMarker({ active, label, position }: ProgressMarkerProps) {
         className={`flex size-4 items-center justify-center rounded-full text-[9px] leading-none font-semibold ${
           active
             ? 'bg-text-primary text-brand-primary'
-            : 'bg-text-tertiary text-bg-container'
+            : 'bg-text-tertiary text-container-bg'
         }`}
       >
         {label}

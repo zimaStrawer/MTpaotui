@@ -25,9 +25,9 @@ export function CourierCard({
   onTip,
 }: CourierCardProps) {
   return (
-    <section className="overflow-hidden rounded-16 bg-bg-container">
+    <section className="overflow-hidden rounded-16 bg-container-bg">
       <div className="flex h-[74px] items-center px-4 max-[350px]:px-3">
-        <div className="relative size-[46px] shrink-0 rounded-full bg-brand-secondary">
+        <div className="relative size-[46px] shrink-0 rounded-full bg-brand-bg">
           <div className="absolute top-[3px] left-[3px] size-10 overflow-hidden rounded-full">
             <img
               src={courierAvatar}
@@ -87,7 +87,7 @@ export function CourierCard({
       </div>
 
       {showTip && (
-        <div className="flex h-[31px] items-center overflow-hidden bg-brand-secondary pl-4 text-caption text-text-primary">
+        <div className="flex h-[31px] items-center overflow-hidden bg-brand-bg pl-4 text-caption text-text-primary">
           <span className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap">
             {courier.name}提前20分钟为您送达，发个感谢红包吧！
           </span>

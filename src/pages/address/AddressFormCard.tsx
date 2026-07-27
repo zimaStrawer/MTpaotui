@@ -25,7 +25,7 @@ function FieldLabel({ text, required = false }: { text: string; required?: boole
     <span className="text-body font-medium text-text-primary">
       {text}
       {required && (
-        <span className="ml-0.5 align-top text-tab font-semibold text-accent-primary">
+        <span className="ml-0.5 align-top text-tab font-semibold text-highlight-primary">
           *
         </span>
       )}
@@ -58,7 +58,7 @@ export function AddressFormCard({
   const canSave = value.poi !== null && value.phone.length === 11;
 
   return (
-    <section className="w-full overflow-hidden rounded-16 border-2 border-bg-container bg-bg-container">
+    <section className="w-full overflow-hidden rounded-16 border-2 border-container-bg bg-container-bg">
       {value.poi !== null && <MapPreview role={role} poi={value.poi} />}
       <div
         className={`px-3 pb-4 ${value.poi !== null ? 'pt-5' : 'pt-4'}`}
@@ -122,7 +122,7 @@ export function AddressFormCard({
           className={`mx-0.5 mt-6 h-11 w-[calc(100%-4px)] rounded-full text-title font-semibold ${
             canSave
               ? 'bg-brand-primary text-text-primary'
-              : 'bg-text-quaternary text-bg-container'
+              : 'bg-text-quaternary text-container-bg'
           }`}
         >
           保存并使用

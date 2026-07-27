@@ -21,10 +21,10 @@ export function AddressBookCard({ selectedPoi, onPick }: AddressBookCardProps) {
   const [tipVisible, setTipVisible] = useState(true);
 
   return (
-    <section className="w-full rounded-16 bg-bg-container py-4">
+    <section className="w-full rounded-16 bg-container-bg py-4">
       <div className="flex items-center gap-3 px-4">
         <h2 className="text-tab font-medium text-text-primary">地址簿</h2>
-        <span className="flex flex-1 items-center gap-1 rounded-full bg-bg-page px-3 py-2">
+        <span className="flex flex-1 items-center gap-1 rounded-full bg-page-bg px-3 py-2">
           <img src={iconSearch} alt="" className="size-5" />
           <span className="text-caption text-text-secondary">
             搜索地址簿内姓名、电话、地址
@@ -33,8 +33,8 @@ export function AddressBookCard({ selectedPoi, onPick }: AddressBookCardProps) {
       </div>
 
       {tipVisible && (
-        <div className="mx-4 mt-2 flex items-center justify-between rounded-4 bg-accent-secondary px-3 py-2">
-          <span className="text-caption font-medium text-accent-primary">
+        <div className="mx-4 mt-2 flex items-center justify-between rounded-4 bg-highlight-bg px-3 py-2">
+          <span className="text-caption font-medium text-highlight-primary">
             左滑可置顶、删除地址
           </span>
           <button
@@ -45,7 +45,7 @@ export function AddressBookCard({ selectedPoi, onPick }: AddressBookCardProps) {
           >
             <span
               aria-hidden
-              className="size-4 bg-accent-primary"
+              className="size-4 bg-highlight-primary"
               style={{
                 WebkitMaskImage: `url("${iconCloseSmall}")`,
                 maskImage: `url("${iconCloseSmall}")`,
@@ -94,7 +94,7 @@ export function AddressBookCard({ selectedPoi, onPick }: AddressBookCardProps) {
                   {entry.avatar === 'runner' ? (
                     <img src={avatarRunner} alt="" className="size-[38px]" />
                   ) : (
-                    <span className="flex size-[38px] items-center justify-center rounded-full bg-accent-secondary text-body font-semibold text-accent-primary">
+                    <span className="flex size-[38px] items-center justify-center rounded-full bg-highlight-bg text-body font-semibold text-highlight-primary">
                       {entry.contactName.charAt(0)}
                     </span>
                   )}

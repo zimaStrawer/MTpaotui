@@ -43,7 +43,7 @@ export function OrderInfoCard({
   pickup,
 }: OrderInfoCardProps) {
   return (
-    <section className="flex min-h-[293px] w-full flex-col rounded-16 bg-bg-container px-4 py-3">
+    <section className="flex min-h-[293px] w-full flex-col rounded-16 bg-container-bg px-4 py-3">
       <h2 className="text-tab font-medium text-text-primary">订单信息</h2>
       <div className="mt-5 flex flex-col gap-4">
         <AddressRow address={pickup} label="取件地址" />
@@ -59,7 +59,7 @@ export function OrderInfoCard({
           )}
         </div>
       </div>
-      <div className="mt-5 border-t border-divider pt-3">
+      <div className="mt-5 border-t border-border-divider pt-3">
         <div className="flex items-center justify-between">
           <span className="text-body font-medium text-text-primary">实付款</span>
           <span className="flex items-end gap-0.5 font-number text-text-primary">

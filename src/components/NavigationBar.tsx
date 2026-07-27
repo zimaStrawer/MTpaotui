@@ -25,7 +25,7 @@ export function NavigationBar({ title, badge, onClose, onBack }: NavigationBarPr
           onClick={leftAction}
           className="absolute left-1 flex size-11 items-center justify-center"
         >
-          <span className="flex size-8 items-center justify-center rounded-full bg-bg-container">
+          <span className="flex size-8 items-center justify-center rounded-full bg-container-bg">
             <img src={onBack ? iconBack : iconClose} alt="" className="size-5" />
           </span>
         </button>

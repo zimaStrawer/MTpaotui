@@ -15,10 +15,10 @@ const OPTIONS: { vehicle: DeliveryVehicle; label: string; icon: string }[] = [
 /** 载具切换胶囊(组件 904:7366):选中项为白底浮起。 */
 export function VehicleCapsule({ value, onChange }: VehicleCapsuleProps) {
   return (
-    <div className="relative grid h-8 shrink-0 grid-cols-2 items-center rounded-full bg-bg-page p-0.5">
+    <div className="relative grid h-8 shrink-0 grid-cols-2 items-center rounded-full bg-page-bg p-0.5">
       <span
         aria-hidden
-        className={`absolute top-0.5 bottom-0.5 left-0.5 w-[calc(50%-2px)] rounded-full bg-bg-container transition-transform duration-200 ease-out motion-reduce:transition-none ${
+        className={`absolute top-0.5 bottom-0.5 left-0.5 w-[calc(50%-2px)] rounded-full bg-container-bg transition-transform duration-200 ease-out motion-reduce:transition-none ${
           value === 'car' ? 'translate-x-full' : 'translate-x-0'
         }`}
       />

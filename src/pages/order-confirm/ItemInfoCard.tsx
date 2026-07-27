@@ -29,7 +29,7 @@ export function ItemInfoCard({
   onEditItem,
 }: ItemInfoCardProps) {
   return (
-    <section className="flex w-full flex-col gap-2 rounded-16 bg-bg-container px-4 py-3">
+    <section className="flex w-full flex-col gap-2 rounded-16 bg-container-bg px-4 py-3">
       <button
         type="button"
         onClick={onEditItem}
@@ -61,7 +61,7 @@ export function ItemInfoCard({
         value={item.note ?? ''}
         onChange={(event) => onNoteChange(event.target.value)}
         placeholder="可备注物品描述、配送要求等"
-        className="h-8 w-full rounded-8 bg-bg-page px-2 text-caption-sm text-text-primary placeholder:text-text-tertiary focus:outline-none"
+        className="h-8 w-full rounded-8 bg-page-bg px-2 text-caption-sm text-text-primary placeholder:text-text-tertiary focus:outline-none"
       />
     </section>
   );

@@ -1,4 +1,4 @@
-/** 配送追踪阶段见 product.md §7，completed 为终态。 */
+/** 配送追踪阶段见 product.md §9，completed 为终态。 */
 export type TrackingStage =
   | 'accepting'
   | 'accepted'

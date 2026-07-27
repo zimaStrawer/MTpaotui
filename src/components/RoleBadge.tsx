@@ -29,7 +29,7 @@ export function RoleBadge({ role, premium = false }: RoleBadgeProps) {
     <span
       className={`flex size-[22px] shrink-0 items-center justify-center rounded-6 text-caption font-semibold ${
         isPickup
-          ? 'bg-text-primary text-bg-container'
+          ? 'bg-text-primary text-container-bg'
           : 'bg-brand-primary text-text-primary'
       }`}
     >

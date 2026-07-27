@@ -13,7 +13,7 @@ export function AddressField({ address, placeholder, onClick }: AddressFieldProp
     <button
       type="button"
       onClick={onClick}
-      className={`relative h-13 flex-1 rounded-full bg-bg-container text-left ${
+      className={`relative h-13 flex-1 rounded-full bg-container-bg text-left ${
         address === null ? 'border border-text-primary' : ''
       }`}
     >
