@@ -18,11 +18,6 @@ const STAGE_COPY: Record<
     label: '预计取件',
     description: '请准备好待取物品，并保持电话畅通',
   },
-  picked: {
-    time: '21:26-21:31',
-    label: '预计送达',
-    description: '请准备好接收，并保持电话畅通',
-  },
   delivering: {
     time: '21:26-21:31',
     label: '预计送达',

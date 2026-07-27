@@ -8,6 +8,13 @@ describe('配送追踪时间轴', () => {
     expect(TRACKING_TIMELINE.map(({ stage }) => stage)).toEqual(
       TRACKING_STAGE_FLOW,
     );
+    expect(TRACKING_STAGE_FLOW).toEqual([
+      'accepting',
+      'accepted',
+      'delivering',
+      'arrived',
+      'completed',
+    ]);
   });
 
   it('完成态是唯一零停留终态', () => {
@@ -20,11 +27,11 @@ describe('配送追踪时间轴', () => {
     ).toBe(true);
   });
 
-  it('压缩流程可在一分钟内完成', () => {
+  it('压缩流程在 44 秒内完成', () => {
     const totalMs = TRACKING_TIMELINE.reduce(
       (sum, { holdMs }) => sum + holdMs,
       0,
     );
-    expect(totalMs).toBeLessThanOrEqual(60_000);
+    expect(totalMs).toBe(44_000);
   });
 });

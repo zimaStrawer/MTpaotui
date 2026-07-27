@@ -110,7 +110,8 @@ export function ItemProofCard({
   onItemIssue,
 }: ItemProofCardProps) {
   const stageIndex = TRACKING_STAGE_FLOW.indexOf(stage);
-  const pickupConfirmed = stageIndex >= TRACKING_STAGE_FLOW.indexOf('picked');
+  const pickupConfirmed =
+    stageIndex >= TRACKING_STAGE_FLOW.indexOf('delivering');
   const deliveryConfirmed = stageIndex >= TRACKING_STAGE_FLOW.indexOf('arrived');
   const codeVisible = pickupConfirmed;
 

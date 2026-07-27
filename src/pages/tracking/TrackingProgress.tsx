@@ -3,7 +3,6 @@ import type { TrackingStage } from '../../data/models/tracking';
 const STAGE_PROGRESS: Record<TrackingStage, number> = {
   accepting: 0,
   accepted: 28,
-  picked: 75,
   delivering: 75,
   arrived: 100,
   completed: 100,

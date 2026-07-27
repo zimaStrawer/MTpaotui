@@ -2,7 +2,6 @@
 export type TrackingStage =
   | 'accepting'
   | 'accepted'
-  | 'picked'
   | 'delivering'
   | 'arrived'
   | 'completed';
@@ -11,7 +10,6 @@ export type TrackingStage =
 export const TRACKING_STAGE_FLOW: readonly TrackingStage[] = [
   'accepting',
   'accepted',
-  'picked',
   'delivering',
   'arrived',
   'completed',
@@ -23,6 +21,6 @@ export interface Courier {
   satisfaction: number;
   /** 信用骑手 / 鲜花使者 / 大件御用 / 极速神通 */
   badges: string[];
-  /** 取件前 UI 显示 ✱✱✱✱,picked 起揭示 4 位数字 */
+  /** 取件前 UI 显示 ✱✱✱✱，delivering 起揭示 4 位数字 */
   pickupCode?: string;
 }
