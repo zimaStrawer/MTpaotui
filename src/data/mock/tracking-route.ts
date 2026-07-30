@@ -45,7 +45,7 @@ export const COURIER_ROUTE: Record<
 > = {
   accepted: PICKUP_ROUTE,
   delivering: DELIVERY_ROUTE,
-  arrived: [DELIVERY_ROUTE.at(-1)!],
+  arrived: [DELIVERY_ROUTE[DELIVERY_ROUTE.length - 1]!],
 };
 
 export function formatTrackingDistance(distanceMeters: number): string {
