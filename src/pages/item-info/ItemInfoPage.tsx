@@ -3,14 +3,17 @@ import { useNavigate } from 'react-router';
 
 import { NavigationBar } from '../../components/NavigationBar';
 import {
+  classifyVolumeDelivery,
   DEFAULT_DELIVERY_BOX_VOLUME,
   DEFAULT_ITEM_WEIGHT_KG,
+  resolveItemDeliveryPreference,
   type InsuranceTier,
   type ItemCategory,
   type Volume,
 } from '../../data/models/order';
 import { useOrderDraftStore } from '../../store/order-draft-store';
 import { BrandCard } from './BrandCard';
+import { CarDeliveryRecommendation } from './CarDeliveryRecommendation';
 import { CategorySelectCard } from './CategorySelectCard';
 import { ConfirmBar } from './ConfirmBar';
 import { TypeSummaryCard } from './TypeSummaryCard';
@@ -28,6 +31,10 @@ export function ItemInfoPage() {
   const navigate = useNavigate();
   const draftItem = useOrderDraftStore((state) => state.item);
   const setItem = useOrderDraftStore((state) => state.setItem);
+  const serviceMode = useOrderDraftStore((state) => state.serviceMode);
+  const setServiceMode = useOrderDraftStore((state) => state.setServiceMode);
+  const vehicle = useOrderDraftStore((state) => state.vehicle);
+  const setVehicle = useOrderDraftStore((state) => state.setVehicle);
 
   const [segment, setSegment] = useState<Segment>(
     draftItem ? 'detail' : 'category',
@@ -45,6 +52,14 @@ export function ItemInfoPage() {
   const [volume, setVolume] = useState<Volume>(
     draftItem?.volume ?? DEFAULT_DELIVERY_BOX_VOLUME,
   );
+  const initialCarRecommendation =
+    draftItem !== null &&
+    classifyVolumeDelivery(draftItem.volume) === 'car-recommended';
+  const [carRecommendationSelected, setCarRecommendationSelected] = useState(
+    initialCarRecommendation && vehicle === 'car',
+  );
+  const [carRecommendationDismissed, setCarRecommendationDismissed] =
+    useState(initialCarRecommendation && vehicle !== 'car');
   const [volumeExpanded, setVolumeExpanded] = useState(false);
   const volumeCardRef = useRef<HTMLDivElement>(null);
 
@@ -69,8 +84,33 @@ export function ItemInfoPage() {
     setSegment('detail');
   };
 
+  const handleVolumeChange = (nextVolume: Volume) => {
+    const wasRecommended =
+      classifyVolumeDelivery(volume) === 'car-recommended';
+    const isRecommended =
+      classifyVolumeDelivery(nextVolume) === 'car-recommended';
+
+    setVolume(nextVolume);
+    if (!isRecommended) {
+      setCarRecommendationSelected(false);
+    } else if (!wasRecommended && !carRecommendationDismissed) {
+      setCarRecommendationSelected(true);
+    }
+  };
+
+  const handleCarRecommendationChange = (selected: boolean) => {
+    setCarRecommendationSelected(selected);
+    setCarRecommendationDismissed(!selected);
+  };
+
   const handleConfirm = () => {
     if (!category) return;
+    const deliveryPreference = resolveItemDeliveryPreference({
+      serviceMode,
+      vehicle,
+      volume,
+      carRecommendationSelected,
+    });
     setItem({
       category,
       weightKg,
@@ -78,13 +118,26 @@ export function ItemInfoPage() {
       insurance,
       note: note.trim() === '' ? undefined : note.trim(),
     });
+    if (deliveryPreference.serviceMode !== serviceMode) {
+      setServiceMode(deliveryPreference.serviceMode);
+    }
+    if (deliveryPreference.vehicle !== vehicle) {
+      setVehicle(deliveryPreference.vehicle);
+    }
     navigate('/order-confirm');
   };
+
+  const showCarRecommendation =
+    classifyVolumeDelivery(volume) === 'car-recommended';
 
   return (
     <div className="mx-auto flex min-h-dvh max-w-md flex-col pt-[env(safe-area-inset-top)]">
       <NavigationBar title="物品信息" onClose={() => navigate('/')} />
-      <main className="flex flex-col gap-2 px-2 pt-3 pb-28">
+      <main
+        className={`flex flex-col gap-2 px-2 pt-3 ${
+          showCarRecommendation ? 'pb-40' : 'pb-28'
+        }`}
+      >
         {segment === 'category' || category === null ? (
           <>
             <CategorySelectCard onSelect={handleSelectCategory} />
@@ -106,7 +159,7 @@ export function ItemInfoPage() {
                 volume={volume}
                 expanded={volumeExpanded}
                 onToggleExpanded={setVolumeExpanded}
-                onChange={setVolume}
+                onChange={handleVolumeChange}
               />
             </div>
           </>
@@ -115,6 +168,14 @@ export function ItemInfoPage() {
       <ConfirmBar
         disabled={segment === 'category' || category === null}
         onConfirm={handleConfirm}
+        recommendation={
+          showCarRecommendation ? (
+            <CarDeliveryRecommendation
+              selected={carRecommendationSelected}
+              onChange={handleCarRecommendationChange}
+            />
+          ) : undefined
+        }
       />
     </div>
   );

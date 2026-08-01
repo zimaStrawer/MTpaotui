@@ -1,12 +1,11 @@
 import { useState } from 'react';
 
 import { RoleBadge } from '../../components/RoleBadge';
-import helpTopics from '../../assets/tracking/help-topics.jpg';
 import iconChevron from '../../assets/nav/icon-chevron.svg';
 import iconExpand from '../../assets/tracking/icon-expand.svg';
 import proofDelivery from '../../assets/tracking/proof-delivery-confirmed.jpg';
 import proofPickup from '../../assets/tracking/proof-pickup-confirmed.jpg';
-import type { Address } from '../../data/models/order';
+import type { Address, ItemCategory } from '../../data/models/order';
 import type { Courier } from '../../data/models/tracking';
 import { CourierCard } from './CourierCard';
 import { OrderActions } from './OrderActions';
@@ -15,10 +14,12 @@ import { TrackingNavigation } from './TrackingNavigation';
 
 function SignedThumbnail({
   onClick,
+  premium,
   role,
   src,
 }: {
   onClick: () => void;
+  premium: boolean;
   role: 'pickup' | 'delivery';
   src: string;
 }) {
@@ -34,7 +35,7 @@ function SignedThumbnail({
         className="size-full object-cover object-center"
       />
       <span className="absolute top-0 left-0">
-        <RoleBadge role={role} />
+        <RoleBadge role={role} premium={premium} />
       </span>
       <span className="absolute right-0 bottom-0 flex size-4 items-center justify-center rounded-[5px] bg-text-primary">
         <img src={iconExpand} alt="" className="size-3" />
@@ -48,8 +49,10 @@ interface CompletedOrderViewProps {
   courier: Courier;
   delivery: Address;
   feeYuan: number;
+  itemCategory: ItemCategory;
   note?: string;
   pickup: Address;
+  premium: boolean;
   onBack: () => void;
   onTip: () => void;
   onUnavailable: () => void;
@@ -61,8 +64,10 @@ export function CompletedOrderView({
   courier,
   delivery,
   feeYuan,
+  itemCategory,
   note,
   pickup,
+  premium,
   onBack,
   onTip,
   onUnavailable,
@@ -112,11 +117,13 @@ export function CompletedOrderView({
             <div className="ml-auto flex gap-3 max-[350px]:gap-2">
               <SignedThumbnail
                 role="pickup"
+                premium={premium}
                 src={proofPickup}
                 onClick={onUnavailable}
               />
               <SignedThumbnail
                 role="delivery"
+                premium={premium}
                 src={proofDelivery}
                 onClick={onUnavailable}
               />
@@ -135,6 +142,7 @@ export function CompletedOrderView({
 
         <CourierCard
           courier={courier}
+          itemCategory={itemCategory}
           showTip={tipVisible}
           onCall={onUnavailable}
           onDismissTip={() => setTipVisible(false)}
@@ -149,25 +157,6 @@ export function CompletedOrderView({
           feeYuan={feeYuan}
           onShowDetails={onUnavailable}
         />
-
-        <button
-          type="button"
-          aria-label="查看订单帮助"
-          onClick={onUnavailable}
-          className="relative h-[411px] overflow-hidden rounded-16 bg-container-bg text-left"
-        >
-          <img
-            src={helpTopics}
-            alt="遇到问题需要帮助"
-            className="absolute max-w-none"
-            style={{
-              width: '104.47%',
-              height: '329.3%',
-              left: '-2.23%',
-              top: '-189.05%',
-            }}
-          />
-        </button>
       </main>
     </div>
   );

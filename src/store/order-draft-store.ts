@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 import {
   swapAddressRoles,
+  shouldSwapServiceAddresses,
   transitionServiceAddresses,
   type Address,
   type BusinessType,
@@ -23,6 +24,8 @@ interface OrderDraftState {
   vehicle: DeliveryVehicle;
   pickup: Address | null;
   delivery: Address | null;
+  /** 原型地图没有真实坐标，记录两地址在模拟地图中的对应位置。 */
+  mapAddressesSwapped: boolean;
   item: Item | null;
   /** 提交订单后的受理结果,追踪页(M5)据此订阅时间轴 */
   receipt: OrderReceipt | null;
@@ -48,6 +51,7 @@ const initialState: OrderDraftState = {
   /** 不预填:让参与者完整体验取/收地址填写流程 */
   pickup: null,
   delivery: null,
+  mapAddressesSwapped: false,
   item: null,
   receipt: null,
 };
@@ -56,10 +60,19 @@ export const useOrderDraftStore = create<OrderDraftState & OrderDraftActions>()(
   (set) => ({
     ...initialState,
     setServiceMode: (mode) =>
-      set((state) => ({
-        serviceMode: mode,
-        ...transitionServiceAddresses(state.serviceMode, mode, state),
-      })),
+      set((state) => {
+        const shouldSwap = shouldSwapServiceAddresses(
+          state.serviceMode,
+          mode,
+        );
+        return {
+          serviceMode: mode,
+          mapAddressesSwapped: shouldSwap
+            ? !state.mapAddressesSwapped
+            : state.mapAddressesSwapped,
+          ...transitionServiceAddresses(state.serviceMode, mode, state),
+        };
+      }),
     setVehicle: (vehicle) => set({ vehicle }),
     setAddress: (address) =>
       set(
@@ -68,7 +81,10 @@ export const useOrderDraftStore = create<OrderDraftState & OrderDraftActions>()(
           : { delivery: address },
       ),
     swapAddresses: () =>
-      set((state) => swapAddressRoles(state)),
+      set((state) => ({
+        ...swapAddressRoles(state),
+        mapAddressesSwapped: !state.mapAddressesSwapped,
+      })),
     setItem: (item) => set({ item }),
     setReceipt: (receipt) => set({ receipt }),
     reset: () => set(initialState),

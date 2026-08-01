@@ -95,6 +95,7 @@ interface OrderRepository {
 ### 状态与路由
 
 - Store 保存服务模式、载具、取收地址、物品和订单回执；当前仅内存，不持久化历史订单；
+- 全链路服务视觉主题由 Store 的 `serviceMode` 通过纯函数派生，应用根节点只输出 `standard` / `premium` 主题标记；不得把 `isPremium` 作为第二份状态写入 Store；
 - 未确认表单、展开状态、Toast、动画方向和提交中状态留在页面或组件；
 - 能由已有数据推导的状态不重复存储；互斥状态使用联合类型，不堆叠 Boolean；
 - `/`、`/address/:role`、`/item-info`、`/order-confirm`、`/tracking` 对应五个核心路由；
@@ -143,6 +144,7 @@ interface OrderRepository {
 
 - 局部问题不得通过修改全局样式解决；全局样式只放基础规则和跨页面公共动效；
 - 优先使用 `src/design-tokens/tokens.css` 中的语义 Token，不重复定义相同颜色、间距和圆角；
+- 跨页面急送换肤按 `design1.md` 指定范围使用 `service-primary`、`service-bg` 和 `service-on-dark`；固定品牌黄的表单控件继续使用 `brand-primary` / `brand-bg`。组件只在必须切换图片或渐变变体时接收 `premium` Props，不在页面散落急送色值；
 - Figma 特有装饰值可以局部使用，但需有明确来源且不能冒充通用 Token；
 - 修改样式时检查不同视口和内容长度，不固定为某个 Figma 画板高度；
 - SVG 保持 `viewBox` 与宽高比，资源按领域目录存放并使用语义名称；

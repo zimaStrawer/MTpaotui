@@ -108,9 +108,9 @@
   .tracking-sonar-wave {
     background: radial-gradient(
       circle,
-      color-mix(in srgb, var(--color-brand-primary) 46%, transparent) 0%,
-      color-mix(in srgb, var(--color-brand-primary) 34%, transparent) 42%,
-      color-mix(in srgb, var(--color-brand-primary) 18%, transparent) 70%,
+      color-mix(in srgb, var(--color-service-primary) 46%, transparent) 0%,
+      color-mix(in srgb, var(--color-service-primary) 34%, transparent) 42%,
+      color-mix(in srgb, var(--color-service-primary) 18%, transparent) 70%,
       transparent 100%
     );
     opacity: 0;

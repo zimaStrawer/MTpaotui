@@ -1,9 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
 import { recommendVehicle } from '../src/data/mock/recommend-vehicle';
+import { resolveServiceVisualTheme } from '../src/design-tokens/service-theme';
 import {
   classifyVolumeDelivery,
+  isOrderDraftReady,
   resolveCapacityInfoState,
+  resolveCourierSpecialtyLabel,
+  resolveItemDeliveryPreference,
   resolveItemProofServiceVariant,
   swapAddressRoles,
   transitionServiceAddresses,
@@ -35,6 +39,12 @@ const standardItem: Item = {
 };
 
 describe('地址与服务模式', () => {
+  it('仅急送派生尊贵视觉主题', () => {
+    expect(resolveServiceVisualTheme('send')).toBe('standard');
+    expect(resolveServiceVisualTheme('pick')).toBe('standard');
+    expect(resolveServiceVisualTheme('express')).toBe('premium');
+  });
+
   it('交换地址时同步修正地址角色', () => {
     expect(swapAddressRoles({ pickup, delivery })).toEqual({
       pickup: { ...delivery, role: 'pickup' },
@@ -60,6 +70,22 @@ describe('地址与服务模式', () => {
 });
 
 describe('体积、运力与凭证', () => {
+  it.each([
+    ['鲜花', '鲜花使者'],
+    ['蛋糕', '蛋糕天使'],
+    ['文件', '文件保镖'],
+    ['餐饮', '美团跑腿'],
+    ['生鲜', '美团跑腿'],
+    ['数码', '美团跑腿'],
+    ['服饰', '美团跑腿'],
+    ['帮取快递', '美团跑腿'],
+    ['五金', '美团跑腿'],
+    ['汽配', '美团跑腿'],
+    ['其他', '美团跑腿'],
+  ] as const)('%s映射为%s骑手标签', (category, label) => {
+    expect(resolveCourierSpecialtyLabel(category)).toBe(label);
+  });
+
   it('按标准、汽车建议、超限优先级分类体积', () => {
     expect(classifyVolumeDelivery({ l: 50, w: 50, h: 50 })).toBe(
       'standard',
@@ -70,6 +96,63 @@ describe('体积、运力与凭证', () => {
     expect(classifyVolumeDelivery({ l: 101, w: 30, h: 30 })).toBe(
       'oversize',
     );
+  });
+
+  it('接受尺寸推荐后自动选择汽车配送', () => {
+    expect(
+      resolveItemDeliveryPreference({
+        serviceMode: 'send',
+        vehicle: 'ebike',
+        volume: { l: 101, w: 20, h: 20 },
+        carRecommendationSelected: true,
+      }),
+    ).toEqual({ serviceMode: 'send', vehicle: 'car' });
+    expect(
+      resolveItemDeliveryPreference({
+        serviceMode: 'express',
+        vehicle: 'ebike',
+        volume: { l: 101, w: 20, h: 20 },
+        carRecommendationSelected: true,
+      }),
+    ).toEqual({ serviceMode: 'send', vehicle: 'car' });
+  });
+
+  it('取消尺寸推荐使用二轮车，未触发时保留原选择', () => {
+    expect(
+      resolveItemDeliveryPreference({
+        serviceMode: 'send',
+        vehicle: 'car',
+        volume: { l: 101, w: 20, h: 20 },
+        carRecommendationSelected: false,
+      }),
+    ).toEqual({ serviceMode: 'send', vehicle: 'ebike' });
+    expect(
+      resolveItemDeliveryPreference({
+        serviceMode: 'send',
+        vehicle: 'car',
+        volume: { l: 50, w: 50, h: 50 },
+        carRecommendationSelected: false,
+      }),
+    ).toEqual({ serviceMode: 'send', vehicle: 'car' });
+  });
+
+  it('物品尺寸超限只提示风险，不阻断正常下单流程', () => {
+    const oversizeItem: Item = {
+      ...standardItem,
+      volume: { l: 101, w: 30, h: 30 },
+    };
+
+    expect(
+      resolveItemDeliveryPreference({
+        serviceMode: 'express',
+        vehicle: 'ebike',
+        volume: oversizeItem.volume,
+        carRecommendationSelected: false,
+      }),
+    ).toEqual({ serviceMode: 'express', vehicle: 'ebike' });
+    expect(
+      isOrderDraftReady({ pickup, delivery, item: oversizeItem }),
+    ).toBe(true);
   });
 
   it('根据地址、服务和载具派生运力信息', () => {

@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 
-import iconAnnounce from '../../assets/order/icon-announce.svg';
+import iconDynamicPrompt from '../../assets/order/icon-dynamic-prompt.svg';
 
 const ROTATE_MS = 5_000;
 const COUNTDOWN_START_SECONDS = 3 * 3600 + 9 * 60 + 35;
@@ -13,7 +13,7 @@ function formatCountdown(totalSeconds: number): string {
 }
 
 /**
- * 导航栏公告(862:4273,内容态 1-5):有内容时每 5 秒自动轮换;
+ * 动态催促标签(862:4273,内容态 1-5):有内容时每 5 秒自动轮换;
  * 折扣倒计时(态 3)实时递减。
  */
 export function AnnouncementBar() {
@@ -37,10 +37,10 @@ export function AnnouncementBar() {
 
   const slides: ReactNode[] = [
     '目前订单较多，骑手紧张，送达时间可能波动',
-    '平台保障｜超1分钟赔・物品安全保障',
+    '平台保障 | 超1分钟赔・物品安全保障',
     <>
       限时 <span className="text-highlight-primary">7.5折</span> 优惠{' '}
-      <span className="font-number text-highlight-primary">
+      <span className="text-highlight-primary">
         {formatCountdown(countdown)}
       </span>
     </>,
@@ -53,11 +53,13 @@ export function AnnouncementBar() {
   ];
 
   return (
-    <span className="flex items-center gap-1 rounded-8 bg-gradient-to-r from-[#fded40] to-transparent to-40% px-2 py-1">
-      <img src={iconAnnounce} alt="" className="size-6" />
-      <span className="text-caption font-medium whitespace-nowrap text-text-primary">
-        {slides[index]}
+    <div className="pointer-events-none relative flex h-11 w-full items-center justify-center overflow-hidden">
+      <span className="flex items-center gap-1 rounded-8 border border-transparent bg-gradient-to-r from-[#fded40] to-transparent to-40% px-2 py-1">
+        <img src={iconDynamicPrompt} alt="" className="size-6" />
+        <span className="text-caption whitespace-nowrap text-text-primary">
+          {slides[index]}
+        </span>
       </span>
-    </span>
+    </div>
   );
 }

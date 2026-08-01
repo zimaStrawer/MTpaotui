@@ -47,15 +47,22 @@ export function swapAddressRoles({
 }
 
 /** 仅帮送与帮取直接互切时交换地址；一对一急送继承当前地址顺序。 */
+export function shouldSwapServiceAddresses(
+  previousMode: ServiceMode,
+  nextMode: ServiceMode,
+): boolean {
+  return (
+    (previousMode === 'send' && nextMode === 'pick') ||
+    (previousMode === 'pick' && nextMode === 'send')
+  );
+}
+
 export function transitionServiceAddresses(
   previousMode: ServiceMode,
   nextMode: ServiceMode,
   addresses: OrderAddresses,
 ): OrderAddresses {
-  const swapsSendAndPick =
-    (previousMode === 'send' && nextMode === 'pick') ||
-    (previousMode === 'pick' && nextMode === 'send');
-  return swapsSendAndPick
+  return shouldSwapServiceAddresses(previousMode, nextMode)
     ? swapAddressRoles(addresses)
     : { pickup: addresses.pickup, delivery: addresses.delivery };
 }
@@ -75,6 +82,22 @@ export const ITEM_CATEGORIES = [
   '其他',
 ] as const;
 export type ItemCategory = (typeof ITEM_CATEGORIES)[number];
+
+/** 骑手卡片中的专业身份标签由当前订单物品类型唯一派生。 */
+export type CourierSpecialtyLabel =
+  | '鲜花使者'
+  | '蛋糕天使'
+  | '文件保镖'
+  | '美团跑腿';
+
+export function resolveCourierSpecialtyLabel(
+  category: ItemCategory,
+): CourierSpecialtyLabel {
+  if (category === '鲜花') return '鲜花使者';
+  if (category === '蛋糕') return '蛋糕天使';
+  if (category === '文件') return '文件保镖';
+  return '美团跑腿';
+}
 
 /** 易损品类:保价组件出「建议您保价」态,车型推荐倾向汽车 */
 export const FRAGILE_CATEGORIES: readonly ItemCategory[] = [
@@ -118,7 +141,8 @@ export interface Volume {
 
 /** 配送箱参照尺寸,也是物品详细尺寸的默认值。 */
 export const DEFAULT_DELIVERY_BOX_VOLUME: Volume = { l: 41, w: 30, h: 31 };
-export const DEFAULT_ITEM_WEIGHT_KG = 1;
+/** 未填写时以 3kg 作为物品重量滑杆的初始位置。 */
+export const DEFAULT_ITEM_WEIGHT_KG = 3;
 export const FREE_WEIGHT_LIMIT_KG = 5;
 export const VOLUME_CAR_THRESHOLD_CM = 100;
 export const VOLUME_MAX_GIRTH_CM = 150;
@@ -151,8 +175,55 @@ export interface Item {
   note?: string;
 }
 
+/** 下单确认只校验前置信息是否齐全，体积状态不作为流程阻断条件。 */
+export function isOrderDraftReady({
+  pickup,
+  delivery,
+  item,
+}: {
+  pickup: Address | null;
+  delivery: Address | null;
+  item: Item | null;
+}): boolean {
+  return pickup !== null && delivery !== null && item !== null;
+}
+
 export type DeliveryVehicle = 'ebike' | 'car';
 export type DeliveryService = 'standard' | 'express' | 'car';
+
+interface ItemDeliveryPreferenceContext {
+  serviceMode: ServiceMode;
+  vehicle: DeliveryVehicle;
+  volume: Volume;
+  carRecommendationSelected: boolean;
+}
+
+/**
+ * 物品页仅在尺寸命中汽车建议时改写配送偏好：默认接受则进入汽车配送，
+ * 主动取消则使用二轮车；未命中时保留用户此前的服务与载具选择。
+ */
+export function resolveItemDeliveryPreference({
+  serviceMode,
+  vehicle,
+  volume,
+  carRecommendationSelected,
+}: ItemDeliveryPreferenceContext): {
+  serviceMode: ServiceMode;
+  vehicle: DeliveryVehicle;
+} {
+  if (classifyVolumeDelivery(volume) !== 'car-recommended') {
+    return { serviceMode, vehicle };
+  }
+
+  if (!carRecommendationSelected) {
+    return { serviceMode, vehicle: 'ebike' };
+  }
+
+  return {
+    serviceMode: serviceMode === 'express' ? 'send' : serviceMode,
+    vehicle: 'car',
+  };
+}
 
 /** 首页业务模式与载具选择共同确定下单及物流页使用的服务档位。 */
 export function resolveDeliveryService(

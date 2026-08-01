@@ -9,6 +9,8 @@ export type CourierStatusProps =
   | {
       distanceMeters: number;
       minutes: number;
+      /** 急送只改变送件中和到达态的左侧承载面。 */
+      premium?: boolean;
       variant: 'pickup' | 'delivery' | 'arrived';
     };
 
@@ -53,10 +55,19 @@ export function CourierStatusBubble(props: CourierStatusProps) {
   }
 
   const status = MOVING_STATUS_COPY[props.variant];
+  const deliveryStage =
+    props.variant === 'delivery' || props.variant === 'arrived';
+  const metricBackground = deliveryStage
+    ? props.premium
+      ? 'bg-decorative-tertiary'
+      : 'bg-brand-bg'
+    : 'bg-page-bg';
 
   return (
     <div className="flex h-[46px] overflow-hidden rounded-8 border border-container-bg shadow-[0_1px_4px_rgba(28,30,33,0.12)]">
-      <div className="flex flex-col items-center justify-center bg-page-bg px-3 py-1.5">
+      <div
+        className={`flex flex-col items-center justify-center px-3 py-1.5 ${metricBackground}`}
+      >
         <span className="flex items-center gap-0.5 text-highlight-primary">
           <span className="font-number text-number font-medium">
             {props.minutes}

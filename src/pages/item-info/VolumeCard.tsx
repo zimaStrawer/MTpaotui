@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import iconCheckGreen from '../../assets/item-info/icon-check-green.svg';
 import iconRefresh from '../../assets/item-info/icon-refresh.svg';
 import photoDeliveryBox from '../../assets/item-info/photo-delivery-box.png';
@@ -37,6 +39,20 @@ export function VolumeCard({
   onChange,
 }: VolumeCardProps) {
   const deliveryStatus = classifyVolumeDelivery(volume);
+  const [switchChecked, setSwitchChecked] = useState(expanded);
+
+  const handleToggleExpanded = (nextExpanded: boolean) => {
+    const reduceMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+
+    setSwitchChecked(nextExpanded);
+    if (reduceMotion) onToggleExpanded(nextExpanded);
+  };
+
+  const handleSwitchSlideEnd = (checked: boolean) => {
+    if (checked !== expanded) onToggleExpanded(checked);
+  };
 
   return (
     <section
@@ -50,9 +66,10 @@ export function VolumeCard({
           <span className="flex items-center gap-1">
             <span className="text-caption text-text-tertiary">详细尺寸</span>
             <Switch
-              checked={expanded}
+              checked={switchChecked}
               ariaLabel="录入详细尺寸"
-              onChange={onToggleExpanded}
+              onChange={handleToggleExpanded}
+              onSlideEnd={handleSwitchSlideEnd}
             />
           </span>
         }

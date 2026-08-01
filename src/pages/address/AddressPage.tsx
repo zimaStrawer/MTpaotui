@@ -41,6 +41,9 @@ export function AddressPage() {
     role === 'pickup' ? state.delivery : state.pickup,
   );
   const setAddress = useOrderDraftStore((state) => state.setAddress);
+  const premium = useOrderDraftStore(
+    (state) => state.serviceMode === 'express',
+  );
 
   const [form, setForm] = useState<AddressFormValue>(() =>
     stored === null
@@ -105,7 +108,7 @@ export function AddressPage() {
     <div className="mx-auto flex min-h-dvh max-w-md flex-col pt-[env(safe-area-inset-top)]">
       <NavigationBar
         title={role === 'pickup' ? '取件信息' : '收件信息'}
-        badge={<RoleBadge role={role} />}
+        badge={<RoleBadge role={role} premium={premium} />}
         onBack={() => navigate(-1)}
       />
       <main className="flex flex-col gap-2 px-2 pt-3 pb-8">
@@ -116,6 +119,7 @@ export function AddressPage() {
         />
         <AddressFormCard
           role={role}
+          premium={premium}
           value={form}
           onPickPoi={handlePickPoi}
           onChange={handlePatch}

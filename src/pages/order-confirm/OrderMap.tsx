@@ -1,9 +1,10 @@
 import mapPickup from '../../assets/address/map-pickup.jpg';
 import iconBack from '../../assets/nav/icon-back.svg';
-import iconWeather from '../../assets/home/icon-weather.svg';
 import iconChevron from '../../assets/nav/icon-chevron.svg';
+import iconSwapMap from '../../assets/order/icon-swap-map.svg';
 import routeCurve from '../../assets/order/route-curve.svg';
 import { MapMarker } from '../../components/MapMarker';
+import { WeatherIndicator } from '../../components/WeatherIndicator';
 import {
   MOCK_ACCEPT_MINUTES,
   MOCK_DELIVERY_ETA,
@@ -57,12 +58,31 @@ function FloatCard({ address, metric, metricLabel, metricBg, onClick }: FloatCar
 interface OrderMapProps {
   pickup: Address;
   delivery: Address;
+  premium: boolean;
   onBack: () => void;
   onEditAddress: (role: AddressRole) => void;
+  onSwapAddresses: () => void;
+  /** 当前模拟地图中，两个地址位置是否已交换。 */
+  addressesSwapped: boolean;
 }
 
 /** 下单页地图区(857:2069):路线 + 取/收地标 + 双浮卡,导航悬浮其上。 */
-export function OrderMap({ pickup, delivery, onBack, onEditAddress }: OrderMapProps) {
+export function OrderMap({
+  pickup,
+  delivery,
+  premium,
+  onBack,
+  onEditAddress,
+  onSwapAddresses,
+  addressesSwapped,
+}: OrderMapProps) {
+  const pickupMetric = (
+    <>
+      {MOCK_ACCEPT_MINUTES}
+      <span className="ml-0.5 font-app text-caption-xs font-medium">分钟</span>
+    </>
+  );
+
   return (
     <div className="relative h-[300px] w-full overflow-hidden">
       <img
@@ -77,37 +97,54 @@ export function OrderMap({ pickup, delivery, onBack, onEditAddress }: OrderMapPr
         className="absolute top-[128px] left-[123px] w-[120px]"
       />
       <span className="absolute top-[190px] left-[108px]">
-        <MapMarker role="pickup" />
+        <MapMarker
+          role={addressesSwapped ? 'delivery' : 'pickup'}
+          premium={premium}
+        />
       </span>
       <span className="absolute top-[93px] left-[228px]">
-        <MapMarker role="delivery" />
+        <MapMarker
+          role={addressesSwapped ? 'pickup' : 'delivery'}
+          premium={premium}
+        />
       </span>
       <div className="absolute top-[43px] left-[143px]">
         <FloatCard
-          address={delivery}
-          metric={MOCK_DELIVERY_ETA}
-          metricLabel="预计送达"
-          metricBg="bg-brand-bg"
-          onClick={() => onEditAddress('delivery')}
+          address={addressesSwapped ? pickup : delivery}
+          metric={addressesSwapped ? pickupMetric : MOCK_DELIVERY_ETA}
+          metricLabel={addressesSwapped ? '最快接单' : '预计送达'}
+          metricBg={addressesSwapped ? 'bg-page-bg' : 'bg-service-bg'}
+          onClick={() =>
+            onEditAddress(addressesSwapped ? 'pickup' : 'delivery')
+          }
         />
       </div>
       <div className="absolute top-[139px] left-[22px]">
         <FloatCard
-          address={pickup}
-          metric={
-            <>
-              {MOCK_ACCEPT_MINUTES}
-              <span className="ml-0.5 font-app text-caption-xs font-medium">
-                分钟
-              </span>
-            </>
+          address={addressesSwapped ? delivery : pickup}
+          metric={addressesSwapped ? MOCK_DELIVERY_ETA : pickupMetric}
+          metricLabel={addressesSwapped ? '预计送达' : '最快接单'}
+          metricBg={addressesSwapped ? 'bg-service-bg' : 'bg-page-bg'}
+          onClick={() =>
+            onEditAddress(addressesSwapped ? 'delivery' : 'pickup')
           }
-          metricLabel="最快接单"
-          metricBg="bg-page-bg"
-          onClick={() => onEditAddress('pickup')}
         />
       </div>
-      <header className="absolute inset-x-0 top-[env(safe-area-inset-top)] flex h-11 items-center justify-between px-2">
+      <button
+        type="button"
+        aria-label="互换取件与收件地址"
+        onClick={onSwapAddresses}
+        className="absolute top-[192px] right-2 flex size-11 items-center justify-center"
+      >
+        <span className="flex size-8 items-center justify-center rounded-[10px] bg-white shadow-[0_0_4px_rgba(0,0,0,0.05)]">
+          <img
+            src={iconSwapMap}
+            alt=""
+            className="size-5 -scale-y-100 rotate-180"
+          />
+        </span>
+      </button>
+      <header className="absolute inset-x-0 top-[env(safe-area-inset-top)] flex h-11 items-center justify-between px-3">
         <button
           type="button"
           aria-label="返回"
@@ -118,13 +155,7 @@ export function OrderMap({ pickup, delivery, onBack, onEditAddress }: OrderMapPr
             <img src={iconBack} alt="" className="size-5" />
           </span>
         </button>
-        <span className="flex items-center gap-1 text-caption font-medium text-text-primary">
-          <img src={iconWeather} alt="" className="size-5" />
-          <span className="flex gap-1.5">
-            <span>强风</span>
-            <span>6级</span>
-          </span>
-        </span>
+        <WeatherIndicator />
       </header>
     </div>
   );

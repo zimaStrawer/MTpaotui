@@ -68,7 +68,7 @@ export function AddressBookCard({ selectedPoi, onPick }: AddressBookCardProps) {
             <li key={entry.poi} className="relative h-15 overflow-hidden">
               {selected && (
                 <>
-                  <span className="absolute -top-3 -left-3 size-7 rounded-8 bg-brand-primary" />
+                  <span className="absolute -top-3 -left-3 size-7 rounded-8 bg-service-primary" />
                   <svg
                     viewBox="0 0 8 8"
                     aria-hidden

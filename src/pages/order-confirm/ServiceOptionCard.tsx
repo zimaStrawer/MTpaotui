@@ -48,11 +48,11 @@ function OptionShell({
         tall ? 'h-18' : 'h-14'
       } ${
         selected
-          ? 'border-brand-primary bg-brand-bg'
+          ? 'border-service-primary bg-service-bg'
           : 'border-text-quaternary bg-container-bg'
       }`}
     >
-      {selected && <CornerCheck />}
+      {selected && <CornerCheck color="service" />}
       {children}
       <span className="absolute top-1/2 right-6 flex -translate-y-1/2 flex-col items-end gap-1">
         <Fee yuan={feeYuan} />

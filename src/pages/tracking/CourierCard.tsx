@@ -4,10 +4,13 @@ import iconButtonRing from '../../assets/tracking/icon-button-ring.svg';
 import iconMessage from '../../assets/tracking/icon-message.svg';
 import iconPhone from '../../assets/tracking/icon-phone.svg';
 import iconStar from '../../assets/tracking/icon-star.svg';
+import type { ItemCategory } from '../../data/models/order';
 import type { Courier } from '../../data/models/tracking';
+import { CourierSpecialtyBadge } from './CourierSpecialtyBadge';
 
 interface CourierCardProps {
   courier: Courier;
+  itemCategory: ItemCategory;
   showTip?: boolean;
   onCall: () => void;
   onDismissTip?: () => void;
@@ -18,6 +21,7 @@ interface CourierCardProps {
 /** 骑手卡片两变体(node 1507:20966):基础态 / 完成后打赏态。 */
 export function CourierCard({
   courier,
+  itemCategory,
   showTip = false,
   onCall,
   onDismissTip,
@@ -45,23 +49,21 @@ export function CourierCard({
 
         <div className="ml-2 flex min-w-0 flex-col max-[350px]:ml-1">
           <div className="flex items-center gap-2 whitespace-nowrap max-[350px]:gap-1">
-            <span className="rounded-4 bg-brand-primary px-1 py-0.5 font-brand text-caption-sm text-text-primary">
-              美团跑腿
-            </span>
             <span className="font-app text-title-brand font-semibold text-text-primary">
               {courier.name}
             </span>
+            <CourierSpecialtyBadge itemCategory={itemCategory} />
           </div>
           <div className="flex items-center gap-1 px-1 py-0.5 text-caption text-text-primary">
-            <span className="font-number">{courier.rating.toFixed(1)}</span>
-            <img src={iconStar} alt="星级" className="size-4" />
-            <span className="text-text-quaternary">|</span>
             <span>
               满意度{' '}
               <span className="font-number">
                 {courier.satisfaction.toFixed(2)}%
               </span>
             </span>
+            <span className="text-text-quaternary">|</span>
+            <span className="font-number">{courier.rating.toFixed(1)}</span>
+            <img src={iconStar} alt="星级" className="size-4" />
           </div>
         </div>
 

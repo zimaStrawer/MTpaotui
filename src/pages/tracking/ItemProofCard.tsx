@@ -25,18 +25,19 @@ function ProofServiceHeader({
 }: {
   variant: ItemProofServiceVariant;
 }) {
+  const color = SERVICE_HEADER_COLOR[variant];
+
   return (
     <>
+      <div
+        className={`pointer-events-none absolute top-0 right-[143px] left-0 h-[27px] rounded-tl-16 bg-current ${color}`}
+      />
       <svg
         aria-hidden
-        viewBox="0 0 256 29"
+        viewBox="216 0 40 29"
         preserveAspectRatio="none"
-        className={`pointer-events-none absolute top-[-2px] left-0 h-[29px] w-[256px] ${SERVICE_HEADER_COLOR[variant]}`}
+        className={`pointer-events-none absolute top-[-2px] right-[103px] h-[29px] w-10 ${color}`}
       >
-        <path
-          d="M0 16C0 7.16344 7.16344 0 16 0H216V29H0V16Z"
-          fill="currentColor"
-        />
         <path
           d="M216 0H228.268C235.72 0 242.186 5.14487 243.859 12.4067L244.877 16.8203C245.909 21.2986 248.816 25.1168 252.859 27.3022L256 29H216V0Z"
           fill="currentColor"
@@ -68,26 +69,32 @@ function ProofServiceHeader({
 
 interface ProofThumbnailProps {
   confirmed: boolean;
+  premium: boolean;
   role: 'pickup' | 'delivery';
   src: string;
 }
 
-function ProofThumbnail({ confirmed, role, src }: ProofThumbnailProps) {
+function ProofThumbnail({
+  confirmed,
+  premium,
+  role,
+  src,
+}: ProofThumbnailProps) {
   const roleLabel = role === 'pickup' ? '取件' : '收件';
   return (
-    <div className="relative size-12 shrink-0 overflow-hidden rounded-6 max-[350px]:size-10">
+    <div className="relative isolate size-12 shrink-0 rounded-6 bg-container-bg max-[350px]:size-10">
       <img
         src={src}
         alt={`${roleLabel}物品凭证`}
-        className={`size-full object-cover ${
+        className={`absolute inset-0 block size-full rounded-6 object-cover ${
           confirmed ? 'object-center' : 'object-bottom'
         }`}
       />
-      <span className="absolute top-0 left-0">
-        <RoleBadge role={role} />
+      <span className="absolute top-0 left-0 z-10 rounded-6">
+        <RoleBadge role={role} premium={premium} />
       </span>
       {confirmed && (
-        <span className="absolute right-0 bottom-0 flex size-4 items-center justify-center rounded-[5px] bg-text-primary">
+        <span className="absolute right-0 bottom-0 z-10 flex size-4 items-center justify-center rounded-[5px] bg-text-primary">
           <img src={iconExpand} alt="" className="size-3" />
         </span>
       )}
@@ -155,11 +162,13 @@ export function ItemProofCard({
       <div className="absolute top-[41px] right-4 flex gap-3 max-[350px]:gap-2">
         <ProofThumbnail
           role="pickup"
+          premium={serviceVariant === 'express'}
           confirmed={pickupConfirmed}
           src={pickupConfirmed ? proofPickupConfirmed : proofPickup}
         />
         <ProofThumbnail
           role="delivery"
+          premium={serviceVariant === 'express'}
           confirmed={deliveryConfirmed}
           src={deliveryConfirmed ? proofDeliveryConfirmed : proofDelivery}
         />

@@ -13,6 +13,7 @@ export interface AddressFormValue {
 
 interface AddressFormCardProps {
   role: AddressRole;
+  premium: boolean;
   value: AddressFormValue;
   /** 地址行点击:mock 定位选点 */
   onPickPoi: () => void;
@@ -50,6 +51,7 @@ const inputClass =
  */
 export function AddressFormCard({
   role,
+  premium,
   value,
   onPickPoi,
   onChange,
@@ -59,7 +61,9 @@ export function AddressFormCard({
 
   return (
     <section className="w-full overflow-hidden rounded-16 border-2 border-container-bg bg-container-bg">
-      {value.poi !== null && <MapPreview role={role} poi={value.poi} />}
+      {value.poi !== null && (
+        <MapPreview role={role} poi={value.poi} premium={premium} />
+      )}
       <div
         className={`px-3 pb-4 ${value.poi !== null ? 'pt-5' : 'pt-4'}`}
       >

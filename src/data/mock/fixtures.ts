@@ -10,7 +10,7 @@ export const MOCK_COURIER: Courier = {
   name: '谢师傅',
   rating: 4.5,
   satisfaction: 97.73,
-  badges: ['信用骑手', '鲜花使者'],
+  badges: ['信用骑手'],
   pickupCode: '8251',
 };
 
@@ -70,6 +70,6 @@ export const MOCK_ADDRESS_BOOK: AddressBookEntry[] = [
 /** 首页价格条起步价(mock 报价,M4 接费用计算) */
 export const MOCK_BASE_FEE_YUAN = 14.5;
 
-/** 情境提示与车型推荐共用的原型环境上下文，见 product.md §8、§10。 */
+/** 情境提示与车型推荐共用的原型环境上下文；界面固定展示为“大雨”，见 product.md §8、§10。 */
 export const MOCK_WEATHER = 'rain' as const;
 export const MOCK_DISTANCE_KM = 3.2;

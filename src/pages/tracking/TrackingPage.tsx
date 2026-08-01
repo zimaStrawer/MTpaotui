@@ -119,10 +119,12 @@ export function TrackingPage() {
       <CompletedOrderView
         bookmarked={bookmarked}
         courier={receipt.courier}
+        itemCategory={item.category}
         pickup={pickup}
         delivery={delivery}
         note={item.note}
         feeYuan={feeYuan}
+        premium={serviceMode === 'express'}
         onBack={commonActions.onBack}
         onTip={commonActions.onTip}
         onUnavailable={() => showNotice(UNAVAILABLE_FEATURE_MESSAGE)}
@@ -145,6 +147,7 @@ export function TrackingPage() {
           {stage !== 'accepting' && (
             <CourierCard
               courier={receipt.courier}
+              itemCategory={item.category}
               onCall={commonActions.onCall}
               onMessage={commonActions.onMessage}
             />

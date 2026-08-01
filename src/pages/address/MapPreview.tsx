@@ -9,10 +9,11 @@ import type { AddressRole } from '../../data/models/order';
 interface MapPreviewProps {
   role: AddressRole;
   poi: string;
+  premium: boolean;
 }
 
 /** 占位地图 + 定位气泡(1082:9499):地址已选后展示。 */
-export function MapPreview({ role, poi }: MapPreviewProps) {
+export function MapPreview({ role, poi, premium }: MapPreviewProps) {
   const isPickup = role === 'pickup';
 
   return (
@@ -25,7 +26,7 @@ export function MapPreview({ role, poi }: MapPreviewProps) {
       />
       <div className="absolute top-[79px] left-1/2 -translate-x-1/2">
         <span className="relative z-10 flex -translate-y-full items-center gap-1 rounded-8 bg-container-bg p-1 shadow-[0_0_2px_rgba(27,29,33,0.2)]">
-          <RoleBadge role={role} />
+          <RoleBadge role={role} premium={premium} />
           <span className="text-caption font-medium text-text-primary">
             {poi}
           </span>

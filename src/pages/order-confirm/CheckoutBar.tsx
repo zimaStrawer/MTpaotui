@@ -1,16 +1,24 @@
 import iconChevron from '../../assets/nav/icon-chevron.svg';
 import type { ServiceQuote } from '../../data/mock/service-quotes';
+import { InsuranceGuaranteeTag } from './InsuranceGuaranteeTag';
 
 interface CheckoutBarProps {
   quote: ServiceQuote;
+  insured: boolean;
   submitting: boolean;
   onSubmit: () => void;
 }
 
 /** 底部支付栏(1554:4789):红包/支付方式行 + 深色结算胶囊。 */
-export function CheckoutBar({ quote, submitting, onSubmit }: CheckoutBarProps) {
+export function CheckoutBar({
+  quote,
+  insured,
+  submitting,
+  onSubmit,
+}: CheckoutBarProps) {
   return (
     <div className="fixed inset-x-0 bottom-0 z-10 mx-auto h-[calc(88px+max(32px,env(safe-area-inset-bottom)))] max-w-md border-t border-border-divider bg-container-bg">
+      {insured && <InsuranceGuaranteeTag className="absolute inset-x-0 -top-8" />}
       <div className="absolute inset-x-0 top-[-2px] grid h-[41px] grid-cols-2 place-items-center">
         <span className="flex items-center text-caption text-text-primary">
           暂无可用红包
@@ -43,7 +51,7 @@ export function CheckoutBar({ quote, submitting, onSubmit }: CheckoutBarProps) {
         </span>
         <button
           type="button"
-          className="ml-auto flex h-full items-center bg-mask-bg px-4 text-tab font-medium text-brand-primary"
+          className="ml-auto flex h-full items-center bg-mask-bg px-4 text-tab font-medium text-service-on-dark"
         >
           找人付
         </button>
@@ -51,7 +59,7 @@ export function CheckoutBar({ quote, submitting, onSubmit }: CheckoutBarProps) {
           type="button"
           disabled={submitting}
           onClick={onSubmit}
-          className="flex h-full items-center bg-brand-primary px-5 text-tab font-medium text-text-primary disabled:opacity-70"
+          className="flex h-full items-center bg-service-primary px-5 text-tab font-medium text-text-primary disabled:opacity-70"
         >
           {submitting ? '提交中…' : '提交订单'}
         </button>

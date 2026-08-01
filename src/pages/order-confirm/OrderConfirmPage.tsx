@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import iconBack from '../../assets/nav/icon-back.svg';
 import { SERVICE_QUOTES } from '../../data/mock/service-quotes';
 import {
+  isOrderDraftReady,
   resolveDeliveryService,
   type AddressRole,
   type DeliveryService,
@@ -40,6 +41,9 @@ export function OrderConfirmPage() {
   const setItem = useOrderDraftStore((state) => state.setItem);
   const setReceipt = useOrderDraftStore((state) => state.setReceipt);
   const swapAddresses = useOrderDraftStore((state) => state.swapAddresses);
+  const mapAddressesSwapped = useOrderDraftStore(
+    (state) => state.mapAddressesSwapped,
+  );
 
   const [insuranceCollapsed, setInsuranceCollapsed] = useState(
     () => (item?.insurance ?? 'none') !== 'none',
@@ -54,7 +58,7 @@ export function OrderConfirmPage() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const ready = pickup !== null && delivery !== null && item !== null;
+  const ready = isOrderDraftReady({ pickup, delivery, item });
   useEffect(() => {
     if (!ready) navigate('/', { replace: true });
   }, [ready, navigate]);
@@ -63,6 +67,7 @@ export function OrderConfirmPage() {
 
   const selected = resolveDeliveryService(serviceMode, vehicle);
   const quote = SERVICE_QUOTES[selected];
+  const premium = serviceMode === 'express';
 
   /** 选档回写业务配置,保持与首页同一份草稿 */
   const handleSelectService = (key: DeliveryService) => {
@@ -103,10 +108,14 @@ export function OrderConfirmPage() {
 
   return (
     <div className="mx-auto min-h-dvh max-w-md bg-gradient-to-b from-container-bg to-page-bg">
-      {/* 上滑吸顶态(864:7899):导航公告 + 缩略地图 */}
+      {/* 上滑吸顶态(864:7899):地图自然离场后，导航公告与缩略地图淡入下滑。 */}
       <div
-        className={`fixed inset-x-0 top-0 z-20 mx-auto max-w-md bg-page-bg px-2 pt-[env(safe-area-inset-top)] pb-2 shadow-[0_4px_16px_rgba(28,30,33,0.06)] transition-transform duration-200 ${
-          scrolled ? 'translate-y-0' : 'pointer-events-none -translate-y-full'
+        aria-hidden={!scrolled}
+        inert={!scrolled}
+        className={`fixed inset-x-0 top-0 z-20 mx-auto max-w-md bg-page-bg px-2 pt-[env(safe-area-inset-top)] pb-2 shadow-[0_4px_16px_rgba(28,30,33,0.06)] transition-[transform,opacity] duration-[250ms] ease-out will-change-[transform,opacity] motion-reduce:transition-none ${
+          scrolled
+            ? 'translate-y-0 opacity-100'
+            : 'pointer-events-none -translate-y-full opacity-0'
         }`}
       >
         <div className="relative flex h-11 items-center justify-center">
@@ -125,6 +134,7 @@ export function OrderConfirmPage() {
         <ThumbnailMap
           pickup={pickup}
           delivery={delivery}
+          premium={premium}
           onEdit={handleEditAddress}
           onSwap={swapAddresses}
         />
@@ -132,8 +142,11 @@ export function OrderConfirmPage() {
       <OrderMap
         pickup={pickup}
         delivery={delivery}
+        premium={premium}
         onBack={() => navigate(-1)}
         onEditAddress={handleEditAddress}
+        onSwapAddresses={swapAddresses}
+        addressesSwapped={mapAddressesSwapped}
       />
       <main className="relative z-10 -mt-15 flex flex-col gap-2 px-2 pb-40">
         <ServiceOptionCard value={selected} onChange={handleSelectService} />
@@ -147,7 +160,12 @@ export function OrderConfirmPage() {
         />
         <OrderConfigCard />
       </main>
-      <CheckoutBar quote={quote} submitting={submitting} onSubmit={handleSubmit} />
+      <CheckoutBar
+        quote={quote}
+        insured={item.insurance !== 'none'}
+        submitting={submitting}
+        onSubmit={handleSubmit}
+      />
     </div>
   );
 }

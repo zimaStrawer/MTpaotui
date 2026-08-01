@@ -97,7 +97,13 @@ function CourierSprite({ arrived }: { arrived: boolean }) {
   );
 }
 
-function MovingCourier({ stage }: { stage: MovingTrackingStage }) {
+function MovingCourier({
+  stage,
+  premium,
+}: {
+  stage: MovingTrackingStage;
+  premium: boolean;
+}) {
   const route = COURIER_ROUTE[stage];
   const [snapshotIndex, setSnapshotIndex] = useState(0);
 
@@ -133,6 +139,7 @@ function MovingCourier({ stage }: { stage: MovingTrackingStage }) {
           variant={statusVariant}
           minutes={snapshot.minutes}
           distanceMeters={snapshot.distanceMeters}
+          premium={premium}
         />
       </div>
       <CourierSprite arrived={arrived} />
@@ -228,7 +235,11 @@ export function TrackingMap({
         </>
       ) : (
         <>
-          <MovingCourier key={stage} stage={stage} />
+          <MovingCourier
+            key={stage}
+            stage={stage}
+            premium={serviceVariant === 'express'}
+          />
           <div
             className="absolute z-10"
             style={{
@@ -236,7 +247,10 @@ export function TrackingMap({
               top: `calc(${COURIER_SCREEN_POSITION.destination.topPx}px + env(safe-area-inset-top))`,
             }}
           >
-            <MapMarker role={stage === 'accepted' ? 'pickup' : 'delivery'} />
+            <MapMarker
+              role={stage === 'accepted' ? 'pickup' : 'delivery'}
+              premium={serviceVariant === 'express'}
+            />
           </div>
         </>
       )}

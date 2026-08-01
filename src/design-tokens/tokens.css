@@ -7,6 +7,11 @@
   /* ── 主题色 Brand ── */
   --color-brand-primary: #fee42b; /* 美团黄,仅主 CTA / 选中态 */
   --color-brand-bg: #fffbe4;
+
+  /* 服务主题色：默认普通态，急送态由根节点 data-service-theme 覆盖 */
+  --color-service-primary: #fee42b;
+  --color-service-bg: #fffbe4;
+  --color-service-on-dark: #fee42b;
   --color-highlight-primary: #f58b1d; /* 价格 / 时间 / 紧迫信息专用 */
   --color-highlight-bg: #fff5e9;
 
@@ -82,4 +87,10 @@
   --text-display-xl--line-height: 1;
   --text-display-lg: 32px; /* 组件库 数字/display-lg(重量/尺寸大数字) */
   --text-display-lg--line-height: 1;
+}
+
+[data-service-theme='premium'] {
+  --color-service-primary: #fdd4b8;
+  --color-service-bg: #fff4ee;
+  --color-service-on-dark: #f2d0b5;
 }
