@@ -1,0 +1,556 @@
+.showcase-active,
+.showcase-active body,
+.showcase-active #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #151619;
+}
+
+.showcase-root {
+  --showcase-surface: rgba(255, 255, 255, 0.055);
+  --showcase-border: rgba(255, 255, 255, 0.11);
+  --showcase-muted: rgba(255, 255, 255, 0.58);
+  --showcase-yellow: #fee42b;
+
+  position: relative;
+  display: grid;
+  grid-template-rows: 72px minmax(0, 1fr);
+  width: 100%;
+  height: 100dvh;
+  overflow: clip;
+  color: #f8f8f8;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    #151619;
+  background-size: 48px 48px;
+  isolation: isolate;
+}
+
+.showcase-root::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    circle at 50% 47%,
+    rgba(254, 228, 43, 0.07),
+    transparent 36%
+  );
+  content: '';
+  pointer-events: none;
+}
+
+.showcase-ambient {
+  position: absolute;
+  z-index: -1;
+  width: 34vw;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+.showcase-ambient-a {
+  top: -24vw;
+  left: -12vw;
+  background: #7c6330;
+}
+
+.showcase-ambient-b {
+  right: -20vw;
+  bottom: -28vw;
+  background: #6c5934;
+}
+
+.showcase-header {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(24px, 3.5vw, 56px);
+}
+
+.showcase-brand {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.showcase-brand-mark {
+  display: block;
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.showcase-brand-copy {
+  display: grid;
+  gap: 2px;
+}
+
+.showcase-brand strong {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.showcase-brand small {
+  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-number);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+}
+
+.showcase-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 0;
+  padding: 12px clamp(32px, 5vw, 72px) 18px;
+}
+
+.showcase-intro,
+.showcase-repository {
+  display: none;
+}
+
+.showcase-stage {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) 60px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.showcase-device-space {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  padding: 4px;
+  place-items: center;
+}
+
+.showcase-device-visual {
+  position: relative;
+  flex: none;
+}
+
+.showcase-device-transform {
+  position: relative;
+  overflow: visible;
+  transform-origin: top left;
+  opacity: 1;
+  filter: drop-shadow(0 28px 42px rgba(0, 0, 0, 0.48));
+  transition: opacity 180ms ease-out;
+  will-change: transform, opacity;
+}
+
+.showcase-device-transform.is-switching {
+  opacity: 0.72;
+}
+
+.showcase-device-screen {
+  position: absolute;
+  z-index: 1;
+  overflow: hidden;
+  background: var(--color-page-bg);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.showcase-app-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--color-page-bg);
+  border: 0;
+}
+
+.showcase-phone-shell {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.showcase-device-selector {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  width: fit-content;
+  max-width: calc(100vw - 48px);
+  min-height: 52px;
+  padding: 4px;
+  overflow: hidden;
+  gap: 0;
+  justify-content: center;
+  background: rgba(24, 25, 27, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: 999px;
+  box-shadow:
+    0 14px 40px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px);
+  place-self: end center;
+}
+
+/* 滑动选中 pill：位置与宽度由 JS 测量写入，动画由 WAAPI 驱动 */
+.showcase-device-indicator {
+  position: absolute;
+  z-index: 0;
+  top: 6px;
+  bottom: 6px;
+  pointer-events: none;
+  background: var(--showcase-yellow);
+  border-radius: 999px;
+}
+
+.showcase-device-option {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 42px;
+  padding: 0 12px;
+  color: rgba(255, 255, 255, 0.68);
+  font-family: var(--font-number);
+  text-align: center;
+  cursor: pointer;
+  touch-action: manipulation;
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  transition:
+    color 180ms ease-out,
+    background-color 180ms ease-out,
+    transform 180ms ease-out;
+}
+
+.showcase-device-option:hover {
+  color: rgba(255, 255, 255, 0.94);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.showcase-device-option:active {
+  transform: scale(0.96);
+}
+
+/* 过渡取「目标状态」的规则：进入选中时走这里的延迟，等 pill 滑到再变深色 */
+.showcase-device-option[aria-pressed='true'] {
+  color: #18191b;
+  transition:
+    color 200ms ease-out 80ms,
+    background-color 180ms ease-out,
+    transform 180ms ease-out;
+}
+
+.showcase-device-option[aria-pressed='true']:hover {
+  background: transparent;
+}
+
+.showcase-device-option:focus-visible,
+.showcase-repository-link:focus-visible,
+.showcase-brand:focus-visible {
+  outline: 2px solid var(--showcase-yellow);
+  outline-offset: 3px;
+}
+
+.showcase-device-trigger-copy,
+.showcase-device-option-copy {
+  display: flex;
+  gap: 4px;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.showcase-device-trigger-copy strong,
+.showcase-device-option-copy strong {
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.showcase-device-trigger-copy span,
+.showcase-device-option-copy span {
+  color: rgba(255, 255, 255, 0.44);
+  font-size: 11px;
+  font-weight: 450;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+  transition: color 180ms ease-out;
+}
+
+.showcase-device-option[aria-pressed='true'] .showcase-device-option-copy span {
+  color: rgba(24, 25, 27, 0.68);
+  transition: color 200ms ease-out 80ms;
+}
+
+.showcase-device-option-icon {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.4;
+}
+
+@media (width >= 1100px) {
+  .showcase-layout {
+    grid-template-columns:
+      minmax(240px, 1fr)
+      minmax(360px, 600px)
+      minmax(240px, 1fr);
+    gap: clamp(28px, 3vw, 56px);
+    padding-right: clamp(28px, 4vw, 64px);
+    padding-left: clamp(28px, 4vw, 64px);
+  }
+
+  .showcase-intro,
+  .showcase-repository {
+    display: flex;
+    align-self: center;
+    min-width: 0;
+  }
+
+  .showcase-intro {
+    flex-direction: column;
+    align-items: flex-start;
+    width: min(100%, 400px);
+    max-width: none;
+    justify-self: end;
+  }
+
+  .showcase-eyebrow,
+  .showcase-repository-label {
+    margin: 0 0 20px;
+    color: var(--showcase-yellow);
+    font-family: var(--font-number);
+    font-size: 11px;
+    font-weight: 650;
+    line-height: 1.2;
+    letter-spacing: 0.14em;
+  }
+
+  .showcase-intro h1 {
+    margin: 0;
+    font-size: clamp(38px, 3.5vw, 56px);
+    font-weight: 740;
+    line-height: 1.28;
+    letter-spacing: -0.02em;
+  }
+
+  .showcase-title-muted {
+    color: rgba(255, 255, 255, 0.52);
+  }
+
+  .showcase-description {
+    max-width: 24em;
+    margin: 32px 0 0;
+    color: rgba(255, 255, 255, 0.64);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .showcase-principles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .showcase-principles span {
+    padding: 8px 12px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 12px;
+    line-height: 1;
+    background: var(--showcase-surface);
+    border: 1px solid var(--showcase-border);
+    border-radius: 999px;
+  }
+
+  .showcase-operate-hint {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 40px 0 0;
+    color: rgba(255, 255, 255, 0.56);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .showcase-operate-hint span {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    color: #161719;
+    font-size: 14px;
+    background: var(--showcase-yellow);
+    border-radius: 50%;
+    place-items: center;
+  }
+
+  .showcase-intro h1 span {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .showcase-repository {
+    flex-direction: column;
+    align-items: flex-start;
+    width: min(100%, 400px);
+    max-width: none;
+    justify-self: start;
+  }
+
+  .showcase-qr-card {
+    display: grid;
+    width: 176px;
+    height: 176px;
+    padding: 11px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 22px;
+    box-shadow: 0 20px 52px rgba(0, 0, 0, 0.3);
+    place-items: center;
+  }
+
+  .showcase-qr-card img {
+    display: block;
+    width: 154px;
+    height: 154px;
+    image-rendering: pixelated;
+  }
+
+  .showcase-repository h2 {
+    margin: 26px 0 0;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+  }
+
+  .showcase-repository > p:not(.showcase-repository-label) {
+    max-width: 100%;
+    margin: 10px 0 0;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .showcase-repository-link {
+    display: inline-flex;
+    gap: 13px;
+    align-items: center;
+    min-height: 40px;
+    margin-top: 22px;
+    padding: 0 18px;
+    color: #1b1d21;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    background: var(--showcase-yellow);
+    border-radius: 999px;
+  }
+
+  .showcase-repository-link-brand {
+    display: inline-flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .showcase-repository-link-icon {
+    display: block;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (width >= 600px) and (width <= 1199px) {
+  .showcase-device-option-copy strong {
+    display: none;
+  }
+}
+
+@media (width <= 839px) {
+  .showcase-root {
+    grid-template-rows: 58px minmax(0, 1fr);
+  }
+
+  .showcase-header {
+    padding: 0 20px;
+  }
+
+  .showcase-brand strong {
+    font-size: 13px;
+  }
+
+  .showcase-brand-mark {
+    width: 20px;
+    height: 20px;
+  }
+
+  .showcase-brand small {
+    display: none;
+  }
+
+  .showcase-layout {
+    padding: 8px 12px 14px;
+  }
+}
+
+@media (height <= 680px) and (width >= 600px) {
+  .showcase-root {
+    grid-template-rows: 52px minmax(0, 1fr);
+  }
+
+  .showcase-layout {
+    padding-top: 4px;
+    padding-bottom: 8px;
+  }
+
+  .showcase-stage {
+    grid-template-rows: minmax(0, 1fr) 54px;
+  }
+
+  .showcase-device-space {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .showcase-intro h1 {
+    font-size: clamp(32px, 3vw, 44px);
+  }
+
+  .showcase-description {
+    margin-top: 18px;
+  }
+
+  .showcase-principles,
+  .showcase-operate-hint {
+    margin-top: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .showcase-device-transform,
+  .showcase-device-option {
+    transition: none;
+  }
+}

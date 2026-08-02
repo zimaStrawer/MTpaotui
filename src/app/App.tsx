@@ -1,19 +1,34 @@
-import { RouterProvider } from 'react-router';
+import { useEffect, useState } from 'react';
 
-import { resolveServiceVisualTheme } from '../design-tokens/service-theme';
-import { useOrderDraftStore } from '../store/order-draft-store';
-import { AppErrorBoundary } from './AppErrorBoundary';
-import { router } from './router';
+import { ShowcaseLayout } from '../showcase/ShowcaseLayout';
+import { AppRuntime } from './AppRuntime';
+
+const DIRECT_APP_QUERY = '(max-width: 599px)';
+
+function isEmbeddedApp() {
+  return new URLSearchParams(window.location.search).get('embed') === '1';
+}
 
 export function App() {
-  const serviceMode = useOrderDraftStore((state) => state.serviceMode);
-  const serviceTheme = resolveServiceVisualTheme(serviceMode);
-
-  return (
-    <div data-service-theme={serviceTheme}>
-      <AppErrorBoundary>
-        <RouterProvider router={router} />
-      </AppErrorBoundary>
-    </div>
+  const [isDirectAppViewport, setIsDirectAppViewport] = useState(() =>
+    window.matchMedia(DIRECT_APP_QUERY).matches,
   );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(DIRECT_APP_QUERY);
+    const updateViewportMode = () => {
+      setIsDirectAppViewport(mediaQuery.matches);
+    };
+
+    mediaQuery.addEventListener('change', updateViewportMode);
+    return () => {
+      mediaQuery.removeEventListener('change', updateViewportMode);
+    };
+  }, []);
+
+  if (isEmbeddedApp() || isDirectAppViewport) {
+    return <AppRuntime />;
+  }
+
+  return <ShowcaseLayout />;
 }
