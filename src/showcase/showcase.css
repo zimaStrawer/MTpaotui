@@ -171,10 +171,68 @@
   border: 0;
 }
 
+/* 仅覆盖样机预览：真实手机浏览器不会渲染这组模拟系统元素。 */
+.showcase-system-status-bar {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 30.85% minmax(0, 1fr);
+  align-items: center;
+  height: 54px;
+  padding-top: 21px;
+  color: #000;
+  pointer-events: none;
+}
+
+.showcase-system-time {
+  justify-self: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: -0.43px;
+  font-variant-numeric: tabular-nums;
+}
+
+.showcase-system-island-spacer {
+  grid-column: 2;
+}
+
+.showcase-system-levels {
+  display: inline-flex;
+  grid-column: 3;
+  gap: 7px;
+  align-items: center;
+  justify-self: center;
+}
+
+.showcase-system-levels img {
+  display: block;
+  width: auto;
+  height: 13px;
+  object-fit: contain;
+}
+
+.showcase-system-home-indicator {
+  position: absolute;
+  z-index: 2;
+  bottom: 8px;
+  left: 50%;
+  width: min(135px, 37%);
+  height: 5px;
+  background: #000;
+  border-radius: 13px;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
 .showcase-phone-shell {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 3;
   display: block;
   width: 100%;
   height: 100%;

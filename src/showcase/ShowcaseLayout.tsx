@@ -10,6 +10,9 @@ import faviconUrl from '../../favicon.png';
 import githubIconUrl from '../assets/showcase/github-icon.svg';
 import githubQrUrl from '../assets/showcase/github-repository-qr.png';
 import phoneFrameUrl from '../assets/showcase/iphone-16-pro-black-titanium.png';
+import statusBatteryUrl from '../assets/showcase/status-battery.svg';
+import statusCellularUrl from '../assets/showcase/status-cellular.svg';
+import statusWifiUrl from '../assets/showcase/status-wifi.svg';
 import {
   DEFAULT_VIEWPORT_PRESET_ID,
   PHONE_PRESETS,
@@ -31,6 +34,48 @@ function buildEmbeddedAppUrl() {
   const url = new URL(window.location.href);
   url.searchParams.set('embed', '1');
   return `${url.pathname}${url.search}${url.hash}`;
+}
+
+function formatSystemTime(date: Date) {
+  return new Intl.DateTimeFormat('zh-CN', {
+    hour: 'numeric',
+    hour12: false,
+    minute: '2-digit',
+  }).format(date);
+}
+
+function useSystemTime() {
+  const [systemTime, setSystemTime] = useState(() => formatSystemTime(new Date()));
+
+  useEffect(() => {
+    const updateSystemTime = () => {
+      setSystemTime(formatSystemTime(new Date()));
+    };
+    const timer = window.setInterval(updateSystemTime, 15_000);
+
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, []);
+
+  return systemTime;
+}
+
+function SimulatedSystemChrome({ time }: { time: string }) {
+  return (
+    <>
+      <div aria-hidden="true" className="showcase-system-status-bar">
+        <time className="showcase-system-time">{time}</time>
+        <span className="showcase-system-island-spacer" />
+        <span className="showcase-system-levels">
+          <img alt="" height="13" src={statusCellularUrl} width="20" />
+          <img alt="" height="13" src={statusWifiUrl} width="18" />
+          <img alt="" height="13" src={statusBatteryUrl} width="28" />
+        </span>
+      </div>
+      <div aria-hidden="true" className="showcase-system-home-indicator" />
+    </>
+  );
 }
 
 function useElementSize(elementRef: React.RefObject<HTMLElement | null>) {
@@ -216,6 +261,7 @@ export function ShowcaseLayout() {
   const switchTimerRef = useRef<number | null>(null);
   const deviceSpaceSize = useElementSize(deviceSpaceRef);
   const [embeddedAppUrl] = useState(buildEmbeddedAppUrl);
+  const systemTime = useSystemTime();
 
   const selectedPreset =
     PHONE_PRESETS.find(({ id }) => id === selectedPresetId) ??
@@ -340,6 +386,7 @@ export function ShowcaseLayout() {
                     src={embeddedAppUrl}
                     title={`${selectedPreset.label} 美团跑腿交互原型`}
                   />
+                  <SimulatedSystemChrome time={systemTime} />
                 </div>
                 <img
                   alt=""
