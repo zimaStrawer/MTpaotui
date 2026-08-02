@@ -212,6 +212,7 @@ export function ShowcaseLayout() {
     useState<ViewportPresetId>(DEFAULT_VIEWPORT_PRESET_ID);
   const [isSwitching, setIsSwitching] = useState(false);
   const deviceSpaceRef = useRef<HTMLDivElement>(null);
+  const appFrameRef = useRef<HTMLIFrameElement>(null);
   const switchTimerRef = useRef<number | null>(null);
   const deviceSpaceSize = useElementSize(deviceSpaceRef);
   const [embeddedAppUrl] = useState(buildEmbeddedAppUrl);
@@ -243,6 +244,13 @@ export function ShowcaseLayout() {
     },
     [],
   );
+
+  useEffect(() => {
+    appFrameRef.current?.contentDocument?.documentElement.style.setProperty(
+      '--app-safe-area-top',
+      `${selectedPreset.safeAreaTop}px`,
+    );
+  }, [selectedPreset.safeAreaTop]);
 
   const selectPreset = (presetId: ViewportPresetId) => {
     if (switchTimerRef.current !== null) {
@@ -322,6 +330,13 @@ export function ShowcaseLayout() {
                 <div className="showcase-device-screen" style={screenStyle}>
                   <iframe
                     className="showcase-app-frame"
+                    onLoad={(event) => {
+                      event.currentTarget.contentDocument?.documentElement.style.setProperty(
+                        '--app-safe-area-top',
+                        `${selectedPreset.safeAreaTop}px`,
+                      );
+                    }}
+                    ref={appFrameRef}
                     src={embeddedAppUrl}
                     title={`${selectedPreset.label} 美团跑腿交互原型`}
                   />

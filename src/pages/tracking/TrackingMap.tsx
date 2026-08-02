@@ -49,7 +49,7 @@ function AcceptingBubble() {
 
 function AcceptingSonar() {
   return (
-    <div className="absolute top-[calc(136px+env(safe-area-inset-top))] left-1/2 z-10 size-44 -translate-x-1/2">
+    <div className="absolute top-[calc(136px+var(--app-safe-area-top))] left-1/2 z-10 size-44 -translate-x-1/2">
       <div aria-hidden className="absolute inset-0">
         {SONAR_WAVE_DELAYS.map((animationDelay) => (
           <span
@@ -131,7 +131,7 @@ function MovingCourier({
       className="absolute z-10 duration-[700ms] ease-out transition-[left,top] motion-reduce:transition-none"
       style={{
         left: `${snapshot.leftPercent}%`,
-        top: `calc(${snapshot.topPx}px + env(safe-area-inset-top))`,
+        top: `calc(${snapshot.topPx}px + var(--app-safe-area-top))`,
       }}
     >
       <div className="absolute" style={{ left: -56, top: -53 }}>
@@ -175,9 +175,9 @@ export function TrackingMap({
   return (
     <section
       aria-label="配送地图"
-      className="relative h-[calc(445px+env(safe-area-inset-top))]"
+      className="relative h-[calc(445px+var(--app-safe-area-top))]"
     >
-      <div className="absolute inset-x-0 top-0 h-[calc(767px+env(safe-area-inset-top))] overflow-hidden">
+      <div className="absolute inset-x-0 top-0 h-[calc(767px+var(--app-safe-area-top))] overflow-hidden">
         <img
           src={mapClear}
           alt="细雨天气下的配送地图"
@@ -192,7 +192,7 @@ export function TrackingMap({
       </div>
       <div
         aria-hidden
-        className="tracking-rain pointer-events-none absolute inset-x-0 top-0 h-[calc(445px+env(safe-area-inset-top))] overflow-hidden"
+        className="tracking-rain pointer-events-none absolute inset-x-0 top-0 h-[calc(445px+var(--app-safe-area-top))] overflow-hidden"
       >
         <span className="tracking-rain-layer tracking-rain-layer-far" />
         <span className="tracking-rain-layer tracking-rain-layer-near" />
@@ -206,7 +206,7 @@ export function TrackingMap({
         }}
       />
 
-      <div className="absolute inset-x-0 top-[env(safe-area-inset-top)] z-10">
+      <div className="absolute inset-x-0 top-[var(--app-safe-area-top)] z-10">
         <TrackingNavigation
           bookmarked={bookmarked}
           onBack={onBack}
@@ -216,7 +216,7 @@ export function TrackingMap({
       </div>
 
       {!accepting && (
-        <div className="absolute inset-x-2 top-[calc(57px+env(safe-area-inset-top))] z-10">
+        <div className="absolute inset-x-2 top-[calc(57px+var(--app-safe-area-top))] z-10">
           <ItemProofCard
             pickupCode={pickupCode}
             serviceVariant={serviceVariant}
@@ -228,7 +228,7 @@ export function TrackingMap({
 
       {accepting ? (
         <>
-          <div className="absolute top-[calc(122px+env(safe-area-inset-top))] left-1/2 z-10 -translate-x-1/2">
+          <div className="absolute top-[calc(122px+var(--app-safe-area-top))] left-1/2 z-10 -translate-x-1/2">
             <AcceptingBubble />
           </div>
           <AcceptingSonar />
@@ -244,7 +244,7 @@ export function TrackingMap({
             className="absolute z-10"
             style={{
               left: `${COURIER_SCREEN_POSITION.destination.leftPercent}%`,
-              top: `calc(${COURIER_SCREEN_POSITION.destination.topPx}px + env(safe-area-inset-top))`,
+              top: `calc(${COURIER_SCREEN_POSITION.destination.topPx}px + var(--app-safe-area-top))`,
             }}
           >
             <MapMarker
@@ -255,7 +255,7 @@ export function TrackingMap({
         </>
       )}
 
-      <div className="absolute top-[calc(409px+env(safe-area-inset-top))] left-2 z-10 flex h-7 w-[270px] items-center gap-0.5 rounded-full bg-page-bg py-1 pr-2.5 pl-1.5">
+      <div className="absolute top-[calc(409px+var(--app-safe-area-top))] left-2 z-10 flex h-7 w-[270px] items-center gap-0.5 rounded-full bg-page-bg py-1 pr-2.5 pl-1.5">
         <img src={iconAnnounce} alt="" className="size-5 shrink-0" />
         <p className="text-caption whitespace-nowrap text-text-tertiary">
           细雨连绵, 骑手赶路不易, 会尽全力为您配送

@@ -112,7 +112,7 @@ export function OrderConfirmPage() {
       <div
         aria-hidden={!scrolled}
         inert={!scrolled}
-        className={`fixed inset-x-0 top-0 z-20 mx-auto max-w-md bg-page-bg px-2 pt-[env(safe-area-inset-top)] pb-2 shadow-[0_4px_16px_rgba(28,30,33,0.06)] transition-[transform,opacity] duration-[250ms] ease-out will-change-[transform,opacity] motion-reduce:transition-none ${
+        className={`fixed inset-x-0 top-0 z-20 mx-auto max-w-md bg-page-bg px-2 pt-[var(--app-safe-area-top)] pb-2 shadow-[0_4px_16px_rgba(28,30,33,0.06)] transition-[transform,opacity] duration-[250ms] ease-out will-change-[transform,opacity] motion-reduce:transition-none ${
           scrolled
             ? 'translate-y-0 opacity-100'
             : 'pointer-events-none -translate-y-full opacity-0'

@@ -67,7 +67,7 @@ export function HomePage() {
           serviceMode === 'express' ? 'bg-[#fde1cd]' : 'bg-[#fef775]'
         }`}
       >
-        <div className="relative flex flex-col pt-[env(safe-area-inset-top)]">
+        <div className="relative flex flex-col pt-[var(--app-safe-area-top)]">
           <div className="relative z-10">
             <HomeNavBar />
           </div>

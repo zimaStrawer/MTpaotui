@@ -144,7 +144,7 @@ export function OrderMap({
           />
         </span>
       </button>
-      <header className="absolute inset-x-0 top-[env(safe-area-inset-top)] flex h-11 items-center justify-between px-3">
+      <header className="absolute inset-x-0 top-[var(--app-safe-area-top)] flex h-11 items-center justify-between px-3">
         <button
           type="button"
           aria-label="返回"

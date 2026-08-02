@@ -11,6 +11,8 @@ export interface ViewportPreset {
   detail: string;
   width: number;
   height: number;
+  /** 样机预览中避开顶部硬件区域的设计留白，可按尺寸手动微调。 */
+  safeAreaTop: number;
 }
 
 export interface PhoneFrameMetrics {
@@ -28,6 +30,7 @@ export const PHONE_PRESETS = [
     detail: '360 × 780',
     width: 360,
     height: 780,
+    safeAreaTop: 52,
   },
   {
     id: 'phone-375',
@@ -35,6 +38,7 @@ export const PHONE_PRESETS = [
     detail: '375 × 812',
     width: 375,
     height: 812,
+    safeAreaTop: 55,
   },
   {
     id: 'phone-390',
@@ -42,6 +46,7 @@ export const PHONE_PRESETS = [
     detail: '390 × 844',
     width: 390,
     height: 844,
+    safeAreaTop: 57,
   },
   {
     id: 'phone-402',
@@ -49,6 +54,7 @@ export const PHONE_PRESETS = [
     detail: '402 × 874',
     width: 402,
     height: 874,
+    safeAreaTop: 59,
   },
   {
     id: 'phone-440',
@@ -56,6 +62,7 @@ export const PHONE_PRESETS = [
     detail: '440 × 956',
     width: 440,
     height: 956,
+    safeAreaTop: 65,
   },
 ] as const satisfies readonly [ViewportPreset, ...ViewportPreset[]];
 

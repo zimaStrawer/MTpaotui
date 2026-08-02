@@ -76,7 +76,7 @@ export function CompletedOrderView({
 
   return (
     <div
-      className="mx-auto min-h-dvh max-w-md pt-[env(safe-area-inset-top)]"
+      className="mx-auto min-h-dvh max-w-md pt-[var(--app-safe-area-top)]"
       style={{
         backgroundImage:
           'linear-gradient(to bottom, var(--color-container-bg) 0, var(--color-page-bg) 50dvh)',

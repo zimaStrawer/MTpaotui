@@ -131,7 +131,7 @@ export function ItemInfoPage() {
     classifyVolumeDelivery(volume) === 'car-recommended';
 
   return (
-    <div className="mx-auto flex min-h-dvh max-w-md flex-col pt-[env(safe-area-inset-top)]">
+    <div className="mx-auto flex min-h-dvh max-w-md flex-col pt-[var(--app-safe-area-top)]">
       <NavigationBar title="物品信息" onClose={() => navigate('/')} />
       <main
         className={`flex flex-col gap-2 px-2 pt-3 ${
