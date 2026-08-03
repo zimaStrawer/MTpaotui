@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { RoleBadge } from '../../components/RoleBadge';
 import iconChevron from '../../assets/nav/icon-chevron.svg';
 import iconExpand from '../../assets/tracking/icon-expand.svg';
-import proofDelivery from '../../assets/tracking/proof-delivery-confirmed.jpg';
-import proofPickup from '../../assets/tracking/proof-pickup-confirmed.jpg';
+import proofDelivery from '../../assets/tracking/proof-delivery-confirmed.webp';
+import proofPickup from '../../assets/tracking/proof-pickup-confirmed.webp';
 import type { Address, ItemCategory } from '../../data/models/order';
 import type { Courier } from '../../data/models/tracking';
 import { CourierCard } from './CourierCard';
@@ -32,6 +32,8 @@ function SignedThumbnail({
       <img
         src={src}
         alt={role === 'pickup' ? '取件物品凭证' : '收件物品凭证'}
+        loading="lazy"
+        decoding="async"
         className="size-full object-cover object-center"
       />
       <span className="absolute top-0 left-0">

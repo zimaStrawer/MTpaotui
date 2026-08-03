@@ -1,6 +1,6 @@
-import iconCake from '../../assets/tracking/icon-courier-cake.png';
-import iconDocument from '../../assets/tracking/icon-courier-document.png';
-import iconFlower from '../../assets/tracking/icon-courier-flower.png';
+import iconCake from '../../assets/tracking/icon-courier-cake.webp';
+import iconDocument from '../../assets/tracking/icon-courier-document.webp';
+import iconFlower from '../../assets/tracking/icon-courier-flower.webp';
 import {
   resolveCourierSpecialtyLabel,
   type CourierSpecialtyLabel,

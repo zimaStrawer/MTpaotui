@@ -1,4 +1,4 @@
-import mapPickup from '../../assets/address/map-pickup.jpg';
+import mapPickup from '../../assets/address/map-pickup.webp';
 import iconBack from '../../assets/nav/icon-back.svg';
 import iconChevron from '../../assets/nav/icon-chevron.svg';
 import iconSwapMap from '../../assets/order/icon-swap-map.svg';
@@ -88,6 +88,9 @@ export function OrderMap({
       <img
         src={mapPickup}
         alt=""
+        width={750}
+        height={1669}
+        decoding="async"
         className="size-full object-cover"
         style={{ objectPosition: 'center 24%' }}
       />

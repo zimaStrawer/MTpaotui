@@ -1,7 +1,7 @@
-import illustBoxRef from '../../assets/item-info/illust-box-ref.png';
-import illustCourierDefault from '../../assets/item-info/illust-courier-default.png';
-import illustCourierLarge from '../../assets/item-info/illust-courier-large.png';
-import illustCourierOversize from '../../assets/item-info/illust-courier.png';
+import illustBoxRef from '../../assets/item-info/illust-box-ref.webp';
+import illustCourierDefault from '../../assets/item-info/illust-courier-default.webp';
+import illustCourierLarge from '../../assets/item-info/illust-courier-large.webp';
+import illustCourierOversize from '../../assets/item-info/illust-courier.webp';
 import type {
   Volume,
   VolumeDeliveryStatus,

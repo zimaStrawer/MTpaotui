@@ -1,10 +1,10 @@
 import expressGlow from '../../assets/home/hero-express-glow.svg';
 import expressLightning from '../../assets/home/hero-express-lightning.svg';
-import expressMascot from '../../assets/home/hero-express-mascot.png';
+import expressMascot from '../../assets/home/hero-express-mascot.webp';
 import expressSlogan from '../../assets/home/hero-express-slogan.svg';
 import heroGlow from '../../assets/home/hero-art-glow.svg';
 import heroLightning from '../../assets/home/hero-art-lightning.svg';
-import heroMascot from '../../assets/home/hero-art-mascot.png';
+import heroMascot from '../../assets/home/hero-art-mascot.webp';
 import heroSlogan from '../../assets/home/hero-slogan.svg';
 import type { ServiceMode } from '../../data/models/order';
 
@@ -40,6 +40,10 @@ export function HeroPromo({ mode }: HeroPromoProps) {
             <img
               src={expressMascot}
               alt=""
+              width={420}
+              height={280}
+              fetchPriority="high"
+              decoding="async"
               className="absolute top-[3.3px] left-[-9.35px] h-[134.2px] w-[201.1px] max-w-none"
             />
           </span>
@@ -58,6 +62,10 @@ export function HeroPromo({ mode }: HeroPromoProps) {
             <img
               src={heroMascot}
               alt=""
+              width={600}
+              height={360}
+              fetchPriority="high"
+              decoding="async"
               className="absolute top-[-0.1px] left-[-114.47px] h-[177.19px] w-[294.48px] max-w-none"
             />
           </span>

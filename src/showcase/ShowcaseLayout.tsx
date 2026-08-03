@@ -9,7 +9,7 @@ import {
 import faviconUrl from '../../favicon.png';
 import githubIconUrl from '../assets/showcase/github-icon.svg';
 import githubQrUrl from '../assets/showcase/github-repository-qr.png';
-import phoneFrameUrl from '../assets/showcase/iphone-16-pro-black-titanium.png';
+import phoneFrameUrl from '../assets/showcase/iphone-16-pro-black-titanium.webp';
 import statusBatteryUrl from '../assets/showcase/status-battery.svg';
 import statusCellularUrl from '../assets/showcase/status-cellular.svg';
 import statusWifiUrl from '../assets/showcase/status-wifi.svg';
@@ -392,9 +392,11 @@ export function ShowcaseLayout() {
                   alt=""
                   aria-hidden="true"
                   className="showcase-phone-shell"
-                  height="5154"
+                  decoding="async"
+                  height="2454"
+                  loading="lazy"
                   src={phoneFrameUrl}
-                  width="2521"
+                  width="1200"
                 />
               </div>
             </div>

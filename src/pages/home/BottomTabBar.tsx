@@ -121,7 +121,7 @@ function FullscreenTab({ isFullscreen }: FullscreenTabProps) {
     );
   };
 
-  const label = isFullscreen ? '退出全屏' : '全屏';
+  const label = isFullscreen ? '还原' : '全屏';
 
   return (
     <button

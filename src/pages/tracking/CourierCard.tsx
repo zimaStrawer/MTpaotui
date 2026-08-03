@@ -1,4 +1,4 @@
-import courierAvatar from '../../assets/tracking/courier-avatar.jpg';
+import courierAvatar from '../../assets/tracking/courier-avatar.webp';
 import iconClose from '../../assets/nav/icon-close-12.svg';
 import iconButtonRing from '../../assets/tracking/icon-button-ring.svg';
 import iconMessage from '../../assets/tracking/icon-message.svg';
@@ -36,6 +36,8 @@ export function CourierCard({
             <img
               src={courierAvatar}
               alt={`${courier.name}头像`}
+              loading="lazy"
+              decoding="async"
               className="absolute max-w-none"
               style={{
                 width: '699.15%',

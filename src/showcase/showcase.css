@@ -266,8 +266,8 @@
 .showcase-device-indicator {
   position: absolute;
   z-index: 0;
-  top: 6px;
-  bottom: 6px;
+  top: 4px;
+  bottom: 4px;
   pointer-events: none;
   background: var(--showcase-yellow);
   border-radius: 999px;

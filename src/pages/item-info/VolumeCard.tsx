@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import iconCheckGreen from '../../assets/item-info/icon-check-green.svg';
 import iconRefresh from '../../assets/item-info/icon-refresh.svg';
-import photoDeliveryBox from '../../assets/item-info/photo-delivery-box.png';
+import photoDeliveryBox from '../../assets/item-info/photo-delivery-box.webp';
 import {
   classifyVolumeDelivery,
   DEFAULT_DELIVERY_BOX_VOLUME,
@@ -102,6 +102,8 @@ export function VolumeCard({
               <img
                 src={photoDeliveryBox}
                 alt="骑手与配送箱"
+                loading="lazy"
+                decoding="async"
                 className="h-[126px] w-[122px] max-w-none"
               />
             </div>

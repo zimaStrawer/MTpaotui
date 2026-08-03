@@ -102,7 +102,7 @@ export function TrackingPage() {
     onBack: () => navigate(-1),
     onBookmark: () => setBookmarked((value) => !value),
     onCall: () => {
-      window.location.href = 'tel:10109777';
+      window.location.href = 'tel:18955506588';
     },
     onClaim: () => showNotice('理赔服务已为您打开'),
     onEdit: () => navigate('/order-confirm'),

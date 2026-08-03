@@ -1,8 +1,8 @@
 import iconChevron from '../../assets/nav/icon-chevron-16.svg';
-import mapDelivery from '../../assets/address/map-delivery.jpg';
+import mapDelivery from '../../assets/address/map-delivery.webp';
 import mapMarkerDot from '../../assets/address/map-marker-dot.svg';
 import mapMarkerPointer from '../../assets/address/map-marker-pointer.svg';
-import mapPickup from '../../assets/address/map-pickup.jpg';
+import mapPickup from '../../assets/address/map-pickup.webp';
 import { RoleBadge } from '../../components/RoleBadge';
 import type { AddressRole } from '../../data/models/order';
 
@@ -21,6 +21,9 @@ export function MapPreview({ role, poi, premium }: MapPreviewProps) {
       <img
         src={isPickup ? mapPickup : mapDelivery}
         alt=""
+        width={750}
+        height={1669}
+        decoding="async"
         className="size-full object-cover"
         style={{ objectPosition: isPickup ? 'center 22%' : 'center 42%' }}
       />

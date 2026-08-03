@@ -1,4 +1,4 @@
-import iconBizHelppick from '../../assets/home/icon-biz-helppick.png';
+import iconBizHelppick from '../../assets/home/icon-biz-helppick.webp';
 import type { BusinessType } from '../../data/models/order';
 
 interface BusinessTabsProps {

@@ -1,6 +1,6 @@
 import iconChevron from '../../assets/nav/icon-chevron-16.svg';
 import iconClose from '../../assets/nav/icon-close-12.svg';
-import photoBouquet from '../../assets/item-info/photo-bouquet.jpg';
+import photoBouquet from '../../assets/item-info/photo-bouquet.webp';
 import {
   isFragileCategory,
   type InsuranceTier,
@@ -91,6 +91,8 @@ export function TypeSummaryCard({
               <img
                 src={photoBouquet}
                 alt="物品照片"
+                loading="lazy"
+                decoding="async"
                 className="size-12 rounded-8 object-cover"
               />
               <span className="absolute -top-1.5 -right-1.5 flex size-3.5 items-center justify-center rounded-full bg-mask-bg">

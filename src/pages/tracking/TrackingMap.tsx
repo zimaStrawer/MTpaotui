@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
 import { MapMarker } from '../../components/MapMarker';
-import acceptingCourierMascot from '../../assets/tracking/accepting-courier-mascot.png';
+import acceptingCourierMascot from '../../assets/tracking/accepting-courier-mascot.webp';
 import iconAnnounce from '../../assets/tracking/icon-announce.svg';
-import courierScooter from '../../assets/tracking/courier-scooter.png';
+import courierScooter from '../../assets/tracking/courier-scooter.webp';
 import mapClear from '../../assets/tracking/map-clear.webp';
 import {
   COURIER_ROUTE,
@@ -84,6 +84,7 @@ function CourierSprite({ arrived }: { arrived: boolean }) {
       <img
         src={courierScooter}
         alt=""
+        decoding="async"
         draggable={false}
         className="pointer-events-none absolute max-w-none object-cover select-none"
         style={{
@@ -181,6 +182,9 @@ export function TrackingMap({
         <img
           src={mapClear}
           alt="细雨天气下的配送地图"
+          width={830}
+          height={1107}
+          decoding="async"
           draggable={false}
           className="absolute top-0 left-0 h-full w-[calc(100%+36px)] max-w-none object-cover object-top transition-transform duration-500 ease-out motion-reduce:transition-none"
           style={{

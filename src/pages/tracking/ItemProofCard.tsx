@@ -4,10 +4,10 @@ import logoExpress from '../../assets/order/logo-express.svg';
 import iconExpand from '../../assets/tracking/icon-expand.svg';
 import iconHelp from '../../assets/tracking/icon-help.svg';
 import logoInsurance from '../../assets/tracking/logo-insurance.svg';
-import proofDelivery from '../../assets/tracking/proof-delivery.png';
-import proofDeliveryConfirmed from '../../assets/tracking/proof-delivery-confirmed.jpg';
-import proofPickup from '../../assets/tracking/proof-pickup.png';
-import proofPickupConfirmed from '../../assets/tracking/proof-pickup-confirmed.jpg';
+import proofDelivery from '../../assets/tracking/proof-delivery.webp';
+import proofDeliveryConfirmed from '../../assets/tracking/proof-delivery-confirmed.webp';
+import proofPickup from '../../assets/tracking/proof-pickup.webp';
+import proofPickupConfirmed from '../../assets/tracking/proof-pickup-confirmed.webp';
 import {
   TRACKING_STAGE_FLOW,
   type TrackingStage,
@@ -86,6 +86,8 @@ function ProofThumbnail({
       <img
         src={src}
         alt={`${roleLabel}物品凭证`}
+        loading="lazy"
+        decoding="async"
         className={`absolute inset-0 block size-full rounded-6 object-cover ${
           confirmed ? 'object-center' : 'object-bottom'
         }`}

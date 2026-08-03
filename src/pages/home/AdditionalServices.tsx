@@ -1,4 +1,4 @@
-import serviceIcons from '../../assets/home/extra-service-icons.png';
+import serviceIcons from '../../assets/home/extra-service-icons.webp';
 
 interface AdditionalServicesProps {
   onUnavailableSelect: () => void;
@@ -29,6 +29,8 @@ export function AdditionalServices({
             <img
               src={serviceIcons}
               alt=""
+              loading="lazy"
+              decoding="async"
               className="pointer-events-none absolute top-[-1.88px] h-[34.75px] w-[309.82px] max-w-none"
               style={{ left: iconLeft }}
             />
