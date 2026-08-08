@@ -412,22 +412,15 @@ export function ShowcaseLayout() {
         <aside className="showcase-repository">
 
           <div className="showcase-qr-card">
-            <a
-              className="showcase-qr-link"
-              href={SITE_URL}
-              rel="noreferrer"
-              target="_blank"
-              aria-label={`扫描或点击打开 ${SITE_URL}`}
-            >
-              <QRCodeSVG
-                value={SITE_URL}
-                size={154}
-                level="M"
-                marginSize={0}
-                bgColor="#ffffff"
-                fgColor="#1b1d21"
-              />
-            </a>
+            <QRCodeSVG
+              value={SITE_URL}
+              size={154}
+              level="M"
+              marginSize={0}
+              bgColor="#ffffff"
+              fgColor="#1b1d21"
+              title={`扫码打开 ${SITE_URL}`}
+            />
           </div>
           <h2>手机端体验</h2>
           <p>扫描二维码，在手机端全屏打开，获得更完整、沉浸的操作体验。</p>

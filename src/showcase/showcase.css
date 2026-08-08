@@ -489,11 +489,6 @@
     place-items: center;
   }
 
-  .showcase-qr-link {
-    display: block;
-    line-height: 0;
-  }
-
   .showcase-qr-card svg {
     display: block;
     width: 154px;
