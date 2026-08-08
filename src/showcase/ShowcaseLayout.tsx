@@ -9,6 +9,7 @@ import {
 import faviconUrl from '../../favicon.png';
 import githubIconUrl from '../assets/showcase/github-icon.svg';
 import { SITE_URL } from '../config/site';
+import { QRCodeSVG } from 'qrcode.react';
 import phoneFrameUrl from '../assets/showcase/iphone-16-pro-black-titanium.webp';
 import statusBatteryUrl from '../assets/showcase/status-battery.svg';
 import statusCellularUrl from '../assets/showcase/status-cellular.svg';
@@ -412,16 +413,24 @@ export function ShowcaseLayout() {
 
           <div className="showcase-qr-card">
             <a
-              className="showcase-site-link"
+              className="showcase-qr-link"
               href={SITE_URL}
               rel="noreferrer"
               target="_blank"
+              aria-label={`扫描或点击打开 ${SITE_URL}`}
             >
-              {SITE_URL}
+              <QRCodeSVG
+                value={SITE_URL}
+                size={154}
+                level="M"
+                marginSize={0}
+                bgColor="#ffffff"
+                fgColor="#1b1d21"
+              />
             </a>
           </div>
           <h2>手机端体验</h2>
-          <p>点击下方链接，在手机端全屏打开，获得更完整、沉浸的操作体验。</p>
+          <p>扫描二维码，在手机端全屏打开，获得更完整、沉浸的操作体验。</p>
           <a
             className="showcase-repository-link"
             href={GITHUB_REPOSITORY_URL}
