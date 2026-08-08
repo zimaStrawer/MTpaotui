@@ -86,7 +86,8 @@ function ProofThumbnail({
       <img
         src={src}
         alt={`${roleLabel}物品凭证`}
-        loading="lazy"
+        width={200}
+        height={444}
         decoding="async"
         className={`absolute inset-0 block size-full rounded-6 object-cover ${
           confirmed ? 'object-center' : 'object-bottom'

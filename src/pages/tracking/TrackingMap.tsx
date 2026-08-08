@@ -178,10 +178,10 @@ export function TrackingMap({
       aria-label="配送地图"
       className="relative h-[calc(445px+var(--app-safe-area-top))]"
     >
-      <div className="absolute inset-x-0 top-0 h-[calc(767px+var(--app-safe-area-top))] overflow-hidden">
+      <div className="absolute inset-x-0 top-0 h-[calc(767px+var(--app-safe-area-top))] overflow-hidden bg-page-bg">
         <img
           src={mapClear}
-          alt="细雨天气下的配送地图"
+          alt=""
           width={830}
           height={1107}
           decoding="async"

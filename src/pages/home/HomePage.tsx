@@ -9,6 +9,7 @@ import {
   resolveCapacityInfoState,
   type AddressRole,
 } from '../../data/models/order';
+import { preloadRoute } from '../../lib/asset-preloader';
 import { useOrderDraftStore } from '../../store/order-draft-store';
 import { AdditionalServices } from './AdditionalServices';
 import { BottomTabBar } from './BottomTabBar';
@@ -40,6 +41,10 @@ export function HomePage() {
   });
   const showUnavailableNotice = () =>
     setUnavailableNoticeId((noticeId) => (noticeId ?? 0) + 1);
+
+  useEffect(() => {
+    void preloadRoute('address');
+  }, []);
 
   useEffect(() => {
     if (unavailableNoticeId === null) return;

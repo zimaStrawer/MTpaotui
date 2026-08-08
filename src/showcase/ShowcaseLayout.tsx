@@ -8,7 +8,7 @@ import {
 
 import faviconUrl from '../../favicon.png';
 import githubIconUrl from '../assets/showcase/github-icon.svg';
-import githubQrUrl from '../assets/showcase/github-repository-qr.png';
+import { SITE_URL } from '../config/site';
 import phoneFrameUrl from '../assets/showcase/iphone-16-pro-black-titanium.webp';
 import statusBatteryUrl from '../assets/showcase/status-battery.svg';
 import statusCellularUrl from '../assets/showcase/status-cellular.svg';
@@ -411,15 +411,17 @@ export function ShowcaseLayout() {
         <aside className="showcase-repository">
 
           <div className="showcase-qr-card">
-            <img
-              alt="扫描二维码打开项目 GitHub 仓库"
-              height="144"
-              src={githubQrUrl}
-              width="144"
-            />
+            <a
+              className="showcase-site-link"
+              href={SITE_URL}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {SITE_URL}
+            </a>
           </div>
           <h2>手机端体验</h2>
-          <p>扫描二维码，在手机端全屏打开，获得更完整、沉浸的操作体验。</p>
+          <p>点击下方链接，在手机端全屏打开，获得更完整、沉浸的操作体验。</p>
           <a
             className="showcase-repository-link"
             href={GITHUB_REPOSITORY_URL}

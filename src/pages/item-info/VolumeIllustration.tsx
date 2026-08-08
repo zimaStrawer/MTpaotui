@@ -56,7 +56,11 @@ export function VolumeIllustration({ state, volume }: VolumeIllustrationProps) {
   const backTop = frontTop - box.depth;
 
   return (
-    <div className="relative h-[225px] w-full overflow-hidden rounded-8 bg-page-bg">
+    <div
+      role="img"
+      aria-label="骑手与配送箱尺寸示意"
+      className="relative h-[225px] w-full overflow-hidden rounded-8 bg-page-bg"
+    >
       <p className="absolute top-1/2 left-3 -translate-y-1/2 text-caption-xs text-text-secondary [writing-mode:vertical-lr]">
         身高175厘米
       </p>
@@ -65,17 +69,61 @@ export function VolumeIllustration({ state, volume }: VolumeIllustrationProps) {
           {courier.message}
         </span>
       </div>
+
+      {Object.entries(COURIER_STATE).map(([candidateState, candidate]) => (
+        <img
+          key={candidateState}
+          src={candidate.image}
+          alt=""
+          width={85}
+          height={147}
+          decoding="async"
+          draggable={false}
+          className={`pointer-events-none absolute object-contain transition-opacity duration-200 ease-out select-none motion-reduce:transition-none ${
+            candidateState === state ? 'opacity-100' : 'opacity-0'
+          }`}
+          style={{
+            left: '12.538%',
+            top: '26.667%',
+            width: '25.994%',
+            height: '65.333%',
+          }}
+        />
+      ))}
+
+      <span
+        aria-hidden
+        className="pointer-events-none absolute overflow-hidden"
+        style={{
+          left: '46.483%',
+          top: '77.778%',
+          width: '12.844%',
+          height: '14.667%',
+        }}
+      >
+        <img
+          src={illustBoxRef}
+          alt=""
+          width={56.37}
+          height={42.05}
+          decoding="async"
+          draggable={false}
+          className="absolute max-w-none select-none"
+          style={{
+            left: '-15.786%',
+            top: '-13.394%',
+            width: '134.214%',
+            height: '127.424%',
+          }}
+        />
+      </span>
+
       <svg
         viewBox="0 0 327 225"
-        role="img"
-        aria-label="骑手与配送箱尺寸示意"
+        aria-hidden="true"
+        focusable="false"
         className="absolute inset-0 size-full"
       >
-        <defs>
-          <clipPath id="delivery-box-clip">
-            <rect x="152" y="175" width="42" height="33" />
-          </clipPath>
-        </defs>
         <g
           fill="none"
           stroke="var(--color-text-tertiary)"
@@ -106,26 +154,6 @@ export function VolumeIllustration({ state, volume }: VolumeIllustrationProps) {
           <text x="216" y="144" transform="rotate(-45 216 144)">
             宽
           </text>
-        </g>
-
-        <image
-          href={courier.image}
-          x="41"
-          y="60"
-          width="85"
-          height="147"
-          preserveAspectRatio="xMidYMid meet"
-        />
-
-        <g clipPath="url(#delivery-box-clip)">
-          <image
-            href={illustBoxRef}
-            x="145.37"
-            y="170.58"
-            width="56.37"
-            height="42.05"
-            preserveAspectRatio="none"
-          />
         </g>
 
         <g

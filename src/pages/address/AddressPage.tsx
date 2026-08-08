@@ -13,6 +13,7 @@ import {
   type AddressBookEntry,
 } from '../../data/mock/fixtures';
 import type { AddressRole } from '../../data/models/order';
+import { preloadRoute } from '../../lib/asset-preloader';
 import { useOrderDraftStore } from '../../store/order-draft-store';
 import { AddressBookCard } from './AddressBookCard';
 import { AddressFormCard, type AddressFormValue } from './AddressFormCard';
@@ -58,6 +59,10 @@ export function AddressPage() {
   const [unavailableNoticeId, setUnavailableNoticeId] = useState<number | null>(
     null,
   );
+
+  useEffect(() => {
+    void preloadRoute('itemInfo');
+  }, []);
 
   useEffect(() => {
     if (unavailableNoticeId === null) return;

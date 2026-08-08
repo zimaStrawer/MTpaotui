@@ -11,6 +11,10 @@ import {
   type ItemCategory,
   type Volume,
 } from '../../data/models/order';
+import {
+  preloadAssetGroup,
+  preloadRoute,
+} from '../../lib/asset-preloader';
 import { useOrderDraftStore } from '../../store/order-draft-store';
 import { BrandCard } from './BrandCard';
 import { CarDeliveryRecommendation } from './CarDeliveryRecommendation';
@@ -62,6 +66,12 @@ export function ItemInfoPage() {
     useState(initialCarRecommendation && vehicle !== 'car');
   const [volumeExpanded, setVolumeExpanded] = useState(false);
   const volumeCardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    void preloadAssetGroup('itemDetail');
+    void preloadAssetGroup('orderConfirm');
+    void preloadRoute('orderConfirm');
+  }, []);
 
   useEffect(() => {
     if (!volumeExpanded) return;

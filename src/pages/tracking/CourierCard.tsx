@@ -36,7 +36,8 @@ export function CourierCard({
             <img
               src={courierAvatar}
               alt={`${courier.name}头像`}
-              loading="lazy"
+              width={560}
+              height={1246}
               decoding="async"
               className="absolute max-w-none"
               style={{

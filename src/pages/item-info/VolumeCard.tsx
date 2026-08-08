@@ -102,7 +102,8 @@ export function VolumeCard({
               <img
                 src={photoDeliveryBox}
                 alt="骑手与配送箱"
-                loading="lazy"
+                width={122}
+                height={126}
                 decoding="async"
                 className="h-[126px] w-[122px] max-w-none"
               />

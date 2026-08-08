@@ -11,6 +11,10 @@ import {
   type InsuranceTier,
 } from '../../data/models/order';
 import { orderRepository } from '../../data/repositories';
+import {
+  preloadAssetGroup,
+  preloadRoute,
+} from '../../lib/asset-preloader';
 import { useOrderDraftStore } from '../../store/order-draft-store';
 import { AnnouncementBar } from './AnnouncementBar';
 import { CheckoutBar } from './CheckoutBar';
@@ -58,6 +62,11 @@ export function OrderConfirmPage() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    void preloadAssetGroup('trackingCritical');
+    void preloadRoute('tracking');
+  }, []);
+
   const ready = isOrderDraftReady({ pickup, delivery, item });
   useEffect(() => {
     if (!ready) navigate('/', { replace: true });
@@ -93,15 +102,19 @@ export function OrderConfirmPage() {
   const handleSubmit = async () => {
     if (submitting) return;
     setSubmitting(true);
-    const receipt = await orderRepository.submitOrder({
-      business,
-      serviceMode,
-      pickup,
-      delivery,
-      item,
-      vehicle: selected === 'car' ? 'car' : 'ebike',
-      feeYuan: quote.feeYuan,
-    });
+    const [receipt] = await Promise.all([
+      orderRepository.submitOrder({
+        business,
+        serviceMode,
+        pickup,
+        delivery,
+        item,
+        vehicle: selected === 'car' ? 'car' : 'ebike',
+        feeYuan: quote.feeYuan,
+      }),
+      preloadAssetGroup('trackingCritical'),
+      preloadRoute('tracking'),
+    ]);
     setReceipt(receipt);
     navigate('/tracking');
   };

@@ -108,11 +108,24 @@ export function ServiceCard({
               className="relative z-10 mt-0.5 flex h-[42px] flex-1 items-center justify-center"
             >
               {tab === 'express' ? (
-                <img
-                  src={active ? logoExpressActive : logoExpressGray}
-                  alt="1对1急送"
-                  className="h-[22px] w-[75px] shrink-0 scale-[1.143]"
-                />
+                <span
+                  role="img"
+                  aria-label="1对1急送"
+                  className="relative h-[22px] w-[75px] shrink-0 scale-[1.143]"
+                >
+                  <img
+                    src={logoExpressGray}
+                    alt=""
+                    className="absolute inset-0 size-full"
+                  />
+                  <img
+                    src={logoExpressActive}
+                    alt=""
+                    className={`absolute inset-0 size-full transition-opacity duration-200 ease-out motion-reduce:transition-none ${
+                      active ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  />
+                </span>
               ) : (
                 <span
                   className={`text-tab transition-colors duration-300 motion-reduce:transition-none ${
