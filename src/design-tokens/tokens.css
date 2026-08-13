@@ -43,12 +43,15 @@
   --radius-16: 16px;
   --radius-20: 20px;
 
-  /* ── 字体族(替代字体策略见 design1.md)── */
-  --font-app: 'PingFang SC', 'Noto Sans SC', 'Helvetica Neue', system-ui,
-    sans-serif;
-  --font-number: 'SF Pro', 'SF Pro Text', -apple-system, system-ui, sans-serif;
-  --font-brand: 'Meituan Type', 'PingFang SC', system-ui, sans-serif;
-  --font-decorative: 'Meituan Type', 'PingFang SC', system-ui, sans-serif;
+  /* ── 字体族(自托管 Noto Sans SC 保证非 Apple 设备也能命中设计字体)── */
+  --font-app: 'PingFang SC', 'Noto Sans SC Variable', 'Noto Sans SC',
+    'Helvetica Neue', system-ui, sans-serif;
+  --font-number: 'SF Pro', 'SF Pro Text', 'Noto Sans SC Variable',
+    -apple-system, system-ui, sans-serif;
+  --font-brand: 'Meituan Type', 'PingFang SC', 'Noto Sans SC Variable',
+    system-ui, sans-serif;
+  --font-decorative: 'Meituan Type', 'PingFang SC',
+    'Noto Sans SC Variable', system-ui, sans-serif;
 
   /* ── 字号(层级靠字重递进,不靠字号堆砌)── */
   --text-headline: 22px;
