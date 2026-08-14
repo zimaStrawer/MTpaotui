@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-import { NavigationBar } from '../../components/NavigationBar';
+import { NavigationPage } from '../../components/NavigationBar';
 import {
   classifyVolumeDelivery,
   DEFAULT_DELIVERY_BOX_VOLUME,
@@ -13,7 +13,7 @@ import {
 } from '../../data/models/order';
 import {
   preloadAssetGroup,
-  preloadRoute,
+  preloadRouteExperience,
 } from '../../lib/asset-preloader';
 import { useOrderDraftStore } from '../../store/order-draft-store';
 import { BrandCard } from './BrandCard';
@@ -69,8 +69,7 @@ export function ItemInfoPage() {
 
   useEffect(() => {
     void preloadAssetGroup('itemDetail');
-    void preloadAssetGroup('orderConfirm');
-    void preloadRoute('orderConfirm');
+    void preloadRouteExperience('orderConfirm');
   }, []);
 
   useEffect(() => {
@@ -115,6 +114,7 @@ export function ItemInfoPage() {
 
   const handleConfirm = () => {
     if (!category) return;
+    const trimmedNote = note.trim();
     const deliveryPreference = resolveItemDeliveryPreference({
       serviceMode,
       vehicle,
@@ -126,7 +126,7 @@ export function ItemInfoPage() {
       weightKg,
       volume,
       insurance,
-      note: note.trim() === '' ? undefined : note.trim(),
+      note: trimmedNote === '' ? undefined : trimmedNote,
     });
     if (deliveryPreference.serviceMode !== serviceMode) {
       setServiceMode(deliveryPreference.serviceMode);
@@ -141,8 +141,7 @@ export function ItemInfoPage() {
     classifyVolumeDelivery(volume) === 'car-recommended';
 
   return (
-    <div className="mx-auto flex min-h-dvh max-w-md flex-col pt-[var(--app-safe-area-top)]">
-      <NavigationBar title="物品信息" onClose={() => navigate('/')} />
+    <NavigationPage title="物品信息" onClose={() => navigate('/')}>
       <main
         className={`flex flex-col gap-2 px-2 pt-3 ${
           showCarRecommendation ? 'pb-40' : 'pb-28'
@@ -187,6 +186,6 @@ export function ItemInfoPage() {
           ) : undefined
         }
       />
-    </div>
+    </NavigationPage>
   );
 }

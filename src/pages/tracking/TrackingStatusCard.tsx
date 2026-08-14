@@ -1,8 +1,6 @@
-import type { TrackingStage } from '../../data/models/tracking';
+import type { ActiveTrackingStage } from '../../data/models/tracking';
 import { OrderActions } from './OrderActions';
 import { TrackingProgress } from './TrackingProgress';
-
-type ActiveTrackingStage = Exclude<TrackingStage, 'completed'>;
 
 const STAGE_COPY: Record<
   ActiveTrackingStage,

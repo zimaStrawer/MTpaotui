@@ -91,6 +91,43 @@
     will-change: transform;
   }
 
+  @keyframes vertical-notice-carousel-roll {
+    0%,
+    23.75% {
+      transform: translateY(0);
+      animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    25%,
+    48.75% {
+      transform: translateY(-20px);
+      animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    50%,
+    73.75% {
+      transform: translateY(-40px);
+      animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    75%,
+    98.75% {
+      transform: translateY(-60px);
+      animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    100% {
+      transform: translateY(-80px);
+    }
+  }
+
+  .vertical-notice-carousel-track {
+    animation-name: vertical-notice-carousel-roll;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+  }
+
   @keyframes tracking-sonar-pulse {
     0% {
       opacity: 0;
@@ -240,7 +277,8 @@
 
     .home-address-swap-from-bottom,
     .home-address-swap-from-top,
-    .home-hero-slogan-slide-left {
+    .home-hero-slogan-slide-left,
+    .vertical-notice-carousel-track {
       animation: none;
     }
 

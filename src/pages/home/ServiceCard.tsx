@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import iconFlash from '../../assets/home/icon-flash.svg';
-import iconPrivacy from '../../assets/home/icon-privacy.svg';
 import iconSwap from '../../assets/home/icon-swap.svg';
 import logoExpressGray from '../../assets/home/logo-express-gray.svg';
 import logoExpressActive from '../../assets/home/logo-express-active.svg';
@@ -19,6 +18,7 @@ import {
 import { RoleBadge } from '../../components/RoleBadge';
 import { AddressField } from './AddressField';
 import { PriceBar } from './PriceBar';
+import { SafetyNoticeCarousel } from './SafetyNoticeCarousel';
 import { VehicleCapsule } from './VehicleCapsule';
 
 interface ServiceCardProps {
@@ -220,10 +220,7 @@ export function ServiceCard({
           <PriceBar mode={mode} onSubmit={onSubmit} />
         </div>
 
-        <p className="mt-3 flex items-center justify-center gap-1 text-caption-sm leading-none text-text-tertiary">
-          <img src={iconPrivacy} alt="" className="size-4" />
-          隐藏真实手机号码，保护您的隐私
-        </p>
+        <SafetyNoticeCarousel className="mt-3" />
       </div>
     </section>
   );

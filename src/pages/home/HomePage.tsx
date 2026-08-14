@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
+import { AppFixedLayer } from '../../components/AppShell';
 import {
   Toast,
   UNAVAILABLE_FEATURE_MESSAGE,
@@ -9,7 +10,8 @@ import {
   resolveCapacityInfoState,
   type AddressRole,
 } from '../../data/models/order';
-import { preloadRoute } from '../../lib/asset-preloader';
+import { useTransientNotice } from '../../hooks/useTransientNotice';
+import { preloadRouteExperience } from '../../lib/asset-preloader';
 import { useOrderDraftStore } from '../../store/order-draft-store';
 import { AdditionalServices } from './AdditionalServices';
 import { BottomTabBar } from './BottomTabBar';
@@ -25,9 +27,7 @@ import { ServiceCard } from './ServiceCard';
  */
 export function HomePage() {
   const navigate = useNavigate();
-  const [unavailableNoticeId, setUnavailableNoticeId] = useState<number | null>(
-    null,
-  );
+  const [notice, showNotice] = useTransientNotice();
   const serviceMode = useOrderDraftStore((state) => state.serviceMode);
   const setServiceMode = useOrderDraftStore((state) => state.setServiceMode);
   const vehicle = useOrderDraftStore((state) => state.vehicle);
@@ -40,17 +40,11 @@ export function HomePage() {
     pickup,
   });
   const showUnavailableNotice = () =>
-    setUnavailableNoticeId((noticeId) => (noticeId ?? 0) + 1);
+    showNotice(UNAVAILABLE_FEATURE_MESSAGE);
 
   useEffect(() => {
-    void preloadRoute('address');
+    void preloadRouteExperience('address');
   }, []);
-
-  useEffect(() => {
-    if (unavailableNoticeId === null) return;
-    const timer = window.setTimeout(() => setUnavailableNoticeId(null), 3_000);
-    return () => window.clearTimeout(timer);
-  }, [unavailableNoticeId]);
 
   const handleEditAddress = (role: AddressRole) => navigate(`/address/${role}`);
 
@@ -66,7 +60,7 @@ export function HomePage() {
   };
 
   return (
-    <div className="relative mx-auto min-h-dvh max-w-md overflow-x-hidden bg-page-bg pb-28">
+    <div className="bg-page-bg pb-28">
       <section
         className={`relative overflow-hidden rounded-b-[20px] transition-colors duration-300 motion-reduce:transition-none ${
           serviceMode === 'express' ? 'bg-[#fde1cd]' : 'bg-[#fef775]'
@@ -100,13 +94,13 @@ export function HomePage() {
         <AdditionalServices onUnavailableSelect={showUnavailableNotice} />
         <HomeBrandMark />
       </main>
-      <div className="fixed inset-x-0 bottom-0 z-10 mx-auto max-w-md">
+      <AppFixedLayer className="bottom-0 z-10">
         <BottomTabBar onUnavailableSelect={showUnavailableNotice} />
-      </div>
-      {unavailableNoticeId !== null && (
+      </AppFixedLayer>
+      {notice !== null && (
         <Toast
-          key={unavailableNoticeId}
-          message={UNAVAILABLE_FEATURE_MESSAGE}
+          key={notice.id}
+          message={notice.message}
           className="bottom-[calc(88px+env(safe-area-inset-bottom))]"
         />
       )}

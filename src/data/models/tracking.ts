@@ -6,6 +6,8 @@ export type TrackingStage =
   | 'arrived'
   | 'completed';
 
+export type ActiveTrackingStage = Exclude<TrackingStage, 'completed'>;
+
 /** 时间轴推进顺序(压缩 mock 与进度条 UI 共用同一事实来源) */
 export const TRACKING_STAGE_FLOW: readonly TrackingStage[] = [
   'accepting',

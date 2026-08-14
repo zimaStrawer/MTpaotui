@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 
-import { NavigationBar } from '../../components/NavigationBar';
+import { NavigationPage } from '../../components/NavigationBar';
 import { RoleBadge } from '../../components/RoleBadge';
 import {
   Toast,
@@ -13,11 +13,26 @@ import {
   type AddressBookEntry,
 } from '../../data/mock/fixtures';
 import type { AddressRole } from '../../data/models/order';
-import { preloadRoute } from '../../lib/asset-preloader';
+import { useTransientNotice } from '../../hooks/useTransientNotice';
+import { preloadRouteExperience } from '../../lib/asset-preloader';
 import { useOrderDraftStore } from '../../store/order-draft-store';
 import { AddressBookCard } from './AddressBookCard';
 import { AddressFormCard, type AddressFormValue } from './AddressFormCard';
 import { PasteRecognizeCard } from './PasteRecognizeCard';
+
+const EMPTY_ADDRESS_FORM: AddressFormValue = {
+  poi: null,
+  unit: '',
+  contactName: '',
+  phone: '',
+};
+
+function toAddressFormValue(
+  source: Pick<AddressFormValue, 'poi' | 'unit' | 'contactName' | 'phone'>,
+): AddressFormValue {
+  const { poi, unit, contactName, phone } = source;
+  return { poi, unit, contactName, phone };
+}
 
 function isAddressRole(value: string | undefined): value is AddressRole {
   return value === 'pickup' || value === 'delivery';
@@ -47,28 +62,13 @@ export function AddressPage() {
   );
 
   const [form, setForm] = useState<AddressFormValue>(() =>
-    stored === null
-      ? { poi: null, unit: '', contactName: '', phone: '' }
-      : {
-          poi: stored.poi,
-          unit: stored.unit,
-          contactName: stored.contactName,
-          phone: stored.phone,
-        },
+    stored === null ? EMPTY_ADDRESS_FORM : toAddressFormValue(stored),
   );
-  const [unavailableNoticeId, setUnavailableNoticeId] = useState<number | null>(
-    null,
-  );
+  const [notice, showNotice] = useTransientNotice();
 
   useEffect(() => {
-    void preloadRoute('itemInfo');
+    void preloadRouteExperience('itemInfo');
   }, []);
-
-  useEffect(() => {
-    if (unavailableNoticeId === null) return;
-    const timer = window.setTimeout(() => setUnavailableNoticeId(null), 3_000);
-    return () => window.clearTimeout(timer);
-  }, [unavailableNoticeId]);
 
   const scenario =
     role === 'pickup' ? SCENARIO_PICKUP_ADDRESS : SCENARIO_DELIVERY_ADDRESS;
@@ -77,21 +77,10 @@ export function AddressPage() {
     setForm((current) => ({ ...current, ...patch }));
 
   /** 地址行点击 = 以对应场景默认地址填满表单,便于串联测试后续流程。 */
-  const handlePickPoi = () =>
-    setForm({
-      poi: scenario.poi,
-      unit: scenario.unit,
-      contactName: scenario.contactName,
-      phone: scenario.phone,
-    });
+  const handlePickPoi = () => setForm(toAddressFormValue(scenario));
 
   const handlePickBookEntry = (entry: AddressBookEntry) =>
-    setForm({
-      poi: entry.poi,
-      unit: entry.unit,
-      contactName: entry.contactName,
-      phone: entry.phone,
-    });
+    setForm(toAddressFormValue(entry));
 
   /**
    * 保存后:带来源标记(下单页改地址)则原路返回;
@@ -110,17 +99,14 @@ export function AddressPage() {
   };
 
   return (
-    <div className="mx-auto flex min-h-dvh max-w-md flex-col pt-[var(--app-safe-area-top)]">
-      <NavigationBar
-        title={role === 'pickup' ? '取件信息' : '收件信息'}
-        badge={<RoleBadge role={role} premium={premium} />}
-        onBack={() => navigate(-1)}
-      />
+    <NavigationPage
+      title={role === 'pickup' ? '取件信息' : '收件信息'}
+      badge={<RoleBadge role={role} premium={premium} />}
+      onBack={() => navigate(-1)}
+    >
       <main className="flex flex-col gap-2 px-2 pt-3 pb-8">
         <PasteRecognizeCard
-          onUnavailable={() =>
-            setUnavailableNoticeId((noticeId) => (noticeId ?? 0) + 1)
-          }
+          onUnavailable={() => showNotice(UNAVAILABLE_FEATURE_MESSAGE)}
         />
         <AddressFormCard
           role={role}
@@ -132,13 +118,13 @@ export function AddressPage() {
         />
         <AddressBookCard selectedPoi={form.poi} onPick={handlePickBookEntry} />
       </main>
-      {unavailableNoticeId !== null && (
+      {notice !== null && (
         <Toast
-          key={unavailableNoticeId}
-          message={UNAVAILABLE_FEATURE_MESSAGE}
+          key={notice.id}
+          message={notice.message}
           className="bottom-[calc(24px+env(safe-area-inset-bottom))]"
         />
       )}
-    </div>
+    </NavigationPage>
   );
 }

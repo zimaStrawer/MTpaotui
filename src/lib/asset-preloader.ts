@@ -117,6 +117,14 @@ interface RouteModules {
 
 export type RouteId = keyof RouteModules;
 
+const routeAssetGroups: Partial<
+  Record<RouteId, readonly AssetGroupName[]>
+> = {
+  itemInfo: ['itemDetail'],
+  orderConfirm: ['orderConfirm'],
+  tracking: ['trackingCritical'],
+};
+
 const rawRouteLoaders: {
   [Route in RouteId]: () => Promise<RouteModules[Route]>;
 } = {
@@ -153,4 +161,13 @@ export async function preloadRoute(routeId: RouteId): Promise<void> {
   } catch {
     // 网络错误由路由的 Suspense / ErrorBoundary 在真正导航时处理。
   }
+}
+
+/** 预取路由代码及该页面首屏关键图片，页面无需重复维护两套调用。 */
+export async function preloadRouteExperience(routeId: RouteId): Promise<void> {
+  const assetGroups = routeAssetGroups[routeId] ?? [];
+  await Promise.all([
+    preloadRoute(routeId),
+    ...assetGroups.map((groupName) => preloadAssetGroup(groupName)),
+  ]);
 }

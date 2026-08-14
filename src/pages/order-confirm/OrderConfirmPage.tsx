@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import iconBack from '../../assets/nav/icon-back.svg';
+import { AppFixedLayer } from '../../components/AppShell';
 import { SERVICE_QUOTES } from '../../data/mock/service-quotes';
 import {
   isOrderDraftReady,
@@ -12,8 +13,7 @@ import {
 } from '../../data/models/order';
 import { orderRepository } from '../../data/repositories';
 import {
-  preloadAssetGroup,
-  preloadRoute,
+  preloadRouteExperience,
 } from '../../lib/asset-preloader';
 import { useOrderDraftStore } from '../../store/order-draft-store';
 import { AnnouncementBar } from './AnnouncementBar';
@@ -63,8 +63,7 @@ export function OrderConfirmPage() {
   }, []);
 
   useEffect(() => {
-    void preloadAssetGroup('trackingCritical');
-    void preloadRoute('tracking');
+    void preloadRouteExperience('tracking');
   }, []);
 
   const ready = isOrderDraftReady({ pickup, delivery, item });
@@ -112,46 +111,47 @@ export function OrderConfirmPage() {
         vehicle: selected === 'car' ? 'car' : 'ebike',
         feeYuan: quote.feeYuan,
       }),
-      preloadAssetGroup('trackingCritical'),
-      preloadRoute('tracking'),
+      preloadRouteExperience('tracking'),
     ]);
     setReceipt(receipt);
     navigate('/tracking');
   };
 
   return (
-    <div className="mx-auto min-h-dvh max-w-md bg-gradient-to-b from-container-bg to-page-bg">
+    <div className="bg-gradient-to-b from-container-bg to-page-bg">
       {/* 上滑吸顶态(864:7899):地图自然离场后，导航公告与缩略地图淡入下滑。 */}
-      <div
+      <AppFixedLayer
         aria-hidden={!scrolled}
         inert={!scrolled}
-        className={`fixed inset-x-0 top-0 z-20 mx-auto max-w-md bg-page-bg px-2 pt-[var(--app-safe-area-top)] pb-2 shadow-[0_4px_16px_rgba(28,30,33,0.06)] transition-[transform,opacity] duration-[250ms] ease-out will-change-[transform,opacity] motion-reduce:transition-none ${
+        className={`top-0 z-20 transition-[transform,opacity] duration-[250ms] ease-out will-change-[transform,opacity] motion-reduce:transition-none ${
           scrolled
             ? 'translate-y-0 opacity-100'
             : 'pointer-events-none -translate-y-full opacity-0'
         }`}
       >
-        <div className="relative flex h-11 items-center justify-center">
-          <button
-            type="button"
-            aria-label="返回"
-            onClick={() => navigate(-1)}
-            className="absolute left-0 flex size-11 items-center justify-center"
-          >
-            <span className="flex size-8 items-center justify-center rounded-full bg-container-bg">
-              <img src={iconBack} alt="" className="size-5" />
-            </span>
-          </button>
-          <AnnouncementBar />
+        <div className="bg-page-bg px-2 pt-[var(--app-safe-area-top)] pb-2 shadow-[0_4px_16px_rgba(28,30,33,0.06)]">
+          <div className="relative flex h-11 items-center justify-center">
+            <button
+              type="button"
+              aria-label="返回"
+              onClick={() => navigate(-1)}
+              className="absolute left-0 flex size-11 items-center justify-center"
+            >
+              <span className="flex size-8 items-center justify-center rounded-full bg-container-bg">
+                <img src={iconBack} alt="" className="size-5" />
+              </span>
+            </button>
+            <AnnouncementBar />
+          </div>
+          <ThumbnailMap
+            pickup={pickup}
+            delivery={delivery}
+            premium={premium}
+            onEdit={handleEditAddress}
+            onSwap={swapAddresses}
+          />
         </div>
-        <ThumbnailMap
-          pickup={pickup}
-          delivery={delivery}
-          premium={premium}
-          onEdit={handleEditAddress}
-          onSwap={swapAddresses}
-        />
-      </div>
+      </AppFixedLayer>
       <OrderMap
         pickup={pickup}
         delivery={delivery}

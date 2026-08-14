@@ -1,3 +1,5 @@
+import { AppFixedLayer } from '../../components/AppShell';
+
 interface ConfirmBarProps {
   disabled: boolean;
   onConfirm: () => void;
@@ -11,7 +13,7 @@ export function ConfirmBar({
   recommendation,
 }: ConfirmBarProps) {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-10 mx-auto max-w-md">
+    <AppFixedLayer className="bottom-0 z-10">
       {recommendation}
       <div className="h-[calc(56px+max(32px,env(safe-area-inset-bottom)))] border-t-[0.6px] border-border-divider bg-container-bg px-3 pt-[11.4px]">
         <button
@@ -27,6 +29,6 @@ export function ConfirmBar({
           确定
         </button>
       </div>
-    </div>
+    </AppFixedLayer>
   );
 }

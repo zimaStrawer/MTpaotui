@@ -8,6 +8,7 @@ import {
 } from '../../data/models/order';
 import type { TrackingStage } from '../../data/models/tracking';
 import { orderRepository } from '../../data/repositories';
+import { useTransientNotice } from '../../hooks/useTransientNotice';
 import { useOrderDraftStore } from '../../store/order-draft-store';
 import {
   Toast,
@@ -31,10 +32,7 @@ export function TrackingPage() {
 
   const [stage, setStage] = useState<TrackingStage>('accepting');
   const [bookmarked, setBookmarked] = useState(false);
-  const [notice, setNotice] = useState<{
-    id: number;
-    message: string;
-  } | null>(null);
+  const [notice, showNotice] = useTransientNotice();
 
   const ready =
     receipt !== null && pickup !== null && delivery !== null && item !== null;
@@ -44,19 +42,9 @@ export function TrackingPage() {
   }, [navigate, ready]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
     if (receipt === null) return;
     return orderRepository.watchTracking(receipt.orderId, setStage);
   }, [receipt]);
-
-  useEffect(() => {
-    if (notice === null) return;
-    const timer = window.setTimeout(() => setNotice(null), 3_000);
-    return () => window.clearTimeout(timer);
-  }, [notice]);
 
   useEffect(() => {
     if (stage === 'completed') window.scrollTo(0, 0);
@@ -72,12 +60,6 @@ export function TrackingPage() {
     item.insurance,
   );
   const feeYuan = SERVICE_QUOTES[serviceKey].feeYuan;
-
-  const showNotice = (message: string) =>
-    setNotice((current) => ({
-      id: (current?.id ?? 0) + 1,
-      message,
-    }));
 
   const handleShare = async () => {
     try {
@@ -132,7 +114,7 @@ export function TrackingPage() {
     );
   } else {
     content = (
-      <div className="mx-auto min-h-dvh max-w-md bg-page-bg">
+      <div className="bg-page-bg">
         <TrackingMap
           stage={stage}
           pickupCode={receipt.courier.pickupCode ?? '----'}

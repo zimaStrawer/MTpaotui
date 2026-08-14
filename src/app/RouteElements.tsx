@@ -1,6 +1,9 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect } from 'react';
+import { Outlet, useLocation } from 'react-router';
 
+import { AppShell } from '../components/AppShell';
 import { loadRoute } from '../lib/asset-preloader';
+import { resetRouteScroll } from './route-scroll';
 
 export const HomePage = lazy(() =>
   loadRoute('home').then((module) => ({ default: module.HomePage })),
@@ -34,4 +37,27 @@ function PageFallback() {
 
 export function RouteSuspense({ children }: { children: React.ReactNode }) {
   return <Suspense fallback={<PageFallback />}>{children}</Suspense>;
+}
+
+/** 所有业务路由共享的视口规则：关闭浏览器恢复并在每次导航时回顶。 */
+export function RouteViewport() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = 'manual';
+    return () => {
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    resetRouteScroll();
+  }, [location.key]);
+
+  return (
+    <AppShell>
+      <Outlet />
+    </AppShell>
+  );
 }

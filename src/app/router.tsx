@@ -6,6 +6,7 @@ import {
   ItemInfoPage,
   OrderConfirmPage,
   RouteSuspense,
+  RouteViewport,
   TrackingPage,
 } from './RouteElements';
 
@@ -21,9 +22,14 @@ function withSuspense(node: React.ReactNode) {
 }
 
 export const router = createBrowserRouter([
-  { path: '/', element: withSuspense(<HomePage />) },
-  { path: '/address/:role', element: withSuspense(<AddressPage />) },
-  { path: '/item-info', element: withSuspense(<ItemInfoPage />) },
-  { path: '/order-confirm', element: withSuspense(<OrderConfirmPage />) },
-  { path: '/tracking', element: withSuspense(<TrackingPage />) },
+  {
+    element: <RouteViewport />,
+    children: [
+      { index: true, element: withSuspense(<HomePage />) },
+      { path: '/address/:role', element: withSuspense(<AddressPage />) },
+      { path: '/item-info', element: withSuspense(<ItemInfoPage />) },
+      { path: '/order-confirm', element: withSuspense(<OrderConfirmPage />) },
+      { path: '/tracking', element: withSuspense(<TrackingPage />) },
+    ],
+  },
 ]);

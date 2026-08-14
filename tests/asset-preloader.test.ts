@@ -113,4 +113,13 @@ describe('视觉资源预加载器', () => {
       { url: '/stalled-map.webp', status: 'timeout' },
     ]);
   });
+
+  it('路由体验预取会同时解码该页面的关键图片组', async () => {
+    const { preloadRouteExperience } = await loadPreloader();
+
+    await expect(preloadRouteExperience('orderConfirm')).resolves.toBe(
+      undefined,
+    );
+    expect(imageInstanceCount).toBe(2);
+  });
 });

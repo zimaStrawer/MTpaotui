@@ -5,6 +5,7 @@ import acceptingCourierMascot from '../../assets/tracking/accepting-courier-masc
 import iconAnnounce from '../../assets/tracking/icon-announce.svg';
 import courierScooter from '../../assets/tracking/courier-scooter.webp';
 import mapClear from '../../assets/tracking/map-clear.webp';
+import { VerticalNoticeCarousel } from '../../components/VerticalNoticeCarousel';
 import {
   COURIER_ROUTE,
   COURIER_SCREEN_POSITION,
@@ -12,12 +13,14 @@ import {
   type MovingTrackingStage,
 } from '../../data/mock/tracking-route';
 import type { ItemProofServiceVariant } from '../../data/models/order';
-import type { TrackingStage } from '../../data/models/tracking';
+import type { ActiveTrackingStage } from '../../data/models/tracking';
 import { CourierStatusBubble } from './CourierStatusBubble';
 import { ItemProofCard } from './ItemProofCard';
 import { TrackingNavigation } from './TrackingNavigation';
-
-type ActiveTrackingStage = Exclude<TrackingStage, 'completed'>;
+import {
+  TRACKING_NOTICES,
+  TRACKING_NOTICE_INTERVAL_MS,
+} from './tracking-notices';
 
 const ACCEPTING_COUNTDOWN_SECONDS = 44;
 const SONAR_WAVE_DELAYS = ['0s', '1.2s', '2.4s'] as const;
@@ -259,11 +262,16 @@ export function TrackingMap({
         </>
       )}
 
-      <div className="absolute top-[calc(409px+var(--app-safe-area-top))] left-2 z-10 flex h-7 w-[270px] items-center gap-0.5 rounded-full bg-page-bg py-1 pr-2.5 pl-1.5">
-        <img src={iconAnnounce} alt="" className="size-5 shrink-0" />
-        <p className="text-caption whitespace-nowrap text-text-tertiary">
-          细雨连绵, 骑手赶路不易, 会尽全力为您配送
-        </p>
+      <div className="absolute top-[calc(409px+var(--app-safe-area-top))] left-2 z-10 flex h-7 w-fit items-center rounded-full bg-page-bg px-1.5 py-1">
+        <VerticalNoticeCarousel
+          align="start"
+          ariaLabel="配送提示"
+          className="text-caption text-text-tertiary"
+          iconClassName="size-5"
+          iconSrc={iconAnnounce}
+          intervalMs={TRACKING_NOTICE_INTERVAL_MS}
+          notices={TRACKING_NOTICES}
+        />
       </div>
     </section>
   );

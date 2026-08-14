@@ -5,6 +5,13 @@ import exitFullscreenIcon from '../../assets/home/icon-exit-fullscreen.svg';
 import fullscreenIcon from '../../assets/home/icon-fullscreen.svg';
 import tabMy from '../../assets/home/tab-my.svg';
 import tabOrder from '../../assets/home/tab-order.svg';
+import {
+  isEmbeddedPreview,
+  isIosStandaloneApp,
+  MOBILE_BROWSER_QUERY,
+  STANDALONE_APP_QUERY,
+} from '../../app/runtime-mode';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import './BottomTabBar.css';
 
 interface BottomTabBarProps {
@@ -22,42 +29,23 @@ interface WebkitFullscreenElement extends HTMLElement {
   webkitRequestFullscreen?: () => Promise<void> | void;
 }
 
-function isEmbeddedPreview() {
-  return new URLSearchParams(window.location.search).get('embed') === '1';
-}
-
-function isStandaloneApp() {
-  const safariNavigator = navigator as Navigator & { standalone?: boolean };
-  return (
-    window.matchMedia('(display-mode: standalone)').matches ||
-    safariNavigator.standalone === true
-  );
-}
-
 function useMobileBrowserMode() {
-  const [isMobileBrowser, setIsMobileBrowser] = useState(() => {
-    const mobileQuery = window.matchMedia('(max-width: 599px) and (pointer: coarse)');
-    return mobileQuery.matches && !isEmbeddedPreview() && !isStandaloneApp();
-  });
+  const isMobileViewport = useMediaQuery(MOBILE_BROWSER_QUERY);
+  const isStandaloneDisplay = useMediaQuery(STANDALONE_APP_QUERY);
 
-  useEffect(() => {
-    const mobileQuery = window.matchMedia('(max-width: 599px) and (pointer: coarse)');
-    const updateMobileBrowserMode = () => {
-      setIsMobileBrowser(
-        mobileQuery.matches && !isEmbeddedPreview() && !isStandaloneApp(),
-      );
-    };
-
-    mobileQuery.addEventListener('change', updateMobileBrowserMode);
-    return () => mobileQuery.removeEventListener('change', updateMobileBrowserMode);
-  }, []);
-
-  return isMobileBrowser;
+  return (
+    isMobileViewport &&
+    !isEmbeddedPreview() &&
+    !isStandaloneDisplay &&
+    !isIosStandaloneApp()
+  );
 }
 
 function getFullscreenElement() {
   const fullscreenDocument = document as WebkitFullscreenDocument;
-  return document.fullscreenElement ?? fullscreenDocument.webkitFullscreenElement;
+  return (
+    document.fullscreenElement ?? fullscreenDocument.webkitFullscreenElement
+  );
 }
 
 function useFullscreenState() {
@@ -66,7 +54,8 @@ function useFullscreenState() {
   );
 
   useEffect(() => {
-    const syncFullscreenState = () => setIsFullscreen(Boolean(getFullscreenElement()));
+    const syncFullscreenState = () =>
+      setIsFullscreen(Boolean(getFullscreenElement()));
     document.addEventListener('fullscreenchange', syncFullscreenState);
     document.addEventListener('webkitfullscreenchange', syncFullscreenState);
 
@@ -137,7 +126,10 @@ function FullscreenTab({ isFullscreen }: FullscreenTabProps) {
       {showHint ? (
         <>
           <span aria-hidden="true" className="home-fullscreen-ring" />
-          <span aria-hidden="true" className="home-fullscreen-ring home-fullscreen-ring-delayed" />
+          <span
+            aria-hidden="true"
+            className="home-fullscreen-ring home-fullscreen-ring-delayed"
+          />
           <span className="home-fullscreen-hint">
             <strong>全屏体验更佳</strong>
             <small>点击进入沉浸模式</small>
@@ -157,9 +149,7 @@ function FullscreenTab({ isFullscreen }: FullscreenTabProps) {
 }
 
 /** 首页底部导航(1677:10022):跑腿固定选中,其余页签提示暂未开放。 */
-export function BottomTabBar({
-  onUnavailableSelect,
-}: BottomTabBarProps) {
+export function BottomTabBar({ onUnavailableSelect }: BottomTabBarProps) {
   const isMobileBrowser = useMobileBrowserMode();
   const isFullscreen = useFullscreenState();
 

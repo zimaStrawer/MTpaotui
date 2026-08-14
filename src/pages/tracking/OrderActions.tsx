@@ -5,6 +5,32 @@ interface OrderActionsProps {
   onShare: () => void;
 }
 
+interface ActionButtonProps {
+  children: React.ReactNode;
+  highlighted?: boolean;
+  onClick: () => void;
+}
+
+function ActionButton({
+  children,
+  highlighted = false,
+  onClick,
+}: ActionButtonProps) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`h-7 w-20 rounded-full border bg-container-bg text-body font-medium max-[350px]:w-[72px] ${
+        highlighted
+          ? 'border-highlight-primary text-highlight-primary'
+          : 'border-border-divider text-text-primary'
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
+
 /** 订单操作(frame 1541:27878)，三枚次级动作保持固定尺寸。 */
 export function OrderActions({
   onMore,
@@ -22,27 +48,11 @@ export function OrderActions({
         更多
       </button>
       <div className="flex gap-1">
-        <button
-          type="button"
-          onClick={onEdit}
-          className="h-7 w-20 rounded-full border border-border-divider bg-container-bg text-body font-medium text-text-primary max-[350px]:w-[72px]"
-        >
-          修改订单
-        </button>
-        <button
-          type="button"
-          onClick={onClaim}
-          className="h-7 w-20 rounded-full border border-border-divider bg-container-bg text-body font-medium text-text-primary max-[350px]:w-[72px]"
-        >
-          申请理赔
-        </button>
-        <button
-          type="button"
-          onClick={onShare}
-          className="h-7 w-20 rounded-full border border-highlight-primary bg-container-bg text-body font-medium text-highlight-primary max-[350px]:w-[72px]"
-        >
+        <ActionButton onClick={onEdit}>修改订单</ActionButton>
+        <ActionButton onClick={onClaim}>申请理赔</ActionButton>
+        <ActionButton highlighted onClick={onShare}>
           分享订单
-        </button>
+        </ActionButton>
       </div>
     </div>
   );

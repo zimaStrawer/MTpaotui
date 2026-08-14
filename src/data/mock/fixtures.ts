@@ -59,12 +59,48 @@ export const SCENARIO_DELIVERY_ADDRESS = createScenarioAddress(
 export const MOCK_ADDRESS_BOOK: AddressBookEntry[] = [
   PICKUP_BOOK_ENTRY,
   DELIVERY_BOOK_ENTRY,
-  { poi: '阿里西溪园区', unit: 'B区2号楼 0605', contactName: '郑木生', phone: '13857180426', avatar: 'initial' },
-  { poi: '浙江省美术馆·策展办公室', unit: '207', contactName: '叶淑柔', phone: '18605711108', avatar: 'initial' },
-  { poi: '浙大玉泉校区·教三楼', unit: '512', contactName: '郑木生', phone: '13857180426', avatar: 'initial' },
-  { poi: '中国美院南山校区·南苑3号楼', unit: '0412', contactName: '叶淑柔', phone: '18605711108', avatar: 'initial' },
-  { poi: '西溪诚园', unit: '22-2-0801', contactName: '郑木生', phone: '13857180426', avatar: 'initial' },
-  { poi: '满觉陇·桂语山房', unit: '8号院', contactName: '叶淑柔', phone: '18605711108', avatar: 'initial' },
+  {
+    poi: '阿里西溪园区',
+    unit: 'B区2号楼 0605',
+    contactName: '郑木生',
+    phone: '13857180426',
+    avatar: 'initial',
+  },
+  {
+    poi: '浙江省美术馆·策展办公室',
+    unit: '207',
+    contactName: '叶淑柔',
+    phone: '18605711108',
+    avatar: 'initial',
+  },
+  {
+    poi: '浙大玉泉校区·教三楼',
+    unit: '512',
+    contactName: '郑木生',
+    phone: '13857180426',
+    avatar: 'initial',
+  },
+  {
+    poi: '中国美院南山校区·南苑3号楼',
+    unit: '0412',
+    contactName: '叶淑柔',
+    phone: '18605711108',
+    avatar: 'initial',
+  },
+  {
+    poi: '西溪诚园',
+    unit: '22-2-0801',
+    contactName: '郑木生',
+    phone: '13857180426',
+    avatar: 'initial',
+  },
+  {
+    poi: '满觉陇·桂语山房',
+    unit: '8号院',
+    contactName: '叶淑柔',
+    phone: '18605711108',
+    avatar: 'initial',
+  },
 ];
 
 /** 首页价格条起步价(mock 报价,M4 接费用计算) */
