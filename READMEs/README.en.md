@@ -2,15 +2,11 @@
 
 <img alt="Cover of the Meituan Errand core journey redesign" src="../readme_hero.jpg" width="100%" />
 
-**Visible items · Trusted couriers · Tangible progress**
-
-<br />
-
+<p>
 <a href="../README.md">简体中文</a> | <a href="./README.en.md"><strong>English</strong></a>
-
 <br />
-
 <img alt="UX Redesign" src="https://img.shields.io/badge/UX-Redesign-F58B1D?style=classic&amp;labelColor=3F4147" /><img alt="" height="1" src="../docs/assets/readme/spacer-12.svg" width="12" /><img alt="Interactive Prototype" src="https://img.shields.io/badge/Prototype-Interactive-079968?style=classic&amp;labelColor=3F4147" /><img alt="" height="1" src="../docs/assets/readme/spacer-12.svg" width="12" /><img alt="React and TypeScript" src="https://img.shields.io/badge/Stack-React%20%2B%20TypeScript-087EA4?style=classic&amp;labelColor=3F4147&amp;logo=react&amp;logoColor=white" />
+</p>
 
 <br />
 
