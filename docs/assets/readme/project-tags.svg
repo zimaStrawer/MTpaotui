@@ -1,0 +1,8 @@
+<svg width="520" height="34" viewBox="0 0 520 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0.5" y="0.5" width="126" height="33" rx="5.5" fill="#1B1D21" stroke="#383B42"/>
+  <rect x="136.5" y="0.5" width="194" height="33" rx="5.5" fill="#FEE42B" stroke="#E6C800"/>
+  <rect x="340.5" y="0.5" width="179" height="33" rx="5.5" fill="#087EA4" stroke="#076F91"/>
+  <text x="63.5" y="22" fill="#FFFFFF" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" text-anchor="middle">UX Redesign</text>
+  <text x="233.5" y="22" fill="#1B1D21" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" text-anchor="middle">Interactive Prototype</text>
+  <text x="430" y="22" fill="#FFFFFF" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" text-anchor="middle">React + TypeScript</text>
+</svg>

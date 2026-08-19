@@ -96,7 +96,7 @@ export function CompletedOrderView({
             订单已完成
           </h1>
           <p className="mt-2 whitespace-nowrap text-body text-text-primary max-[350px]:whitespace-normal">
-            本次服务约2.5公里，用时17分钟，感谢您使用美团跑腿
+            本次服务约2.5公里，用时17分钟
           </p>
 
           <div className="mt-4 mr-4 flex h-[93px] items-center rounded-8 bg-page-bg p-3">

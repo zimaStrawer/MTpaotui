@@ -1,20 +1,22 @@
 <div align="center">
 
-<a href="./README.md"><strong>简体中文</strong></a> · <a href="./READMEs/README.en.md">English</a>
-
 # 美团跑腿核心交互链路体验优化
-
-### Meituan Errand Core Journey Redesign
 
 **物可见 · 人可信 · 事可感**
 
-<a href="https://mtpaotui.pages.dev/"><img alt="在线体验" src="https://img.shields.io/badge/在线体验-立即打开-FEE42B?style=for-the-badge&labelColor=1B1D21&color=FEE42B" /></a>
-
 <br />
 
-<img alt="UX Redesign" src="https://img.shields.io/badge/-UX_Redesign-1B1D21?style=flat-square" />
-<img alt="Interactive Prototype" src="https://img.shields.io/badge/-Interactive_Prototype-595D65?style=flat-square" />
-<img alt="React and TypeScript" src="https://img.shields.io/badge/-React_+_TypeScript-087EA4?style=flat-square" />
+<a href="https://mtpaotui.pages.dev/"><img alt="mtpaotui.pages.dev · 立即打开" src="./docs/assets/readme/live-demo-zh.svg" width="360" /></a>
+
+<br />
+<br />
+
+<a href="./README.md"><strong>简体中文</strong></a> | <a href="./READMEs/README.en.md">English</a>
+
+<br />
+<br />
+
+<img alt="UX Redesign · Interactive Prototype · React + TypeScript" src="./docs/assets/readme/project-tags.svg" width="520" />
 
 </div>
 
