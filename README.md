@@ -16,7 +16,9 @@
 <br />
 <br />
 
-<img alt="UX Redesign · Interactive Prototype · React + TypeScript" src="./docs/assets/readme/project-tags.svg" width="520" />
+<img alt="UX Redesign" src="https://img.shields.io/badge/UX-Redesign-F58B1D?style=classic&amp;labelColor=3F4147" />
+<img alt="Interactive Prototype" src="https://img.shields.io/badge/Prototype-Interactive-079968?style=classic&amp;labelColor=3F4147" />
+<img alt="React and TypeScript" src="https://img.shields.io/badge/Stack-React%20%2B%20TypeScript-087EA4?style=classic&amp;labelColor=3F4147&amp;logo=react&amp;logoColor=white" />
 
 </div>
 
