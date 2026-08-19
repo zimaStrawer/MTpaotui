@@ -1,5 +1,6 @@
 import priceCtaLightningExpress from '../../assets/home/price-cta-lightning-express.svg';
 import priceCtaLightning from '../../assets/home/price-cta-lightning.svg';
+import { MoneyAmount } from '../../components/MoneyAmount';
 import { MOCK_BASE_FEE_YUAN } from '../../data/mock/fixtures';
 import type { ServiceMode } from '../../data/models/order';
 
@@ -20,8 +21,6 @@ const CTA_DECORATION: Record<ServiceMode, string> = {
   express: priceCtaLightningExpress,
 };
 
-const [feeInt, feeDecimal] = MOCK_BASE_FEE_YUAN.toFixed(1).split('.');
-
 /** 价格条(913:6529):起步价 + 立减角标;右侧用闪电 Mask 形成下单区。 */
 export function PriceBar({ mode, onSubmit }: PriceBarProps) {
   return (
@@ -35,21 +34,20 @@ export function PriceBar({ mode, onSubmit }: PriceBarProps) {
         alt=""
         className="pointer-events-none absolute inset-y-0 right-0 h-12 w-[182px]"
       />
-      <span className="absolute top-3 left-5 z-10 flex items-end gap-1">
-        <span className="flex items-end gap-0.5 text-text-primary">
-          <span className="font-number text-tab leading-4 font-bold">¥</span>
-          {/* 24px 展示型大数字为 token 已知缺口(design.md Known Gaps) */}
-          <span className="text-[24px] leading-6 font-semibold">
-            {feeInt}.
-          </span>
-          <span className="text-title leading-6 font-semibold">
-            {feeDecimal}
+      <span className="absolute top-3 left-[21px] z-10 flex h-6 items-end gap-1">
+        <span className="flex h-full items-baseline gap-1">
+          <MoneyAmount
+            yuan={MOCK_BASE_FEE_YUAN}
+            variant="hero"
+            className="text-text-primary"
+          />
+          <span className="font-ui text-[12px] leading-[normal] font-medium whitespace-nowrap text-text-secondary">
+            起
           </span>
         </span>
-        <span className="text-caption font-medium text-text-secondary">起</span>
-      </span>
-      <span className="absolute top-4 left-[96px] z-10 flex h-5 items-center rounded-tl-10 rounded-tr-10 rounded-br-10 bg-alert-primary px-2 text-caption-sm whitespace-nowrap text-container-bg">
-        最高减20元
+        <span className="flex h-5 items-center self-end rounded-tl-10 rounded-tr-10 rounded-br-10 bg-alert-primary px-2 font-ui text-[11px] leading-[normal] font-normal whitespace-nowrap text-container-bg">
+          最高减20元
+        </span>
       </span>
       <span className="absolute inset-y-0 right-0 z-10 flex w-[100px] items-center justify-center">
         <span className="text-title font-semibold text-text-primary">

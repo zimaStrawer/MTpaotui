@@ -1,4 +1,5 @@
 import iconChevron from '../../assets/nav/icon-chevron.svg';
+import { MoneyAmount } from '../../components/MoneyAmount';
 import type { Address } from '../../data/models/order';
 import { compactUnit, maskPhone } from '../../lib/format';
 
@@ -62,10 +63,11 @@ export function OrderInfoCard({
       <div className="mt-5 border-t border-border-divider pt-3">
         <div className="flex items-center justify-between">
           <span className="text-body font-medium text-text-primary">实付款</span>
-          <span className="flex items-end gap-0.5 font-number text-text-primary">
-            <span className="text-number-lg font-bold">¥</span>
-            <span className="text-display font-bold">{feeYuan.toFixed(1)}</span>
-          </span>
+          <MoneyAmount
+            yuan={feeYuan}
+            variant="summary"
+            className="text-text-primary"
+          />
         </div>
       </div>
       <button

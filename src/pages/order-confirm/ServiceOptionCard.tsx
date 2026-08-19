@@ -1,28 +1,13 @@
 import iconHelp from '../../assets/item-info/icon-help.svg';
 import logoExpress from '../../assets/order/logo-express.svg';
 import { CornerCheck } from '../../components/CornerCheck';
+import { MoneyAmount } from '../../components/MoneyAmount';
 import { SERVICE_QUOTES } from '../../data/mock/service-quotes';
 import type { DeliveryService } from '../../data/models/order';
 
 interface ServiceOptionCardProps {
   value: DeliveryService;
   onChange: (key: DeliveryService) => void;
-}
-
-function Fee({ yuan }: { yuan: number }) {
-  const [int, decimal] = yuan.toFixed(1).split('.');
-  return (
-    <span className="flex items-end gap-0.5 text-highlight-primary">
-      <span className="text-body font-semibold">¥</span>
-      {/* DINPro 展示数字为 token 已知缺口,以 SF Pro 近似 */}
-      <span className="font-number text-[20px] leading-5 font-bold">
-        {int}.
-      </span>
-      <span className="font-number text-tab leading-5 font-bold">
-        {decimal}
-      </span>
-    </span>
-  );
 }
 
 function OptionShell({
@@ -55,10 +40,16 @@ function OptionShell({
       {selected && <CornerCheck color="service" />}
       {children}
       <span className="absolute top-1/2 right-6 flex -translate-y-1/2 flex-col items-end gap-1">
-        <Fee yuan={feeYuan} />
+        <MoneyAmount
+          yuan={feeYuan}
+          variant="quote"
+          className="text-highlight-primary"
+        />
         <span className="flex items-center gap-0.5 whitespace-nowrap">
-          <span className="text-caption-xs text-text-tertiary">送达</span>
-          <span className="font-number text-body text-text-primary">
+          <span className="text-[10px] leading-[10px] text-text-tertiary">
+            送达
+          </span>
+          <span className="font-number text-[14px] leading-[10px] text-text-primary">
             {etaLabel}
           </span>
         </span>

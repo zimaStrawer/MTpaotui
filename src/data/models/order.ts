@@ -144,7 +144,9 @@ export const DEFAULT_DELIVERY_BOX_VOLUME: Volume = { l: 41, w: 30, h: 31 };
 /** 未填写时以 3kg 作为物品重量滑杆的初始位置。 */
 export const DEFAULT_ITEM_WEIGHT_KG = 3;
 export const FREE_WEIGHT_LIMIT_KG = 5;
-export const VOLUME_CAR_THRESHOLD_CM = 100;
+/** 达到任一建议阈值时提示汽车配送，优先于普通状态、低于超限状态。 */
+export const VOLUME_CAR_SIDE_THRESHOLD_CM = 60;
+export const VOLUME_CAR_GIRTH_THRESHOLD_CM = 120;
 export const VOLUME_MAX_GIRTH_CM = 150;
 
 export type VolumeDeliveryStatus =
@@ -152,13 +154,19 @@ export type VolumeDeliveryStatus =
   | 'car-recommended'
   | 'oversize';
 
-/** 三边和超过 150cm 视为超限；否则任一边超过 100cm 时建议汽车配送。 */
+/**
+ * 三边和超过 150cm 视为超限；否则三边和达到 120cm，或任一边达到
+ * 60cm 时建议汽车配送。超限判断优先，避免同时出现推荐和风险提示。
+ */
 export function classifyVolumeDelivery(
   volume: Volume,
 ): VolumeDeliveryStatus {
   const girth = volume.l + volume.w + volume.h;
   if (girth > VOLUME_MAX_GIRTH_CM) return 'oversize';
-  if (Math.max(volume.l, volume.w, volume.h) > VOLUME_CAR_THRESHOLD_CM) {
+  if (
+    girth >= VOLUME_CAR_GIRTH_THRESHOLD_CM ||
+    Math.max(volume.l, volume.w, volume.h) >= VOLUME_CAR_SIDE_THRESHOLD_CM
+  ) {
     return 'car-recommended';
   }
   return 'standard';

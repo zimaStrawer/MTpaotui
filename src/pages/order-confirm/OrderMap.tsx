@@ -105,13 +105,13 @@ export function OrderMap({
           premium={premium}
         />
       </span>
-      <span className="absolute top-[93px] left-[228px]">
+      <span className="absolute top-[101px] left-[228px]">
         <MapMarker
           role={addressesSwapped ? 'pickup' : 'delivery'}
           premium={premium}
         />
       </span>
-      <div className="absolute top-[43px] left-[143px]">
+      <div className="absolute top-[51px] left-[143px] z-20">
         <FloatCard
           address={addressesSwapped ? pickup : delivery}
           metric={addressesSwapped ? pickupMetric : MOCK_DELIVERY_ETA}
@@ -122,7 +122,7 @@ export function OrderMap({
           }
         />
       </div>
-      <div className="absolute top-[139px] left-[22px]">
+      <div className="absolute top-[139px] left-[22px] z-20">
         <FloatCard
           address={addressesSwapped ? delivery : pickup}
           metric={addressesSwapped ? MOCK_DELIVERY_ETA : pickupMetric}

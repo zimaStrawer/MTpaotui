@@ -76,12 +76,23 @@ export function ItemInfoPage() {
     if (!volumeExpanded) return;
 
     const frame = requestAnimationFrame(() => {
+      const volumeCard = volumeCardRef.current;
+      if (volumeCard === null) return;
+
       const reduceMotion = window.matchMedia(
         '(prefers-reduced-motion: reduce)',
       ).matches;
-      volumeCardRef.current?.scrollIntoView({
+      const navigationHeight =
+        document
+          .querySelector<HTMLElement>('[data-app-navigation-bar]')
+          ?.getBoundingClientRect().height ?? 0;
+      const volumeCardTop =
+        window.scrollY + volumeCard.getBoundingClientRect().top;
+
+      window.scrollTo({
+        top: Math.max(0, volumeCardTop - navigationHeight),
+        left: 0,
         behavior: reduceMotion ? 'auto' : 'smooth',
-        block: 'start',
       });
     });
 

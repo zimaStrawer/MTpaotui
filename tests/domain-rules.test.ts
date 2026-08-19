@@ -87,13 +87,19 @@ describe('体积、运力与凭证', () => {
   });
 
   it('按标准、汽车建议、超限优先级分类体积', () => {
-    expect(classifyVolumeDelivery({ l: 50, w: 50, h: 50 })).toBe(
+    expect(classifyVolumeDelivery({ l: 41, w: 30, h: 31 })).toBe(
       'standard',
     );
-    expect(classifyVolumeDelivery({ l: 101, w: 20, h: 20 })).toBe(
+    expect(classifyVolumeDelivery({ l: 40, w: 40, h: 40 })).toBe(
       'car-recommended',
     );
-    expect(classifyVolumeDelivery({ l: 101, w: 30, h: 30 })).toBe(
+    expect(classifyVolumeDelivery({ l: 60, w: 20, h: 20 })).toBe(
+      'car-recommended',
+    );
+    expect(classifyVolumeDelivery({ l: 100, w: 30, h: 20 })).toBe(
+      'car-recommended',
+    );
+    expect(classifyVolumeDelivery({ l: 101, w: 30, h: 20 })).toBe(
       'oversize',
     );
   });
@@ -103,7 +109,7 @@ describe('体积、运力与凭证', () => {
       resolveItemDeliveryPreference({
         serviceMode: 'send',
         vehicle: 'ebike',
-        volume: { l: 101, w: 20, h: 20 },
+        volume: { l: 60, w: 20, h: 20 },
         carRecommendationSelected: true,
       }),
     ).toEqual({ serviceMode: 'send', vehicle: 'car' });
@@ -111,7 +117,7 @@ describe('体积、运力与凭证', () => {
       resolveItemDeliveryPreference({
         serviceMode: 'express',
         vehicle: 'ebike',
-        volume: { l: 101, w: 20, h: 20 },
+        volume: { l: 60, w: 20, h: 20 },
         carRecommendationSelected: true,
       }),
     ).toEqual({ serviceMode: 'send', vehicle: 'car' });
@@ -122,7 +128,7 @@ describe('体积、运力与凭证', () => {
       resolveItemDeliveryPreference({
         serviceMode: 'send',
         vehicle: 'car',
-        volume: { l: 101, w: 20, h: 20 },
+        volume: { l: 60, w: 20, h: 20 },
         carRecommendationSelected: false,
       }),
     ).toEqual({ serviceMode: 'send', vehicle: 'ebike' });
@@ -130,7 +136,7 @@ describe('体积、运力与凭证', () => {
       resolveItemDeliveryPreference({
         serviceMode: 'send',
         vehicle: 'car',
-        volume: { l: 50, w: 50, h: 50 },
+        volume: { l: 41, w: 30, h: 31 },
         carRecommendationSelected: false,
       }),
     ).toEqual({ serviceMode: 'send', vehicle: 'car' });
@@ -139,7 +145,7 @@ describe('体积、运力与凭证', () => {
   it('物品尺寸超限只提示风险，不阻断正常下单流程', () => {
     const oversizeItem: Item = {
       ...standardItem,
-      volume: { l: 101, w: 30, h: 30 },
+      volume: { l: 101, w: 30, h: 20 },
     };
 
     expect(

@@ -46,10 +46,14 @@
   /* ── 字体族(自托管字体必须优先，避免设备直接命中系统默认字体)── */
   --font-app: 'Noto Sans SC Variable', 'Noto Sans SC', 'PingFang SC',
     'Helvetica Neue', system-ui, sans-serif;
-  --font-number: 'Noto Sans SC Variable', 'SF Pro', 'SF Pro Text',
-    -apple-system, system-ui, sans-serif;
-  --font-brand: 'Noto Sans SC Variable', 'Meituan Type', 'PingFang SC',
-    system-ui, sans-serif;
+
+  /* 精确还原 Figma 标注：设备原生字体优先，内置 Noto 保证跨设备兜底。 */
+  --font-ui: 'PingFang SC', 'Noto Sans SC Variable', 'Noto Sans SC',
+    'Helvetica Neue', system-ui, sans-serif;
+  --font-number: 'SF Pro', 'SF Pro Text', -apple-system,
+    'Noto Sans SC Variable', system-ui, sans-serif;
+  --font-brand: 'Meituan Type', 'Noto Sans SC Variable', 'Noto Sans SC',
+    'PingFang SC', system-ui, sans-serif;
   --font-decorative: 'Noto Sans SC Variable', 'Meituan Type', 'PingFang SC',
     system-ui, sans-serif;
 

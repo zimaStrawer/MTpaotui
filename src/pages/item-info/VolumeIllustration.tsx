@@ -71,24 +71,35 @@ export function VolumeIllustration({ state, volume }: VolumeIllustrationProps) {
       </div>
 
       {Object.entries(COURIER_STATE).map(([candidateState, candidate]) => (
-        <img
+        <span
           key={candidateState}
-          src={candidate.image}
-          alt=""
-          width={85}
-          height={147}
-          decoding="async"
-          draggable={false}
-          className={`pointer-events-none absolute object-contain transition-opacity duration-200 ease-out select-none motion-reduce:transition-none ${
+          aria-hidden
+          className={`pointer-events-none absolute overflow-hidden transition-opacity duration-200 ease-out motion-reduce:transition-none ${
             candidateState === state ? 'opacity-100' : 'opacity-0'
           }`}
           style={{
             left: '12.538%',
             top: '26.667%',
-            width: '25.994%',
+            width: '29.969%',
             height: '65.333%',
           }}
-        />
+        >
+          <img
+            src={candidate.image}
+            alt=""
+            width={200}
+            height={355}
+            decoding="async"
+            draggable={false}
+            className="absolute max-w-none select-none"
+            style={{
+              left: '0.837%',
+              top: '-4.57%',
+              width: '99.37%',
+              height: '118.08%',
+            }}
+          />
+        </span>
       ))}
 
       <span

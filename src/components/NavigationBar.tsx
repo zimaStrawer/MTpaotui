@@ -29,7 +29,10 @@ export function NavigationBar({
   const leftAction = onBack ?? onClose;
   return (
     <AppFixedLayer className="top-0 z-30">
-      <header className="h-[calc(44px+var(--app-safe-area-top))] bg-page-bg pt-[var(--app-safe-area-top)]">
+      <header
+        data-app-navigation-bar
+        className="h-[calc(44px+var(--app-safe-area-top))] bg-page-bg pt-[var(--app-safe-area-top)]"
+      >
         <div className="relative flex h-11 items-center justify-center gap-1">
           {leftAction && (
             <button

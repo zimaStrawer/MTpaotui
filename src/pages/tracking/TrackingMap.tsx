@@ -262,11 +262,11 @@ export function TrackingMap({
         </>
       )}
 
-      <div className="absolute top-[calc(409px+var(--app-safe-area-top))] left-2 z-10 flex h-7 w-fit items-center rounded-full bg-page-bg px-1.5 py-1">
+      <div className="absolute top-[calc(409px+var(--app-safe-area-top))] left-2 z-10 flex h-7 w-fit max-w-[calc(100%-1rem)] min-w-0 items-center rounded-full bg-page-bg py-1 pr-3 pl-1.5">
         <VerticalNoticeCarousel
           align="start"
           ariaLabel="配送提示"
-          className="text-caption text-text-tertiary"
+          className="w-fit max-w-full min-w-0 text-caption text-text-tertiary"
           iconClassName="size-5"
           iconSrc={iconAnnounce}
           intervalMs={TRACKING_NOTICE_INTERVAL_MS}

@@ -1,5 +1,6 @@
 import iconChevron from '../../assets/nav/icon-chevron.svg';
 import { AppFixedLayer } from '../../components/AppShell';
+import { MoneyAmount } from '../../components/MoneyAmount';
 import type { ServiceQuote } from '../../data/mock/service-quotes';
 import { InsuranceGuaranteeTag } from './InsuranceGuaranteeTag';
 
@@ -35,18 +36,21 @@ export function CheckoutBar({
         </div>
         <div className="absolute inset-x-2 top-[39px] flex h-12 items-center overflow-hidden rounded-full bg-text-primary">
           <span className="flex items-end gap-2 pl-4">
-            <span className="flex items-end gap-0.5 text-container-bg">
-              <span className="font-number text-tab font-bold">¥</span>
-              {/* 24px 展示型大数字为 token 已知缺口 */}
-              <span className="text-[24px] leading-6 font-semibold">
-                {quote.feeYuan}
-              </span>
+            <span className="flex items-baseline gap-2">
+              <MoneyAmount
+                yuan={quote.feeYuan}
+                variant="checkout"
+                className="text-container-bg"
+              />
+              {quote.originalFeeYuan !== undefined && (
+                <MoneyAmount
+                  yuan={quote.originalFeeYuan}
+                  fractionDigits={0}
+                  variant="original"
+                  className="text-text-tertiary line-through"
+                />
+              )}
             </span>
-            {quote.originalFeeYuan !== undefined && (
-              <span className="font-number text-tab text-text-tertiary line-through">
-                ¥{quote.originalFeeYuan}
-              </span>
-            )}
             <img
               src={iconChevron}
               alt=""

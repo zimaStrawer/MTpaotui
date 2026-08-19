@@ -4,22 +4,21 @@ import iconHelp from '../assets/item-info/icon-help.svg';
 import logoShengxinsong from '../assets/item-info/logo-shengxinsong.svg';
 import type { InsuranceTier } from '../data/models/order';
 import { CornerCheck } from './CornerCheck';
+import { MoneyAmount } from './MoneyAmount';
 
 const INSURANCE_OPTIONS: {
   tier: Extract<InsuranceTier, 'tier1' | 'tier2'>;
   valueLabel: string;
-  feeLabel: string;
+  feeYuan: number;
 }[] = [
-  { tier: 'tier1', valueLabel: '价值500元及以下', feeLabel: '保价费¥1' },
-  { tier: 'tier2', valueLabel: '价值501~1000元', feeLabel: '保价费¥2' },
+  { tier: 'tier1', valueLabel: '价值500元及以下', feeYuan: 1 },
+  { tier: 'tier2', valueLabel: '价值501~1000元', feeYuan: 2 },
 ];
 
 /** 缩小态展示的保价费(custom 无固定档,显示「自定义」) */
-const COLLAPSED_FEE_LABEL: Record<InsuranceTier, string> = {
-  none: '',
-  tier1: '¥1',
-  tier2: '¥2',
-  custom: '自定义',
+const COLLAPSED_FEE_YUAN: Partial<Record<InsuranceTier, number>> = {
+  tier1: 1,
+  tier2: 2,
 };
 
 interface InsurancePanelProps {
@@ -82,11 +81,16 @@ export function InsurancePanel({ value, fragile, onChange }: InsurancePanelProps
               className={`${chipBase} ${selected ? chipSelected : chipIdle}`}
             >
               {selected && <CornerCheck />}
-              <span className="text-caption text-text-secondary">
+              <span className="h-[17px] font-ui text-[12px] leading-[17px] font-normal text-text-secondary">
                 {option.valueLabel}
               </span>
-              <span className="text-body font-medium text-text-primary">
-                {option.feeLabel}
+              <span className="flex h-5 items-baseline font-ui text-[14px] leading-5 font-medium text-text-primary">
+                保价费
+                <MoneyAmount
+                  yuan={option.feeYuan}
+                  fractionDigits={0}
+                  variant="insurance-option"
+                />
               </span>
             </button>
           );
@@ -117,17 +121,27 @@ interface InsuranceCollapsedBarProps {
 
 /** 已保价-缩小(1541:27854):前序流程已选保价时的单行态。 */
 export function InsuranceCollapsedBar({ tier, onExpand }: InsuranceCollapsedBarProps) {
+  const feeYuan = COLLAPSED_FEE_YUAN[tier];
+
   return (
     <button
       type="button"
       onClick={onExpand}
       className="flex w-full items-center justify-between rounded-8 bg-page-bg px-3 py-2 text-left"
     >
-      <span className="flex items-center gap-1 text-caption font-medium text-text-primary">
+      <span className="flex items-center gap-1 font-ui text-[12px] leading-[normal] font-medium text-text-primary">
         保价费
-        <span className="text-title font-semibold">
-          {COLLAPSED_FEE_LABEL[tier]}
-        </span>
+        {feeYuan === undefined ? (
+          <span className="font-ui text-[18px] leading-[normal] font-semibold">
+            {tier === 'custom' ? '自定义' : ''}
+          </span>
+        ) : (
+          <MoneyAmount
+            yuan={feeYuan}
+            fractionDigits={0}
+            variant="insurance-collapsed"
+          />
+        )}
       </span>
       <span className="flex items-center text-caption text-text-tertiary">
         省心送服务保障中
