@@ -1,30 +1,24 @@
 <div align="center">
 
-# 美团跑腿核心交互链路体验优化
+<img alt="美团跑腿核心交互链路体验优化封面" src="./readme_hero.jpg" width="100%" />
 
 **物可见 · 人可信 · 事可感**
 
 <br />
 
-<a href="https://mtpaotui.pages.dev/"><img alt="mtpaotui.pages.dev · 立即打开" src="./docs/assets/readme/live-demo-zh.svg" width="360" /></a>
-
-<br />
-<br />
-
 <a href="./README.md"><strong>简体中文</strong></a> | <a href="./READMEs/README.en.md">English</a>
 
-<br />
 <br />
 
 <img alt="UX Redesign" src="https://img.shields.io/badge/UX-Redesign-F58B1D?style=classic&amp;labelColor=3F4147" />
 <img alt="Interactive Prototype" src="https://img.shields.io/badge/Prototype-Interactive-079968?style=classic&amp;labelColor=3F4147" />
 <img alt="React and TypeScript" src="https://img.shields.io/badge/Stack-React%20%2B%20TypeScript-087EA4?style=classic&amp;labelColor=3F4147&amp;logo=react&amp;logoColor=white" />
 
-</div>
-
 <br />
 
-![美团跑腿核心交互链路体验优化封面](./readme_hero.jpg)
+<a href="https://mtpaotui.pages.dev/"><img alt="mtpaotui.pages.dev · 立即打开" src="./docs/assets/readme/live-demo-zh.svg" width="360" /></a>
+
+</div>
 
 ## 项目概述
 
