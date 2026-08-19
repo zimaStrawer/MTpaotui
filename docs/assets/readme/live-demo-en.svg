@@ -5,11 +5,11 @@
     </clipPath>
   </defs>
   <g clip-path="url(#clip)">
-    <rect width="246" height="42" fill="#1B1D21"/>
-    <rect x="246" width="114" height="42" fill="#FEE42B"/>
-    <path d="M246 0V42" stroke="#111317" stroke-opacity="0.18"/>
+    <rect width="218" height="42" fill="#1B1D21"/>
+    <rect x="218" width="142" height="42" fill="#FEE42B"/>
+    <path d="M218 0V42" stroke="#111317" stroke-opacity="0.18"/>
   </g>
   <rect x="0.5" y="0.5" width="359" height="41" rx="5.5" stroke="#1B1D21" stroke-opacity="0.16"/>
-  <text x="123" y="26.5" fill="#FFFFFF" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="500" text-anchor="middle">mtpaotui.pages.dev</text>
-  <text x="303" y="26.5" fill="#1B1D21" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="600" text-anchor="middle">OPEN</text>
+  <text x="109" y="26.5" fill="#FFFFFF" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="15" font-weight="500" text-anchor="middle">mtpaotui.pages.dev</text>
+  <text x="289" y="26" fill="#1B1D21" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle">OPEN PROTOTYPE</text>
 </svg>

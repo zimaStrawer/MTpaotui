@@ -14,7 +14,7 @@
 
 <br />
 
-<a href="https://mtpaotui.pages.dev/"><img alt="mtpaotui.pages.dev · 立即打开" src="./docs/assets/readme/live-demo-zh.svg" width="360" /></a>
+<a href="https://mtpaotui.pages.dev/"><img alt="mtpaotui.pages.dev · 体验交互原型" src="./docs/assets/readme/live-demo-zh.svg" width="360" /></a>
 
 </div>
 
